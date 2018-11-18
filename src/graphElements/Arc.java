@@ -36,6 +36,35 @@ public class Arc <S>
 	{
 		this.arrivee = arivee;
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public boolean equals(Object obj)
+	{
+		boolean callback;
+		if(obj.getClass()!=this.getClass())
+		{
+			callback=false;
+		}
+		else
+		{
+			if(((Arc<S>)obj).getDepart().equals(this.getDepart())&&((Arc<S>)obj).getArrivee().equals(this.getArrivee()))
+			{
+				callback=true;
+			}
+			else
+			{
+				callback=false;
+			}
+		}
+		return callback;
+	}
+	
+	@Override
+	public int hashCode()
+	{
+		return this.getArrivee().hashCode()+this.getDepart().hashCode();
+	}
 
 }
 

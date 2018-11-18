@@ -21,27 +21,34 @@ public class Sommet<S>
 		this.id = s;
 	}
 	
-	/*@Override
+	@SuppressWarnings("unchecked")
+	@Override
 	public boolean equals(Object obj)
 	{
 		boolean callback;
-		if(obj.getClass()==this.getClass())
+		if(obj.getClass()!=this.getClass())
 		{
 			callback=false;
 		}
 		else
 		{
-			if(((Sommet<S>)obj).getId()==this.getId())
-			{
-				callback=false;
-			}
-			else
+			if(((Sommet<S>)obj).getId().equals(this.getId()))
 			{
 				callback=true;
 			}
+			else
+			{
+				callback=false;
+			}
 		}
 		return callback;
-	}*/
+	}
+	
+	@Override
+	public int hashCode()
+	{
+		return this.getId().hashCode();
+	}
 	
 	@Override
 	public String toString()
