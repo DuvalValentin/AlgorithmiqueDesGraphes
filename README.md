@@ -25,7 +25,16 @@ Impémentation des méthodes dites élémentaires ( liste de successeur/prédecc
 Avec ces nouvelles méthodes les algorithmes de parcours DFS et WFS ont pu être crées dans une nouvelle classe : AlgorithmeGraphe (classe qui permetra d'appeller des algoritmes de manière statique, les méthodes algorithme prennent des graphes en paramètre.)
 La classe Test a été renommée en ExempleUtilisation
 
-Prochaine étape : 
--Apprendre à maîtriser les assert en en mettre dans le projet.
--Revenir sur les différentes méthodes et effectuer les modification nécessaires pour rendre le code plus propre possible.
+V 1.0.3
 
+Des tests unitaires ont été réalisés avec JUnit pour chacune des classes et ce pour la plupart des méthodes.
+Les méthodes ajoutSommet et supprSommet ont été ajoutées.
+X et Gamma dans le Graphe ont été mieux encapsulés pour empêcher des modifications sur ses deux ensembles sans passer par le Graphe, les utilisateurs n'ont (normalement) plus accès aux graphes.
+La plupart des this on été supprimés car ils n'étaient pas utiles.
+
+
+Prochaine étape : 
+-Faire en Sorte que le Graphe puisse être valué : rajouté un hashMap V (chaque clé étant un arc, si pas renseigné : tout est initialisé à 1)
+
+Remarque : 
+-La méthode firstSommet de EnsembleSommet est un peu crade donc est à modifier dès que possible.

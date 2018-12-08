@@ -7,8 +7,7 @@ import graphElements.*;
 
 public class AlgorithmeGraphe
 {
-	@SuppressWarnings("unchecked")
-	public static <S> void /*EnsembleArc<S>*/ DFS (Graphe<S> G, Sommet<S> x)
+	public static <S> void DFS (Graphe<S> G, Sommet<S> x)
 	{
 		EnsembleArc<S> V; //Ensemble des arcs visités
 		EnsembleSommet<S> D;//Ensemble des sommets non visités
@@ -19,14 +18,11 @@ public class AlgorithmeGraphe
 		Stack<Sommet<S>> A=new Stack<Sommet<S>>(); 
 		Sommet<S>y;
 		Sommet<S>z;
-		
-		
 		//Init
 		D=new EnsembleSommet<S>(G.getX());
 		D.remove(x);
 		V=new EnsembleArc<S>();
 		X=G.listSucc(x);
-		
 		if (X.isEmpty())
 		{
 			T.add(x);
@@ -43,10 +39,9 @@ public class AlgorithmeGraphe
 			Y=Gavisiter.listSucc(y);
 			if(!Y.isEmpty())
 			{
-				Sommet<S>[] Ytab=new Sommet[Y.size()]; 
-				z=Y.toArray(Ytab)[0];
+				z=Y.firstSommet();
 				Arc<S> arc =new Arc<S>(y,z);
-				Gavisiter.supprarc(arc);
+				Gavisiter.supprArc(arc);
 				V.add(arc);
 				if (D.contains(z))
 				{
@@ -68,10 +63,10 @@ public class AlgorithmeGraphe
 				A.pop();
 			}
 		}
-		//return V; afin d'effecuer des test
+		assert G.getGamma().equals(V) : "DFS ne marche pas";
 	}
 	
-	public static <S> void/*EnsembleArc<S>*/  WFS (Graphe<S> G, Sommet<S> x)
+	public static <S> void WFS (Graphe<S> G, Sommet<S> x)
 	{
 		EnsembleArc<S> V;
 		EnsembleSommet<S> D;
@@ -101,6 +96,7 @@ public class AlgorithmeGraphe
 				}
 			}
 		}
-		//return V; //à décommenter pour effectuer des tests
+		assert G.getGamma().equals(V) : "WFS ne marche pas";
 	}
+	
 }

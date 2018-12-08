@@ -8,7 +8,7 @@ public class Sommet<S>
 	
 	public Sommet(S s)
 	{
-		this.setId(s);
+		setId(s);
 	}
 
 	public S getId() 
@@ -18,7 +18,8 @@ public class Sommet<S>
 
 	public void setId(S s) 
 	{
-		this.id = s;
+		assert s!= null: "Objet null passé en paramètre";
+		id = s;
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -26,13 +27,13 @@ public class Sommet<S>
 	public boolean equals(Object obj)
 	{
 		boolean callback;
-		if(obj.getClass()!=this.getClass())
+		if(obj.getClass()!=getClass())
 		{
 			callback=false;
 		}
 		else
 		{
-			if(((Sommet<S>)obj).getId().equals(this.getId()))
+			if(((Sommet<S>)obj).getId().equals(getId()))
 			{
 				callback=true;
 			}
@@ -47,13 +48,13 @@ public class Sommet<S>
 	@Override
 	public int hashCode()
 	{
-		return this.getId().hashCode();
+		return getId().hashCode();
 	}
 	
 	@Override
 	public String toString()
 	{
-		return this.getId().toString();
+		return getId().toString();
 	}
 }
 

@@ -45,5 +45,4 @@ public class EnsembleArc<S> extends Ensemble<Arc<S>>
 	{
 		return (EnsembleArc<S>)super.clone();
 	}
-	
 }

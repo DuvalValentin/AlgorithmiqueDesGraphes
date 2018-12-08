@@ -1,21 +1,21 @@
 package graphElements;
 
 
-public class Arc <S>
+public class Arc<S>
 {
 	private Sommet<S> depart;
 	private Sommet<S> arrivee;
 	
 	public Arc(Sommet<S> dep, Sommet<S> arr)
 	{
-		this.setDepart(dep);
-		this.setArrivee(arr);
+		setDepart(dep);
+		setArrivee(arr);
 	}
 	
 	@Override
 	public String toString()
 	{
-		String str="("+this.getDepart().getId()+","+this.getArrivee().getId()+")";
+		String str="("+getDepart().getId()+","+getArrivee().getId()+")";
 		return str;
 	}
 	
@@ -32,9 +32,9 @@ public class Arc <S>
 	{
 		this.depart = depart;
 	}
-	public void setArrivee(Sommet<S> arivee) 
+	public void setArrivee(Sommet<S> arrivee) 
 	{
-		this.arrivee = arivee;
+		this.arrivee = arrivee;
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -42,13 +42,13 @@ public class Arc <S>
 	public boolean equals(Object obj)
 	{
 		boolean callback;
-		if(obj.getClass()!=this.getClass())
+		if(obj.getClass()!=getClass())
 		{
 			callback=false;
 		}
 		else
 		{
-			if(((Arc<S>)obj).getDepart().equals(this.getDepart())&&((Arc<S>)obj).getArrivee().equals(this.getArrivee()))
+			if(((Arc<S>)obj).getDepart().equals(getDepart())&&((Arc<S>)obj).getArrivee().equals(getArrivee()))
 			{
 				callback=true;
 			}
@@ -63,7 +63,7 @@ public class Arc <S>
 	@Override
 	public int hashCode()
 	{
-		return this.getArrivee().hashCode()+this.getDepart().hashCode();
+		return getArrivee().hashCode()+getDepart().hashCode();
 	}
 
 }

@@ -9,14 +9,13 @@ public class Ensemble<E> extends HashSet<E>
 	{
 		super();
 	}
-	public Ensemble  (Ensemble<E> ensemble)
+	public Ensemble (Ensemble<E> ensemble)
 	{
 		for (E e : ensemble)
 		{
-			this.add(e);
+			add(e);
 		}
 	}
-	
 	
 	public String toString()
 	{
@@ -34,6 +33,5 @@ public class Ensemble<E> extends HashSet<E>
 	public Ensemble<E> clone()
 	{
 		return (Ensemble<E>)super.clone();
-		
 	}
 }

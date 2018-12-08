@@ -7,12 +7,12 @@ public class ExempleUtilisation
 		
 		//Opérations de créations : 
 		
-		Sommet<Integer> s1=new Sommet<Integer>(new Integer(1));
-		Sommet<Integer> s2=new Sommet<Integer>(new Integer(2));
-		Sommet<Integer> s3=new Sommet<Integer>(new Integer(3));
-		Sommet<Integer> s4=new Sommet<Integer>(new Integer(4));
-		Sommet<Integer> s5=new Sommet<Integer>(new Integer(5));
-		Sommet<Integer> s6=new Sommet<Integer>(new Integer(6));
+		Sommet<Integer> s1=new Sommet<Integer>(1);
+		Sommet<Integer> s2=new Sommet<Integer>(2);
+		Sommet<Integer> s3=new Sommet<Integer>(3);
+		Sommet<Integer> s4=new Sommet<Integer>(4);
+		Sommet<Integer> s5=new Sommet<Integer>(5);
+		Sommet<Integer> s6=new Sommet<Integer>(6);
 		System.out.println("Un sommet : "+s3);
 		
 		Arc<Integer>a1=new Arc<Integer>(s1,s2);
@@ -37,7 +37,6 @@ public class ExempleUtilisation
 		Gamma.add(a6);Gamma.add(a7);Gamma.add(a8);Gamma.add(a9);Gamma.add(a10);
 		System.out.println("Un ensemble d'arcs : "+Gamma);
 		
-		
 		Graphe<Integer> G = new Graphe<Integer>(X,Gamma);
 		System.out.println("Un graphe : "+G);
 		
@@ -53,7 +52,6 @@ public class ExempleUtilisation
 		
 		//Appels aux algorithmes
 		AlgorithmeGraphe.DFS(G, s1);//Juste un parcours du graphe (ne fait absolument rien)
-		AlgorithmeGraphe.WFS(G, s1);//Pareil
-		
+		AlgorithmeGraphe.WFS(G, s1);//Pareil		
 	}
 }

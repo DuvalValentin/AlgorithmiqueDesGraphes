@@ -10,7 +10,7 @@ public class EnsembleSommet<S> extends Ensemble<Sommet<S>>
 	{
 		super(ensemble);
 	}
-
+	
 	private static final long serialVersionUID = 7278825382690341067L;
 	
 	@Override
@@ -18,5 +18,11 @@ public class EnsembleSommet<S> extends Ensemble<Sommet<S>>
 	{
 		return (EnsembleSommet<S>)super.clone();
 	}
-	//existsSommet=>contains
+	
+	public Sommet<S> firstSommet()
+	{
+		@SuppressWarnings("unchecked")
+		Sommet<S>[] tab=new Sommet[size()]; 
+		return toArray(tab)[0];
+	}
 }
