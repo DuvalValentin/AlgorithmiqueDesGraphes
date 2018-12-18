@@ -51,6 +51,9 @@ public class GrapheTest
 	{
 		assertEquals("Test du constructeur et des getteurs",X,G.getX());
 		assertEquals("Test du constructeur et des getteurs",Gamma,G.getGamma());
+		Graphe<Integer> G1=new Graphe<Integer>(G);
+		assertEquals("Test du constructeur prenant un graphe en entrée",G,G1);
+		assertNotSame("On vérifie que les deux graphes n'ont pas la même réferrence",G,G1);
 	}
 	
 	@Test
@@ -60,7 +63,7 @@ public class GrapheTest
 		assertEquals("Test du clonage même variable à l'interieur",Clone,G);
 		assertNotSame("Test du clonage différent pointeur",Clone,G);
 	}
-	
+	/* commenté tant que les setters sont privés
 	@Test
 	public void testSetX()
 	{
@@ -78,6 +81,7 @@ public class GrapheTest
 		G.setGamma(gammaSet);
 		assertEquals("Test de setX",gammaSet,G.getGamma());
 	}
+	*/
 	
 	@Test
 	public void testExistSommet()
@@ -136,8 +140,10 @@ public class GrapheTest
 		Arc<Integer> a41 = new Arc<Integer> (s4,s1);
 		G.ajouteArc(a51);
 		G.ajouteArc(a41);
+		G.ajouteArc(s3, s1);
 		assertTrue("Test de l'ajout d'un arc ajoutable",G.existArc(a41));
 		assertFalse("Test de l'ajout d'un arc non ajoutable",G.existArc(a51));
+		assertTrue("Test de l'ajout d'un arc avec 2 sommets en paramètres",G.existArc(s3, s1));
 	}
 	
 	@Test

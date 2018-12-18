@@ -12,10 +12,29 @@ import graphElements.Sommet;
 public class EnsembleArcTest
 {
 	private EnsembleArc<Integer> ensembleArcTest;
+	
+	private Sommet<Integer> s1;
+	private Sommet<Integer> s2;
+	private Sommet<Integer> s3;
+	
+	Arc<Integer> a11;
+	Arc<Integer> a12;
+	Arc<Integer> a21;
+	Arc<Integer> a22;
+	Arc<Integer> a23;
+	
 	@Before
 	public void setup()
 	{
 		ensembleArcTest = new EnsembleArc<Integer>();
+		s1 = new Sommet<Integer>(1);
+		s2 = new Sommet<Integer>(2);
+		s3 = new Sommet<Integer>(3);
+		a11 = new Arc<Integer>(s1,s1);
+		a12 = new Arc<Integer>(s1,s2);
+		a21 = new Arc<Integer>(s2,s1);
+		a22 = new Arc<Integer>(s2,s2);
+		a23 = new Arc<Integer>(s2,s3);
 	}
 
 	@Test
@@ -37,20 +56,24 @@ public class EnsembleArcTest
 	@Test 
 	public void testListSuccPred()
 	{
-		Sommet<Integer> s1 = new Sommet<Integer>(1);
-		Sommet<Integer> s2 = new Sommet<Integer>(2);
-		Sommet<Integer> s3 = new Sommet<Integer>(3);
-		Arc<Integer> a1 = new Arc<Integer>(s1,s1);
-		Arc<Integer> a2 = new Arc<Integer>(s1,s2);
-		Arc<Integer> a3 = new Arc<Integer>(s2,s1);
-		Arc<Integer> a4 = new Arc<Integer>(s2,s2);
-		Arc<Integer> a5 = new Arc<Integer>(s2,s3);
-		ensembleArcTest.add(a1);ensembleArcTest.add(a2);ensembleArcTest.add(a3);ensembleArcTest.add(a4);ensembleArcTest.add(a5);
+		
+		ensembleArcTest.add(a11);ensembleArcTest.add(a12);ensembleArcTest.add(a21);ensembleArcTest.add(a22);ensembleArcTest.add(a23);
 		EnsembleSommet<Integer> succ1 = new EnsembleSommet<Integer>();
 		succ1.add(s2);succ1.add(s1);
 		EnsembleSommet<Integer> pred3 = new EnsembleSommet<Integer>();
 		pred3.add(s2);
 		assertEquals("la méthode listSucc de EnsembleArc ne marche pas",ensembleArcTest.listSucc(s1),succ1);
 		assertEquals("la méthode listPred de EnsembleArc ne marche pas",ensembleArcTest.listPred(s3),pred3);	
+	}
+	
+	@Test
+	public void testAdd()
+	{
+		ensembleArcTest.add(s1,s2);ensembleArcTest.add(s2,s2);ensembleArcTest.add(s2,s3);
+		
+		EnsembleArc<Integer> normalAdd = new EnsembleArc<Integer>();
+		normalAdd.add(a12);normalAdd.add(a22);normalAdd.add(a23);
+		
+		assertEquals("Le add avec 2 somment en paramètre ne marche pas",normalAdd,ensembleArcTest);
 	}
 }

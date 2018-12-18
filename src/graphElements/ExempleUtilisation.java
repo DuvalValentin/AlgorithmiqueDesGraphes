@@ -1,5 +1,5 @@
 package graphElements;
-import algorithme.AlgorithmeGraphe;
+import algorithme.*;
 public class ExempleUtilisation
 {
 	public static void main(String[] args) 
@@ -38,7 +38,8 @@ public class ExempleUtilisation
 		System.out.println("Un ensemble d'arcs : "+Gamma);
 		
 		Graphe<Integer> G = new Graphe<Integer>(X,Gamma);
-		System.out.println("Un graphe : "+G);
+		System.out.println("Un graphe : "+G.toString());
+		
 		
 		
 		//Opération élémentaires
@@ -51,7 +52,12 @@ public class ExempleUtilisation
 		G.existeBoucle(s4);//Savoir si il existe une boucle au niveau de ce sommet
 		
 		//Appels aux algorithmes
-		AlgorithmeGraphe.DFS(G, s1);//Juste un parcours du graphe (ne fait absolument rien)
-		AlgorithmeGraphe.WFS(G, s1);//Pareil		
+		Parcours.DFS(G, s1);//Juste un parcours du graphe (ne fait absolument rien)
+		Parcours.WFS(G, s1);//Pareil	
+		System.out.println();
+		//System.out.println("Le graphe composé de G (arcs en deux temps) : "+FermetureTransitive.Composition(G, G));//En commentaire tant que composition est privé
+		System.out.println("Fermeture transitive par puissance de Graphe : "+FermetureTransitive.PuissanceDeGraphe(G));
+		System.out.println("Fermeture transitive par Roy-Warshall : "+FermetureTransitive.Roy_Warshall(G));
+		//EnsembleArcValués<Integer,Integer>Gamma2= new EnsembleArcValués<Integer,Integer>();
 	}
 }

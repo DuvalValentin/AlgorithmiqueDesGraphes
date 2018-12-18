@@ -40,6 +40,10 @@ public class EnsembleArc<S> extends Ensemble<Arc<S>>
 		return XPred;
 	}
 	
+	public void add(Sommet<S> depart,Sommet<S>arrivee)
+	{
+		add(new Arc<S>(depart,arrivee));
+	}
 	@Override
 	public EnsembleArc<S> clone ()
 	{

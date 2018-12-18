@@ -5,12 +5,19 @@ public class Graphe<S> implements Cloneable
 	private EnsembleSommet<S> X;
 	private EnsembleArc<S> Gamma;
 	
-	//Constructeur
+	//Constructeurs
 	public Graphe(EnsembleSommet<S> x,EnsembleArc<S> gamma)
 	{
-		setX(x.clone());
-		setGamma(gamma.clone());
+		setX(x);
+		setGamma(gamma);
 	}
+	//TODO Pareil que le clonnage => problème ?
+	public Graphe(Graphe<S> G)
+	{
+		setX(G.getX());
+		setGamma(G.getGamma());
+	}
+	
 	//Clonage
 	@Override
 	public Graphe<S> clone()
@@ -20,13 +27,17 @@ public class Graphe<S> implements Cloneable
 	
 	//ToString
 	@Override
-	public String toString()
+	public String toString() //toString sans le coût
 	{
-		String str="["+this.getX().toString()+" | "+this.getGamma().toString()+"]";
+		String str="["+X.toString()+" | "+Gamma.toString()+"]";
 		return str;
 	}
 	
-	//Getters/setters
+	
+	
+	
+	//Getters -------------------------------------------------------------
+	
 	public EnsembleSommet<S> getX() 
 	{
 		return X.clone();
@@ -35,15 +46,20 @@ public class Graphe<S> implements Cloneable
 	{
 		return Gamma.clone();
 	}
-	
-	public void setX(EnsembleSommet<S> x) 
+	//Setters ------------------------------------------------------------
+	private void setX(EnsembleSommet<S> x) 
 	{
-		X = x;
+		X = x.clone();
 	}
-	public void setGamma(EnsembleArc<S> gamma) 
-	{	
-		Gamma = gamma;
+	private void setGamma(EnsembleArc<S> gamma) 
+	{
+		if (correctGamma(gamma))
+		{
+			Gamma = gamma.clone();
+		}
+		assert gamma.equals(Gamma) : "Le gamma passé en paramètre n'est pas correct";
 	}
+	
 	
 	//Equals et hash code
 	@SuppressWarnings("unchecked")
@@ -82,7 +98,18 @@ public class Graphe<S> implements Cloneable
 	
 	public boolean existArc (Arc<S> arc)
 	{
-		return Gamma.contains(arc);
+		boolean result;
+		if(null==Gamma)
+		{
+			result=false;
+		}
+		else
+		{
+			result= Gamma.contains(arc);
+		}
+		return result;
+		
+		
 	}
 	public boolean existArc (Sommet<S> arrivee, Sommet<S> depart)
 	{
@@ -95,12 +122,47 @@ public class Graphe<S> implements Cloneable
 		return existArc(sommet, sommet);
 	}
 	
+	//Vérification des éléments
 	public boolean ajoutableArc(Arc<S> arc)
 	{
 		return (existSommet(arc.getArrivee()) && existSommet(arc.getDepart()) && !existArc(arc));
 	}
 	
-	//
+	public boolean correctGamma(EnsembleArc<S> gamma)
+	{
+		boolean result=true;
+		
+		for(Arc<S> arc : gamma)
+		{
+			if(!ajoutableArc(arc))
+			{
+				result=false;
+			}
+		}
+		return result;
+	}
+	
+	/*public boolean correctCoût(CoûtsArcs<S> coût)
+	{
+		boolean result=true;
+		if(Gamma.size()==coût.size())
+		{
+			for(Arc<S> arcCoût : coût.keySet())
+			{
+				if(!Gamma.contains(arcCoût))
+				{
+					result=false;
+				}
+			}
+		}
+		else
+		{
+			result=false;
+		}
+		return result;		
+	}*/
+	
+	//Liste des prédecesseurs et successeurs
 	public EnsembleSommet<S> listSucc(Sommet<S> sommet)
 	{
 		return Gamma.listSucc(sommet);
@@ -111,6 +173,7 @@ public class Graphe<S> implements Cloneable
 		return Gamma.listPred(sommet);
 	}
 	
+	//Ajouts et suppressions d'éléments
 	public void ajouteSommet(Sommet<S> sommet)
 	{
 		X.add(sommet);
@@ -135,10 +198,32 @@ public class Graphe<S> implements Cloneable
 			Gamma.add(arc);
 		}
 	}
+	public void ajouteArc(Sommet<S> depart, Sommet<S> arrivee)
+	{
+		ajouteArc(new Arc<S>(depart,arrivee));
+	}
+	
 	public void supprArc(Arc<S> arc)
 	{
 		Gamma.remove(arc);
 	}
-
+	public void supprArc(Sommet<S> depart, Sommet<S> arrivee)
+	{
+		supprArc(new Arc<S>(depart,arrivee));
+	}
+	
+	//Union
+	public Graphe<S> union(Graphe<S> G)
+	{
+		Graphe<S> U = new Graphe<S>(this);
+		for(Sommet<S> S : G.getX())
+		{
+			U.ajouteSommet(S);
+		}
+		for(Arc<S> A : G.getGamma())
+		{
+			U.ajouteArc(A);
+		}
+		return U;
+	}
 }
-

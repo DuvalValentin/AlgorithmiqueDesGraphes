@@ -6,7 +6,7 @@ public class EnsembleSommet<S> extends Ensemble<Sommet<S>>
 	{
 		super();
 	}
-	public EnsembleSommet(Ensemble<Sommet<S>> ensemble)
+	public EnsembleSommet(EnsembleSommet<S> ensemble)
 	{
 		super(ensemble);
 	}

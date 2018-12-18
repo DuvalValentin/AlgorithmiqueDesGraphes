@@ -1,7 +1,7 @@
 # AlgorithmiqueDesGraphes
-Version 1.0.2
-Le but de ce package est de disposer d'un ensemble d'outils facile à utiliser permettant de manipuler des Graphes.
-L'objectif final étant de pouvoir effectuer des algorithmes sur les graphes.
+Version 1.0.4
+Le but de ces packages est de disposer d'un ensemble d'outils facile à utiliser permettant de manipuler des Graphes.
+L'objectif final étant de pouvoir effectuer un maximum  d'algorithmes sur les graphes.
 
 V 1
 Actuellement ce package ne dispose que d'objets basiques : 
@@ -32,9 +32,19 @@ Les méthodes ajoutSommet et supprSommet ont été ajoutées.
 X et Gamma dans le Graphe ont été mieux encapsulés pour empêcher des modifications sur ses deux ensembles sans passer par le Graphe, les utilisateurs n'ont (normalement) plus accès aux graphes.
 La plupart des this on été supprimés car ils n'étaient pas utiles.
 
+V 1.0.4
 
-Prochaine étape : 
--Faire en Sorte que le Graphe puisse être valué : rajouté un hashMap V (chaque clé étant un arc, si pas renseigné : tout est initialisé à 1)
+Ajouter les coût a été moins facile que prévu, il y a entre autre un problème de conception (voir schéma DIA), des classes ont été créées mais elles ne sont pas encore utilisables.
+Les setters de Graphe ont été rendus privés pour une meilleure encapsulation.
+Les méthodes add de EnsembleArc et ajouteArc,supprArc de Graphe peuvent maintenant prendre en arguments deux sommets(représentant un arc).
+Les algorithmes de fermeture transitives (Puissace de graphes,RoyWarshall) ont été rajoutés.
+La classe AlgorithmeGraphe a été scindée en plusieurs autre classes (Parcours et FermetureTransitive).
+Des tests unitaires ont été ajoutés au fur et à mesure de l'ajout de classes/méthodes
 
 Remarque : 
 -La méthode firstSommet de EnsembleSommet est un peu crade donc est à modifier dès que possible.
+-Trouver un moyen de résoudre le problème de conception lié aux graphes valués.
+-Essayer de voir si on peut trouver une manière de réexploiter facilement des Algorithme/Méthodes (exemple : ne pas avoir à écrire tout RoyWarshall lors de la fermeture anti-Transitive) afin de rendre le projet plus facilement 
+
+Prochaine étape : 
+Résoudre un ou plusieurs des problèmes si dessus pour pouvoir continuer à avancer.

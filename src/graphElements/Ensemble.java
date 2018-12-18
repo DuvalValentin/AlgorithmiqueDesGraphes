@@ -1,7 +1,7 @@
 package graphElements;
 
 import java.util.HashSet;
-public class Ensemble<E> extends HashSet<E>
+public class Ensemble<E> extends HashSet<E> implements Cloneable
 {
 	private static final long serialVersionUID = -4354387895748449845L;
 

@@ -5,7 +5,7 @@ import java.util.Stack;
 
 import graphElements.*;
 
-public class AlgorithmeGraphe
+public class Parcours
 {
 	public static <S> void DFS (Graphe<S> G, Sommet<S> x)
 	{
@@ -98,5 +98,4 @@ public class AlgorithmeGraphe
 		}
 		assert G.getGamma().equals(V) : "WFS ne marche pas";
 	}
-	
 }
