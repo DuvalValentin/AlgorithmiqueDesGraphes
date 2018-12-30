@@ -41,10 +41,22 @@ Les algorithmes de fermeture transitives (Puissace de graphes,RoyWarshall) ont �
 La classe AlgorithmeGraphe a été scindée en plusieurs autre classes (Parcours et FermetureTransitive).
 Des tests unitaires ont été ajoutés au fur et à mesure de l'ajout de classes/méthodes
 
+V 1.0.5.0
+
+Les coûts ont enfin été ajoutés:
+- Une class Cout comprenant un flottant a été créée.
+- La classe ArcValue hérite de Arc et comporte un attribut Cout.
+- EnsembleArc et EnsembleArcValue descendent de AbstractEnsembleArc, en conséquence EnsembleArcValue ne peut contenir que des ArcValue et pas d'Arc.
+- Graphe et GrapheValue descendent de AbstractGraphe.
+
+Les algorithmes de graphes ont été décomposés en plusieurs sous parties:
+-FermetureTransitive
+-Parcours
+-DetectionCircuit
+-AntiTransitif
+
 Remarque : 
 -La méthode firstSommet de EnsembleSommet est un peu crade donc est à modifier dès que possible.
--Trouver un moyen de résoudre le problème de conception lié aux graphes valués.
 -Essayer de voir si on peut trouver une manière de réexploiter facilement des Algorithme/Méthodes (exemple : ne pas avoir à écrire tout RoyWarshall lors de la fermeture anti-Transitive) afin de rendre le projet plus facilement 
 
-Prochaine étape : 
-Résoudre un ou plusieurs des problèmes si dessus pour pouvoir continuer à avancer.
+Prochaine étape : revenir sur le code, ajouter des Interfaces, mettre à jour les tests, possiblement résoudre les problèmes mis en remarque.

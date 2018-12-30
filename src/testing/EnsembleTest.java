@@ -27,6 +27,7 @@ public class EnsembleTest
 	{
 		Ensemble<Integer> ensembleClone = ensembleTest.clone();
 		assertEquals("La méthode clone de Ensemble ne marche pas.",ensembleTest,ensembleClone);
+		assertNotSame("Le clone pointe vers le même objet",ensembleTest,ensembleClone);
 	}
 
 }

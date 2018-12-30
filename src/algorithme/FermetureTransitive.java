@@ -1,18 +1,14 @@
 package algorithme;
 
-import graphElements.Arc;
-import graphElements.EnsembleArc;
-import graphElements.EnsembleSommet;
-import graphElements.Graphe;
-import graphElements.Sommet;
+import graphElements.*;
 
 public class FermetureTransitive
 {
 	private static <S> Graphe<S> Composition (Graphe<S> G1,Graphe<S> G2)
 	{
 		EnsembleSommet<S>X=G1.getX();
-		EnsembleArc<S>Gamma1=G1.getGamma();
-		EnsembleArc<S>Gamma2=G2.getGamma();
+		EnsembleArc<S>Gamma1=(EnsembleArc<S>) G1.getGamma();//TODO cast bizzare
+		EnsembleArc<S>Gamma2=(EnsembleArc<S>) G2.getGamma();//TODO cast bizzare
 		Graphe<S> G3 = new Graphe<S>(X,new EnsembleArc<S>());
 		for(Sommet<S> x : X)
 		{
@@ -42,16 +38,16 @@ public class FermetureTransitive
 		R=new Graphe<S>(G);
 		while(!R.equals(P))
 		{
-			P=R;
-			R=G.union(Composition(G,R));
+			P=R.clone();
+			R.union(Composition(G,R));
 		}
 		return(P);
 	}
+	//Non valué
 	public static <S> Graphe<S> Roy_Warshall(Graphe<S> G)
 	{
 		EnsembleSommet<S>X=G.getX();
-		Graphe<S> RW;
-		RW=new Graphe<S>(G);
+		Graphe<S> RW=new Graphe<S>(G);
 		for(Sommet<S> z : X) 
 		{
 			for(Sommet<S> x : X)
@@ -63,6 +59,31 @@ public class FermetureTransitive
 						if(RW.existArc(z,y))
 						{
 							RW.ajouteArc(x, y);
+						}
+					}
+				}
+			}
+		}
+		return RW;
+	}
+	
+	public static <S> GrapheValue<S> Roy_Warshall(GrapheValue<S> G)
+	{
+		EnsembleSommet<S>X=G.getX();
+		GrapheValue<S> RW=new GrapheValue<S>(G);
+		Cout Cxz=new Cout(), Czy=new Cout(), Cxy=new Cout();
+		for(Sommet<S> z : X) 
+		{
+			for(Sommet<S> x : X)
+			{
+				if(RW.getCout(x,z,Cxz))//Si getValue rend faux c'est que l'arc x,z n'existe pas, 
+				{
+					for(Sommet<S> y : X)
+					{
+						if(RW.getCout(z,y,Czy))
+						{
+							Cxy=Cout.somme(Cxz, Czy);
+							RW.ajouteArc(x, y, Cxy);
 						}
 					}
 				}

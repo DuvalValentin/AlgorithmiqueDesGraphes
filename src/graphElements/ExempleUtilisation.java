@@ -58,6 +58,8 @@ public class ExempleUtilisation
 		//System.out.println("Le graphe composé de G (arcs en deux temps) : "+FermetureTransitive.Composition(G, G));//En commentaire tant que composition est privé
 		System.out.println("Fermeture transitive par puissance de Graphe : "+FermetureTransitive.PuissanceDeGraphe(G));
 		System.out.println("Fermeture transitive par Roy-Warshall : "+FermetureTransitive.Roy_Warshall(G));
+		System.out.println("Fermeture anti-transitive par Tau-Minalité (ne marche pas si circuit) : "+AntiTransitif.TauMinalite(G));
+		System.out.println("Existence d'un circuit : "+DetectionCircuit.Roy_Warshall(G));
 		//EnsembleArcValués<Integer,Integer>Gamma2= new EnsembleArcValués<Integer,Integer>();
 	}
 }

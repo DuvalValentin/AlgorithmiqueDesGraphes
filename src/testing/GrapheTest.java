@@ -163,8 +163,10 @@ public class GrapheTest
 		EnsembleSommet<Integer> Xg =G.getX();
 		Xg.remove(s3);
 		assertNotEquals("On modifie l'ensemble donné par getX",Xg,G.getX());
-		EnsembleArc<Integer> Gammag =G.getGamma();
+		EnsembleArc<Integer> Gammag =(EnsembleArc<Integer>) G.getGamma();//TODO cast bizzare
 		Gammag.remove(a23);
 		assertNotEquals("On modifie l'ensemble donné par getGamma",Gammag,G.getGamma());
+		s4=new Sommet<Integer>(6);
+		assertFalse("On modifie un des sommets par l'exterieur",G.getX().contains(s4));
 	}
 }

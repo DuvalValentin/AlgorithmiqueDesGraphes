@@ -1,17 +1,17 @@
 package graphElements;
 
-public class ArcValue<S,V> extends Arc<S>
+public class ArcValue<S> extends Arc<S>
 {
-	private V valeur;
+	private Cout cout;
 	
-	public ArcValue (Sommet<S> depart, Sommet<S> arrivee, V valeur)
+	public ArcValue (Sommet<S> depart, Sommet<S> arrivee, Cout cout)
 	{
-		super(arrivee,depart);
-		this.valeur=valeur;
+		super(depart,arrivee);
+		this.cout=cout;
 	}
 	
-	public V getValeur()
+	public Cout getCout()
 	{
-		return valeur;
+		return cout;
 	}
 }

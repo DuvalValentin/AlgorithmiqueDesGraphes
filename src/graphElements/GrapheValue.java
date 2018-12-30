@@ -1,28 +1,36 @@
 package graphElements;
 
-public class GrapheValue<S,V> extends Graphe<S>
+public class GrapheValue<S> extends AbstractGraphe<S,ArcValue<S>>
 {
-	//private EnsembleArcValués<S,V> Gamma;
-	public GrapheValue(EnsembleSommet<S> x,EnsembleArcValues<S,V> gamma)
+	public GrapheValue()
+	{
+		super();
+	}
+	
+	public GrapheValue(EnsembleSommet<S> x,EnsembleArcValues<S> gamma)
 	{
 		super(x,gamma);
 	}
 	
-	/*public void valeurMin()
+	public GrapheValue(GrapheValue<S> G)
 	{
-		V min;
-		for(ArcValué<S,V> arc : Gamma)
-		{
-			if (arc.getValeur()==arc.getValeur())
-			{
-				min=arc.getValeur();
-			}
-		}
-		return min;
-	}*/
+		super(G);
+	}
 	
-	public V valeurArc(ArcValue<S,V> arc)
+//Un cast est effectué mais j'aimerais trouver mieux
+	@Override
+	public EnsembleArcValues<S> getGamma()
 	{
-		return arc.getValeur();
+		return (EnsembleArcValues<S>)super.getGamma();
+	}
+	
+	public boolean getCout(Sommet<S> depart, Sommet<S> arrivee,Cout cout)
+	{
+		return getGamma().getValue(depart,arrivee,cout);
+	}
+	
+	public void ajouteArc(Sommet<S> depart, Sommet<S> arrivee, Cout cout)
+	{
+		ajouteArc(new ArcValue<S>(depart,arrivee,cout));
 	}
 }

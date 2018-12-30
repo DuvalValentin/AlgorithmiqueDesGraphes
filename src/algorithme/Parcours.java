@@ -63,7 +63,7 @@ public class Parcours
 				A.pop();
 			}
 		}
-		assert G.getGamma().equals(V) : "DFS ne marche pas";
+		//assert G.getGamma().equals(V) : "DFS ne marche pas";
 	}
 	
 	public static <S> void WFS (Graphe<S> G, Sommet<S> x)
@@ -96,6 +96,6 @@ public class Parcours
 				}
 			}
 		}
-		assert G.getGamma().equals(V) : "WFS ne marche pas";
+		//assert G.getGamma().equals(V) : "WFS ne marche pas";
 	}
 }

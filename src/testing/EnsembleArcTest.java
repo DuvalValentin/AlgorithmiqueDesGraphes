@@ -17,11 +17,11 @@ public class EnsembleArcTest
 	private Sommet<Integer> s2;
 	private Sommet<Integer> s3;
 	
-	Arc<Integer> a11;
-	Arc<Integer> a12;
-	Arc<Integer> a21;
-	Arc<Integer> a22;
-	Arc<Integer> a23;
+	private Arc<Integer> a11;
+	private Arc<Integer> a12;
+	private Arc<Integer> a21;
+	private Arc<Integer> a22;
+	private Arc<Integer> a23;
 	
 	@Before
 	public void setup()
@@ -47,10 +47,10 @@ public class EnsembleArcTest
 	@Test
 	public void testClone()
 	{
-		EnsembleArc<Integer> ensembleArc = ensembleArcTest.clone();
-		assertEquals("La méthode clone de EnsembleArc ne marche pas",ensembleArcTest,ensembleArc);
-		ensembleArc.add(new Arc<Integer>(new Sommet<Integer>(1),new Sommet<Integer>(2)));
-		assertNotEquals("La méthode clone de EnsembleArc ne créé pas un nouvel objet",ensembleArcTest,ensembleArc);
+		EnsembleArc<Integer> clone1 = ensembleArcTest.clone();
+		assertEquals("La méthode clone de EnsembleArc ne marche pas",ensembleArcTest,clone1);
+		clone1.add(new Arc<Integer>(new Sommet<Integer>(1),new Sommet<Integer>(2)));
+		assertNotEquals("La méthode clone de EnsembleArc ne créé pas un nouvel objet",ensembleArcTest,clone1);
 	}
 	
 	@Test 
