@@ -1,6 +1,6 @@
 package algorithme;
 
-import graphElements.*;
+import graphElements.Elements.*;
 
 public class FermetureTransitive
 {
@@ -34,7 +34,7 @@ public class FermetureTransitive
 	{
 		Graphe<S> P;
 		Graphe<S> R;
-		P=new Graphe<S>(new EnsembleSommet<S>(), new EnsembleArc<S>());
+		P=new Graphe<S>();
 		R=new Graphe<S>(G);
 		while(!R.equals(P))
 		{
@@ -52,11 +52,11 @@ public class FermetureTransitive
 		{
 			for(Sommet<S> x : X)
 			{
-				if(RW.existArc(x,z))
+				if(RW.existeArc(x,z))
 				{
 					for(Sommet<S> y : X)
 					{
-						if(RW.existArc(z,y))
+						if(RW.existeArc(z,y))
 						{
 							RW.ajouteArc(x, y);
 						}
@@ -67,11 +67,12 @@ public class FermetureTransitive
 		return RW;
 	}
 	
+	//Valué
 	public static <S> GrapheValue<S> Roy_Warshall(GrapheValue<S> G)
 	{
 		EnsembleSommet<S>X=G.getX();
 		GrapheValue<S> RW=new GrapheValue<S>(G);
-		Cout Cxz=new Cout(), Czy=new Cout(), Cxy=new Cout();
+	  Cout Cxz=new Cout(), Czy=new Cout(), Cxy=new Cout();
 		for(Sommet<S> z : X) 
 		{
 			for(Sommet<S> x : X)

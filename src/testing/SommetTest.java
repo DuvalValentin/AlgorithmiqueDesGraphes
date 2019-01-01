@@ -1,10 +1,10 @@
 package testing;
-import graphElements.Sommet;
-
 import org.junit.Before;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import graphElements.Elements.Sommet;
 
 public class SommetTest
 {
@@ -38,5 +38,11 @@ public class SommetTest
 		Integer value2=7;
 		sommetTest.setId(value2);
 		assertEquals("Le setId de Sommet n'est pas fonctionnel",sommetTest.getId(),value2);
+	}
+	
+	@Test
+	public void testHashCode()
+	{
+		assertSame("HashCode",5,sommetTest.hashCode());
 	}
 }

@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import algorithme.FermetureTransitive;
-import graphElements.*;
+import graphElements.Elements.*;
 
 public class FermetureTransitiveTest
 {
@@ -39,7 +39,7 @@ public class FermetureTransitiveTest
 		s3=new Sommet<Integer>(3);
 		s4=new Sommet<Integer>(4);
 		X=new EnsembleSommet<Integer>();
-		X.add(s1);X.add(s2);X.add(s3);X.add(s4);
+		X.ajouteSommet(s1);X.ajouteSommet(s2);X.ajouteSommet(s3);X.ajouteSommet(s4);
 		
 		a12 = new Arc<Integer>(s1,s2);
 		a23 = new Arc<Integer>(s2,s3);
@@ -47,7 +47,7 @@ public class FermetureTransitiveTest
 		a34 = new Arc<Integer>(s3,s4);
 		a44 = new Arc<Integer>(s4,s4);
 		Gamma=new EnsembleArc<Integer>();
-		Gamma.add(a12);Gamma.add(a23);Gamma.add(a32);Gamma.add(a34);Gamma.add(a44);
+		Gamma.ajouteArc(a12);Gamma.ajouteArc(a23);Gamma.ajouteArc(a32);Gamma.ajouteArc(a34);Gamma.ajouteArc(a44);
 		
 		G=new Graphe<Integer>(X,Gamma);
 		
@@ -57,7 +57,7 @@ public class FermetureTransitiveTest
 		a24 = new Arc<Integer>(s2,s4);
 		a33 = new Arc<Integer>(s3,s3);
 		GammaT=new EnsembleArc<Integer>(Gamma);
-		GammaT.add(a13);GammaT.add(a14);GammaT.add(a22);GammaT.add(a24);GammaT.add(a33);
+		GammaT.ajouteArc(a13);GammaT.ajouteArc(a14);GammaT.ajouteArc(a22);GammaT.ajouteArc(a24);GammaT.ajouteArc(a33);
 		GT=new Graphe<Integer>(X,GammaT);
 	}
 
@@ -67,12 +67,12 @@ public class FermetureTransitiveTest
 	{
 		Graphe<Integer> Gcomp=FermetureTransitive.Composition(G,G);
 		EnsembleArc<Integer> Gammacomp=new EnsembleArc<Integer>();
-		Gammacomp.add(a13);
-		Gammacomp.add(a22);
-		Gammacomp.add(a24);
-		Gammacomp.add(a33);
-		Gammacomp.add(a34);
-		Gammacomp.add(a44);
+		Gammacomp.ajouteArc(a13);
+		Gammacomp.ajouteArc(a22);
+		Gammacomp.ajouteArc(a24);
+		Gammacomp.ajouteArc(a33);
+		Gammacomp.ajouteArc(a34);
+		Gammacomp.ajouteArc(a44);
 		assertEquals("La composition ne marche pas",Gammacomp,Gcomp.getGamma());
 	}//Commenté tant que composition est privé */
 	

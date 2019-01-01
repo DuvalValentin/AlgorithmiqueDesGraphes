@@ -4,13 +4,14 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import graphElements.Arc;
-import graphElements.EnsembleArc;
-import graphElements.EnsembleSommet;
-import graphElements.Sommet;
-
+import graphElements.Elements.Arc;
+import graphElements.Elements.EnsembleArc;
+import graphElements.Elements.EnsembleSommet;
+import graphElements.Elements.Sommet;
+//Comprends les test de AbstractEnsembleArc
 public class EnsembleArcTest
 {
+
 	private EnsembleArc<Integer> ensembleArcTest;
 	
 	private Sommet<Integer> s1;
@@ -56,24 +57,32 @@ public class EnsembleArcTest
 	@Test 
 	public void testListSuccPred()
 	{
-		
-		ensembleArcTest.add(a11);ensembleArcTest.add(a12);ensembleArcTest.add(a21);ensembleArcTest.add(a22);ensembleArcTest.add(a23);
+		ensembleArcTest.ajouteArc(a11);ensembleArcTest.ajouteArc(a12);ensembleArcTest.ajouteArc(a21);ensembleArcTest.ajouteArc(a22);ensembleArcTest.ajouteArc(a23);
 		EnsembleSommet<Integer> succ1 = new EnsembleSommet<Integer>();
-		succ1.add(s2);succ1.add(s1);
+		succ1.ajouteSommet(s2);succ1.ajouteSommet(s1);
 		EnsembleSommet<Integer> pred3 = new EnsembleSommet<Integer>();
-		pred3.add(s2);
+		pred3.ajouteSommet(s2);
 		assertEquals("la méthode listSucc de EnsembleArc ne marche pas",ensembleArcTest.listSucc(s1),succ1);
 		assertEquals("la méthode listPred de EnsembleArc ne marche pas",ensembleArcTest.listPred(s3),pred3);	
 	}
 	
 	@Test
-	public void testAdd()
+	public void testAjouteSupprExistArc()
 	{
-		ensembleArcTest.add(s1,s2);ensembleArcTest.add(s2,s2);ensembleArcTest.add(s2,s3);
-		
-		EnsembleArc<Integer> normalAdd = new EnsembleArc<Integer>();
-		normalAdd.add(a12);normalAdd.add(a22);normalAdd.add(a23);
-		
-		assertEquals("Le add avec 2 somment en paramètre ne marche pas",normalAdd,ensembleArcTest);
+		ensembleArcTest.ajouteArc(s1,s2);ensembleArcTest.ajouteArc(s2,s2);ensembleArcTest.ajouteArc(s2,s3);
+		EnsembleArc<Integer> normalAjout = new EnsembleArc<Integer>();
+		assertTrue("Les arcs s'ajoutent bien",ensembleArcTest.existeArc(s1,s2));
+		assertTrue("Les arcs s'ajoutent bien",ensembleArcTest.existeArc(s2,s2));
+		assertTrue("Les arcs s'ajoutent bien",ensembleArcTest.existeArc(s2,s3));
+		assertTrue("Test de présence de boucle lorsqu'elle existe",ensembleArcTest.existeBoucle());
+		normalAjout.ajouteArc(a12);normalAjout.ajouteArc(a22);normalAjout.ajouteArc(a23);
+		assertTrue("Les arcs s'ajoutent bien",normalAjout.existeArc(a12));
+		assertTrue("Les arcs s'ajoutent bien",normalAjout.existeArc(a22));
+		assertTrue("Les arcs s'ajoutent bien",normalAjout.existeArc(a23));
+		assertEquals("Les deux ajouteArc ont un effet différent",normalAjout,ensembleArcTest);
+		ensembleArcTest.supprArc(a12);ensembleArcTest.supprArc(s2, s2);
+		assertFalse("Arc supposé être enlevé",ensembleArcTest.existeArc(a22));
+		assertFalse("Arc supposé être enlevé",ensembleArcTest.existeArc(s1,s2));
+		assertFalse("Test de présence de boucle lorsqu'elle n'existe pas",ensembleArcTest.existeBoucle());
 	}
 }

@@ -4,14 +4,14 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import graphElements.ArcValue;
-import graphElements.Cout;
-import graphElements.EnsembleArcValues;
-import graphElements.Sommet;
+import graphElements.Elements.ArcValue;
+import graphElements.Elements.Cout;
+import graphElements.Elements.EnsembleArcValue;
+import graphElements.Elements.Sommet;
 
 public class EnsembleArcValuesTest
 {
-	private EnsembleArcValues<Integer> ensembleArcValueTest;
+	private EnsembleArcValue<Integer> ensembleArcValueTest;
 	
 	private Sommet<Integer> s1;
 	private Sommet<Integer> s2;
@@ -29,7 +29,7 @@ public class EnsembleArcValuesTest
 	@Before
 	public void setUp()
 	{
-		ensembleArcValueTest = new EnsembleArcValues<Integer>();
+		ensembleArcValueTest = new EnsembleArcValue<Integer>();
 		s1 = new Sommet<Integer>(1);
 		s2 = new Sommet<Integer>(2);
 		
@@ -51,17 +51,18 @@ public class EnsembleArcValuesTest
 	@Test
 	public void testEnsembleArcValues()
 	{
-		EnsembleArcValues<Integer>ensemble2=new EnsembleArcValues<Integer>(ensembleArcValueTest);
+		EnsembleArcValue<Integer>ensemble2=new EnsembleArcValue<Integer>(ensembleArcValueTest);
 		assertEquals("Constructeur avec un ensemble en entrée",ensembleArcValueTest,ensemble2);
 		assertNotSame("Constructeur avec un ensemble en entrée rend le même objet",ensembleArcValueTest,ensemble2);
 	}
 	
 	@Test
-	public void testAdd()
+	//TODO à REFAIRE
+	public void testAjouteArc()
 	{
 		Cout res=new Cout();
 		ensembleArcValueTest.add(av113);
-		ensembleArcValueTest.getValue(s1, s1, res);
+		ensembleArcValueTest.getCout(s1, s1, res);
 		assertEquals("Le add ajoute même si l'arc est présent",av115.getCout(),res);
 	}
 
@@ -69,7 +70,7 @@ public class EnsembleArcValuesTest
 	public void testGetValue()
 	{
 		Cout res=new Cout();
-		ensembleArcValueTest.getValue(s1, s2, res);
+		ensembleArcValueTest.getCout(s1, s2, res);
 		assertEquals("getValue ne marche pas ",av121.getCout(),res);
 	}
 }

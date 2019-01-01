@@ -4,11 +4,11 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import graphElements.Arc;
-import graphElements.EnsembleArc;
-import graphElements.EnsembleSommet;
-import graphElements.Graphe;
-import graphElements.Sommet;
+import graphElements.Elements.Arc;
+import graphElements.Elements.EnsembleArc;
+import graphElements.Elements.EnsembleSommet;
+import graphElements.Elements.Graphe;
+import graphElements.Elements.Sommet;
 
 public class GrapheTest
 {
@@ -26,14 +26,14 @@ public class GrapheTest
 	private Arc<Integer> a44;
 	
 	@Before
-	public void setUp() throws Exception
+	public void setUp()
 	{
 		s1=new Sommet<Integer>(1);
 		s2=new Sommet<Integer>(2);
 		s3=new Sommet<Integer>(3);
 		s4=new Sommet<Integer>(4);
 		X=new EnsembleSommet<Integer>();
-		X.add(s1);X.add(s2);X.add(s3);X.add(s4);
+		X.ajouteSommet(s1);X.ajouteSommet(s2);X.ajouteSommet(s3);X.ajouteSommet(s4);
 		
 		a12 = new Arc<Integer>(s1,s2);
 		a23 = new Arc<Integer>(s2,s3);
@@ -41,7 +41,7 @@ public class GrapheTest
 		a34 = new Arc<Integer>(s3,s4);
 		a44 = new Arc<Integer>(s4,s4);
 		Gamma=new EnsembleArc<Integer>();
-		Gamma.add(a12);Gamma.add(a23);Gamma.add(a32);Gamma.add(a34);Gamma.add(a44);
+		Gamma.ajouteArc(a12);Gamma.ajouteArc(a23);Gamma.ajouteArc(a32);Gamma.ajouteArc(a34);Gamma.ajouteArc(a44);
 		
 		G=new Graphe<Integer>(X,Gamma);
 	}
@@ -57,7 +57,7 @@ public class GrapheTest
 	}
 	
 	@Test
-	public void testClone()
+	public void testCloneEquals()
 	{
 		Graphe<Integer> Clone =G.clone();
 		assertEquals("Test du clonage même variable à l'interieur",Clone,G);
@@ -68,7 +68,7 @@ public class GrapheTest
 	public void testSetX()
 	{
 		EnsembleSommet<Integer> xSet=new EnsembleSommet<Integer>();
-		xSet.add(s1);xSet.add(s2);xSet.add(s3);
+		xSet.ajouteSommet(s1);xSet.ajouteSommet(s2);xSet.ajouteSommet(s3);
 		G.setX(xSet);
 		assertEquals("Test de setX",xSet,G.getX());
 	}
@@ -77,11 +77,20 @@ public class GrapheTest
 	public void testSetGamma()
 	{
 		EnsembleArc<Integer> gammaSet=new EnsembleArc<Integer>();
-		gammaSet.add(a12);gammaSet.add(a44);gammaSet.add(a32);
+		gammaSet.ajouteArc(a12);gammaSet.ajouteArc(a44);gammaSet.ajouteArc(a32);
 		G.setGamma(gammaSet);
 		assertEquals("Test de setX",gammaSet,G.getGamma());
 	}
 	*/
+	
+	@Test
+	public void testGetters()
+	{
+		assertEquals("Test du getX",X,G.getX());
+		assertNotSame("Test de l'encapsulation de getX",X,G.getX());
+		assertEquals("Test du getGamma",Gamma,G.getGamma());
+		assertNotSame("Test de l'encapsulation de getGamma",Gamma,G.getGamma());
+	}
 	
 	@Test
 	public void testExistSommet()
@@ -95,17 +104,18 @@ public class GrapheTest
 	public void testExistArc()
 	{
 		Arc<Integer> ea = new Arc<Integer>(s4,s1);
-		assertTrue("Test de existArc pour un arc existant",G.existArc(a12));
-		assertTrue("Test de existArc pour un arc existant",G.existArc(s4,s4));
-		assertFalse("Test de existArc pour un arc non existant",G.existArc(ea));
-		assertFalse("Test de existArc pour un arc non existant",G.existArc(s4,s1));
+		assertTrue("Test de existArc pour un arc existant",G.existeArc(a12));
+		assertTrue("Test de existArc avec 2 sommet en paramètres pour un arc existant",G.existeArc(s4,s4));
+		assertFalse("Test de existArc pour un arc non existant",G.existeArc(ea));
+		assertFalse("Test de existArc avec 2 sommet en paramètres pour un arc non existant",G.existeArc(s4,s1));
 	}
 	
 	@Test
 	public void testExisteBoucle()
 	{
-		assertTrue("Test de existBoucle pour une boucle existante",G.existeBoucle(s4));
-		assertFalse("Test de existBoucle pour une boucle existante",G.existeBoucle(s1));
+		assertTrue("Test de existeBoucle pour une boucle existante",G.existeBoucle());
+		G.supprArc(a44);
+		assertFalse("Test de existeBoucle pour une boucle non existante",G.existeBoucle());
 	}
 	
 	@Test
@@ -115,7 +125,6 @@ public class GrapheTest
 		assertEquals("Test de listPred sur un graphe",Gamma.listPred(s4),G.listPred(s4));
 	}
 	
-	//TODO créer une fonction contains dans G pour savoir si un ensemble/sommet/arc existe dans G
 	@Test
 	public void testAjouteSommet()
 	{
@@ -141,17 +150,50 @@ public class GrapheTest
 		G.ajouteArc(a51);
 		G.ajouteArc(a41);
 		G.ajouteArc(s3, s1);
-		assertTrue("Test de l'ajout d'un arc ajoutable",G.existArc(a41));
-		assertFalse("Test de l'ajout d'un arc non ajoutable",G.existArc(a51));
-		assertTrue("Test de l'ajout d'un arc avec 2 sommets en paramètres",G.existArc(s3, s1));
+		assertTrue("Test de l'ajout d'un arc ajoutable",G.existeArc(a41));
+		assertFalse("Test de l'ajout d'un arc non ajoutable",G.existeArc(a51));
+		assertTrue("Test de l'ajout d'un arc avec 2 sommets en paramètres",G.existeArc(s3,s1));
 	}
 	
 	@Test
 	public void testSupprArc()
 	{
 		G.supprArc(a34);
-		assertFalse("Test de la suppression d'un arc",G.existArc(a34));
+		assertFalse("Test de la suppression d'un arc",G.existeArc(a34));
+		G.supprArc(s3,s2);
+		assertFalse("Test de la suppression d'un arc avec deux sommets en paramètres",G.existeArc(s3,s2));
 	}
+	
+	@Test
+	public void testIsEmpty()
+	{
+		Graphe<Integer> Ge = new Graphe<Integer>();
+		assertTrue("Test de isEmpty et du constructeur sans paramètres",Ge.isEmpty());
+	}
+	
+	@Test
+	public void testPointsEntree()
+	{
+		EnsembleSommet<Integer> Pe=new EnsembleSommet<Integer>();
+		Pe.ajouteSommet(s1);
+		assertEquals("Test de pointsEntree",Pe,G.pointsEntree());
+	}
+	
+	@Test
+	public void testUnion()
+	{
+		Sommet<Integer> s5 = new Sommet<Integer>(5);
+		Arc<Integer> a15 = new Arc<Integer>(s1,s5);
+		Graphe<Integer> Gajout=new Graphe<Integer>();
+		Gajout.ajouteSommet(s1); Gajout.ajouteSommet(s5);
+		Gajout.ajouteArc(a15);
+		Gajout.union(G);
+		Graphe<Integer> Gunion=new Graphe<Integer>(G);
+		Gunion.ajouteSommet(s5);
+		Gunion.ajouteArc(a15);
+		assertEquals("Test de l'union",Gunion,Gajout);
+	}
+	
 	
 	@Test
 	public void encapsulation()
@@ -163,7 +205,7 @@ public class GrapheTest
 		EnsembleSommet<Integer> Xg =G.getX();
 		Xg.remove(s3);
 		assertNotEquals("On modifie l'ensemble donné par getX",Xg,G.getX());
-		EnsembleArc<Integer> Gammag =(EnsembleArc<Integer>) G.getGamma();//TODO cast bizzare
+		EnsembleArc<Integer> Gammag = G.getGamma();
 		Gammag.remove(a23);
 		assertNotEquals("On modifie l'ensemble donné par getGamma",Gammag,G.getGamma());
 		s4=new Sommet<Integer>(6);

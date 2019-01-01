@@ -1,8 +1,9 @@
 package testing;
 
-import graphElements.ArcValue;
-import graphElements.Cout;
-import graphElements.Sommet;
+import graphElements.Elements.ArcValue;
+import graphElements.Elements.Cout;
+import graphElements.Elements.Sommet;
+
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;

@@ -1,6 +1,6 @@
 package testing;
-import graphElements.Arc;
-import graphElements.Sommet;
+import graphElements.Elements.Arc;
+import graphElements.Elements.Sommet;
 
 import org.junit.Before;
 import static org.junit.Assert.*;
@@ -60,5 +60,11 @@ public class ArcTest
 		assertNotEquals("Le equals de Arc rends vrai pour deux arcs avec un depart différent",arcTest,arcNDepEq);
 		assertNotEquals("Le equals de Arc rends vrai pour deux arcs avec une arrivee différente",arcTest,arcNArrEq);
 		assertNotEquals("Le equals de Arc rends vrai pour deux arcs avec un depart et une arrivee différents",arcTest,arcNEq);
+	}
+	
+	@Test
+	public void testHashCode()
+	{
+		assertSame("Test du HashCode",13,arcTest.hashCode());
 	}
 }

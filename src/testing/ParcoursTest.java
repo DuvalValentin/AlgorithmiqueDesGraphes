@@ -4,7 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import algorithme.Parcours;
-import graphElements.*;
+import graphElements.Elements.*;
 
 public class ParcoursTest
 {

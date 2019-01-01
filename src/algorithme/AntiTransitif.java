@@ -1,6 +1,6 @@
 package algorithme;
 
-import graphElements.*;
+import graphElements.Elements.*;
 
 public class AntiTransitif
 {
@@ -14,11 +14,11 @@ public class AntiTransitif
 		{
 			for(Sommet<S> x : X)
 			{
-				if(RW.existArc(x,z))
+				if(RW.existeArc(x,z))
 				{
 					for(Sommet<S> y : X)
 					{
-						if(RW.existArc(z,y))
+						if(RW.existeArc(z,y))
 						{
 							RW.ajouteArc(x, y);
 							TauMin.supprArc(x, y);

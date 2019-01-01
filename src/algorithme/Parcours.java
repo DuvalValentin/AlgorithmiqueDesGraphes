@@ -3,7 +3,7 @@ package algorithme;
 import java.util.LinkedList;
 import java.util.Stack;
 
-import graphElements.*;
+import graphElements.Elements.*;
 
 public class Parcours
 {
