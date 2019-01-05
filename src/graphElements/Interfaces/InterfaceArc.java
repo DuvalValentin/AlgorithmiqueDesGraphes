@@ -2,7 +2,7 @@ package graphElements.Interfaces;
 
 import graphElements.Elements.Sommet;
 
-public interface InterfaceArc<S>
+public interface InterfaceArc<S> extends Cloneable
 {
 	//Getters et Setters
 	public Sommet<S> getDepart();

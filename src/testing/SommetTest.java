@@ -45,4 +45,13 @@ public class SommetTest
 	{
 		assertSame("HashCode",5,sommetTest.hashCode());
 	}
+	
+	@Test 
+	public void testClone()
+	{
+		Sommet<Integer> sommetClone = sommetTest.clone();
+		assertEquals("Clone ne fonctionne pas",sommetTest,sommetClone);
+		sommetClone.setId(9);
+		assertNotEquals("modifier le clone modifie l'original",sommetTest,sommetClone);
+	}
 }

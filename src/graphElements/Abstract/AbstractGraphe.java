@@ -2,7 +2,6 @@ package graphElements.Abstract;
 
 import graphElements.Elements.Arc;
 import graphElements.Elements.EnsembleSommet;
-import graphElements.Elements.Graphe;
 import graphElements.Elements.Sommet;
 import graphElements.Interfaces.InterfaceAbstractGraphe;
 
@@ -70,7 +69,7 @@ public abstract class AbstractGraphe<S,A extends Arc<S>> implements Cloneable, I
 			if(obj.getClass()==getClass())
 			{
 
-				if(((Graphe<S>)obj).getX().equals(X)&&((Graphe<S>)obj).getGamma().equals(Gamma))
+				if(((AbstractGraphe<S,A>)obj).getX().equals(X)&&((AbstractGraphe<S,A>)obj).getGamma().equals(Gamma))
 				{
 					result=true;
 				}
@@ -113,6 +112,12 @@ public abstract class AbstractGraphe<S,A extends Arc<S>> implements Cloneable, I
 	public boolean existeBoucle()
 	{
 		return Gamma.existeBoucle();
+	}
+	
+	@Override
+	public boolean existeBoucle(Sommet<S> sommet)
+	{
+		return Gamma.existeArc(sommet,sommet);
 	}
 	
 	//Vérification des éléments
@@ -222,7 +227,7 @@ public abstract class AbstractGraphe<S,A extends Arc<S>> implements Cloneable, I
 		//TODO demander à papa pour l'itérateur qui ne marche pas sur une variable privée
 		for(A arc : getGamma())
 		{
-			if(arc.getDepart()==sommet || arc.getArrivee()==sommet)
+			if(arc.getDepart().equals(sommet) || arc.getArrivee().equals(sommet))
 			{
 				supprArc(arc);
 			}
@@ -245,21 +250,13 @@ public abstract class AbstractGraphe<S,A extends Arc<S>> implements Cloneable, I
 		Gamma.supprArc(arc);
 	}
 
-	
-	
 	//Union
 	//TODO implémenter l'union pour les ensemble en général
 	@Override
 	public void union(InterfaceAbstractGraphe<S, A> G)
 	{
-		for(Sommet<S> S : G.getX())
-		{
-			ajouteSommet(S);
-		}
-		for(A Arc : G.getGamma())
-		{
-			ajouteArc(Arc);
-		}
+		X.union(G.getX());
+		Gamma.union(G.getGamma());
 	}
 	
 	@Override

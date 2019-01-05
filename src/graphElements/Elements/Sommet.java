@@ -12,6 +12,11 @@ public class Sommet<S> implements InterfaceSommet<S>
 	{
 		setId(s);
 	}
+	
+	public Sommet(Sommet<S> sommet)
+	{
+		setId(sommet.getId());
+	}
 
 	public S getId() 
 	{
@@ -23,8 +28,6 @@ public class Sommet<S> implements InterfaceSommet<S>
 		assert s!= null: "Objet null passé en paramètre";
 		id = s;
 	}
-	
-	
 	
 	@SuppressWarnings("unchecked")
 	@Override
@@ -47,6 +50,12 @@ public class Sommet<S> implements InterfaceSommet<S>
 			}
 		}
 		return callback;
+	}
+	
+	@Override
+	public Sommet<S> clone()
+	{
+		return new Sommet<S>(this);
 	}
 	
 	@Override

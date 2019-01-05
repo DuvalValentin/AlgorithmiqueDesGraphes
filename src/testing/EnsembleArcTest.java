@@ -62,12 +62,12 @@ public class EnsembleArcTest
 		succ1.ajouteSommet(s2);succ1.ajouteSommet(s1);
 		EnsembleSommet<Integer> pred3 = new EnsembleSommet<Integer>();
 		pred3.ajouteSommet(s2);
-		assertEquals("la méthode listSucc de EnsembleArc ne marche pas",ensembleArcTest.listSucc(s1),succ1);
-		assertEquals("la méthode listPred de EnsembleArc ne marche pas",ensembleArcTest.listPred(s3),pred3);	
+		assertEquals("la méthode listSucc de EnsembleArc ne marche pas",succ1,ensembleArcTest.listSucc(s1));
+		assertEquals("la méthode listPred de EnsembleArc ne marche pas",pred3,ensembleArcTest.listPred(s3));	
 	}
 	
 	@Test
-	public void testAjouteSupprExistArc()
+	public void testAjouteSupprExist()
 	{
 		ensembleArcTest.ajouteArc(s1,s2);ensembleArcTest.ajouteArc(s2,s2);ensembleArcTest.ajouteArc(s2,s3);
 		EnsembleArc<Integer> normalAjout = new EnsembleArc<Integer>();
@@ -75,6 +75,8 @@ public class EnsembleArcTest
 		assertTrue("Les arcs s'ajoutent bien",ensembleArcTest.existeArc(s2,s2));
 		assertTrue("Les arcs s'ajoutent bien",ensembleArcTest.existeArc(s2,s3));
 		assertTrue("Test de présence de boucle lorsqu'elle existe",ensembleArcTest.existeBoucle());
+		assertTrue("Test de présence de boucle avec un sommet en paramètre lorsqu'elle existe",ensembleArcTest.existeBoucle(s2));
+		assertFalse("Test de présence de boucle avec un sommet en paramètre lorsqu'elle n'existe pas",ensembleArcTest.existeBoucle(s3));
 		normalAjout.ajouteArc(a12);normalAjout.ajouteArc(a22);normalAjout.ajouteArc(a23);
 		assertTrue("Les arcs s'ajoutent bien",normalAjout.existeArc(a12));
 		assertTrue("Les arcs s'ajoutent bien",normalAjout.existeArc(a22));

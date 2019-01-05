@@ -57,20 +57,22 @@ public class EnsembleArcValuesTest
 	}
 	
 	@Test
-	//TODO à REFAIRE
 	public void testAjouteArc()
 	{
-		Cout res=new Cout();
-		ensembleArcValueTest.add(av113);
-		ensembleArcValueTest.getCout(s1, s1, res);
-		assertEquals("Le add ajoute même si l'arc est présent",av115.getCout(),res);
+		ensembleArcValueTest.ajouteArc(av113);
+		assertEquals("Le ajouteArc ajoute même si l'arc est présent",av115.getCout(),ensembleArcValueTest.getCout(s1, s1));
 	}
 
 	@Test
-	public void testGetValue()
+	public void testGetCout()
 	{
-		Cout res=new Cout();
-		ensembleArcValueTest.getCout(s1, s2, res);
-		assertEquals("getValue ne marche pas ",av121.getCout(),res);
+		assertEquals("getCout ne marche pas ",av121.getCout(),ensembleArcValueTest.getCout(s1, s2));
+	}
+	
+	@Test
+	public void testSetCout()
+	{
+		ensembleArcValueTest.setCout(s1, s2, c7);
+		assertEquals("setCout ne marche pas",c7,av121.getCout());
 	}
 }

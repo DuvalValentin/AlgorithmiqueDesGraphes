@@ -21,11 +21,19 @@ public abstract class AbstractEnsemble<E> extends HashSet<E> //possibilité de l
 	public String toString()
 	{
 		StringBuffer str=new StringBuffer("{");
-		for(E e: this)
+		if(!isEmpty())
 		{
-			str=str.append(e.toString()+",");
+			for(E e: this)
+			{
+				str=str.append(e.toString()+",");
+			}
+			str.setCharAt(str.length()-1, '}');
 		}
-		str.setCharAt(str.length()-1, '}');
+		else
+		{
+			str.append("}");
+		}
+		
 		return str.toString();
 	}
 	
@@ -34,5 +42,13 @@ public abstract class AbstractEnsemble<E> extends HashSet<E> //possibilité de l
 	public AbstractEnsemble<E> clone()
 	{
 		return (AbstractEnsemble<E>)super.clone();
+	}
+	
+	public void union(AbstractEnsemble<E> ensemble)
+	{
+		for(E element : ensemble)
+		{
+			add(element);
+		}
 	}
 }

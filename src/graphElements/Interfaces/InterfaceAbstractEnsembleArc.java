@@ -13,6 +13,7 @@ public interface InterfaceAbstractEnsembleArc<S, A extends Arc<S>> extends Inter
 	boolean existeArc(Arc<S> arc);
 	boolean existeArc(Sommet<S> arrivee, Sommet<S> depart);
 	boolean existeBoucle();
+	boolean existeBoucle(Sommet<S> sommet);
 	//Ajout et suppression d'éléments
 	void ajouteArc(A arc);
 	void supprArc(A arc);

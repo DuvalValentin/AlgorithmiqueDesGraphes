@@ -114,6 +114,8 @@ public class GrapheTest
 	public void testExisteBoucle()
 	{
 		assertTrue("Test de existeBoucle pour une boucle existante",G.existeBoucle());
+		assertTrue("Test de existeBoucle avec un sommet en paramètre pour une boucle existante",G.existeBoucle(s4));
+		assertFalse("Test de existeBoucle avec un sommet en paramètre pour une boucle non existante",G.existeBoucle(s1));
 		G.supprArc(a44);
 		assertFalse("Test de existeBoucle pour une boucle non existante",G.existeBoucle());
 	}
@@ -198,6 +200,7 @@ public class GrapheTest
 	@Test
 	public void encapsulation()
 	{
+		//Graphe<Integer> Gbis=new Graphe<Integer>(G);
 		X.remove(s3);
 		assertNotEquals("On modifie le X ayant initialisé G", X, G.getX());
 		Gamma.remove(a32);
@@ -209,6 +212,13 @@ public class GrapheTest
 		Gammag.remove(a23);
 		assertNotEquals("On modifie l'ensemble donné par getGamma",Gammag,G.getGamma());
 		s4=new Sommet<Integer>(6);
-		assertFalse("On modifie un des sommets par l'exterieur",G.getX().contains(s4));
+		assertFalse("On modifie un des sommets par l'exterieur",G.existSommet(s4));
+		s3.setId(9);
+		assertFalse("On modifie un des sommets par l'exterieur",G.existSommet(s3));
+		Graphe<Integer>G2=new Graphe<Integer>(G);
+		G2.supprArc(a12);
+		assertNotEquals("On modifie le graphe créé à partir de G",G,G2);
+		a32.setDepart(s4);
+		assertFalse("On modifie un arc par l'exterieur",G.existeArc(a32));
 	}
 }

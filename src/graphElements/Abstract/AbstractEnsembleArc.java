@@ -8,9 +8,13 @@ import graphElements.Interfaces.InterfaceAbstractEnsembleArc;
 public abstract class AbstractEnsembleArc<S,A extends Arc<S>> extends AbstractEnsemble<A> implements InterfaceAbstractEnsembleArc<S, A>
 {
 	//Constructeurs
+	@SuppressWarnings("unchecked")
 	public AbstractEnsembleArc(AbstractEnsemble<A> ensemble)
 	{
-		super(ensemble);
+		for (A arc : ensemble)
+		{
+			ajouteArc((A)arc.clone());
+		}
 	}
 	public AbstractEnsembleArc()
 	{
@@ -25,7 +29,7 @@ public abstract class AbstractEnsembleArc<S,A extends Arc<S>> extends AbstractEn
 		EnsembleSommet<S> XSucc=new EnsembleSommet<S>();
 		for (Arc<S> arc : this)
 		{
-			if (arc.getDepart()==sommet)
+			if (arc.getDepart().equals(sommet))
 			{
 				XSucc.add(arc.getArrivee());
 			}
@@ -39,7 +43,7 @@ public abstract class AbstractEnsembleArc<S,A extends Arc<S>> extends AbstractEn
 		EnsembleSommet<S> XPred=new EnsembleSommet<S>();
 		for (Arc<S> arc : this)
 		{
-			if (arc.getArrivee()==sommet)
+			if (arc.getArrivee().equals(sommet))
 			{
 				XPred.add(arc.getDepart());
 			}
@@ -73,6 +77,14 @@ public abstract class AbstractEnsembleArc<S,A extends Arc<S>> extends AbstractEn
 		}
 		return resultat;
 	}
+	
+	@Override
+	public boolean existeBoucle(Sommet<S> sommet)
+	{
+		Arc<S> arc = new Arc<S>(sommet,sommet);
+		return existeArc(arc);
+	}
+	
 	@Override
 	public void ajouteArc(A arc)
 	{
@@ -82,6 +94,14 @@ public abstract class AbstractEnsembleArc<S,A extends Arc<S>> extends AbstractEn
 	public void supprArc(A arc)
 	{
 		remove(arc);
+	}
+	//TODO mettre dans l'interface
+	public void union(AbstractEnsembleArc<S,A> ensemble)
+	{
+		for(A arc : ensemble)
+		{
+			ajouteArc(arc);
+		}
 	}
 	
 	@SuppressWarnings("unchecked")

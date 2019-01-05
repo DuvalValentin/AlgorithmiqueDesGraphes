@@ -11,7 +11,10 @@ public class EnsembleSommet<S> extends AbstractEnsemble<Sommet<S>> implements In
 	}
 	public EnsembleSommet(EnsembleSommet<S> ensemble)
 	{
-		super(ensemble);
+		for (Sommet<S> sommet : ensemble)
+		{
+			ajouteSommet(sommet.clone());
+		}
 	}
 	
 	private static final long serialVersionUID = 7278825382690341067L;
@@ -38,11 +41,19 @@ public class EnsembleSommet<S> extends AbstractEnsemble<Sommet<S>> implements In
 	@Override
 	public void ajouteSommet(Sommet<S> sommet)
 	{
-		add(sommet);
+		add(sommet.clone());
 	}
 	@Override
 	public void supprSommet(Sommet<S> sommet)
 	{
 		remove(sommet);
+	}
+	//TODO ajouter méthode dans une interface
+	public void union(EnsembleSommet<S> ensemble)
+	{
+		for(Sommet<S> sommet : ensemble)
+		{
+			ajouteSommet(sommet);
+		}
 	}
 }

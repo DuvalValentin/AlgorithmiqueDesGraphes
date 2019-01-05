@@ -32,6 +32,11 @@ public class EnsembleArc<S> extends AbstractEnsembleArc<S,Arc<S>> implements Int
 	@Override
 	public EnsembleArc<S> clone ()
 	{
-		return (EnsembleArc<S>)super.clone();
+		EnsembleArc<S> Clone=new EnsembleArc<S>();
+		for(Arc<S> arc : this)
+		{
+			Clone.ajouteArc(arc.clone());
+		}
+		return Clone;
 	}
 }

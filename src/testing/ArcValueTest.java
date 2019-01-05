@@ -25,9 +25,34 @@ public class ArcValueTest
 	}
 
 	@Test
+	public void testGetCout()
+	{
+		assertEquals("Test du getCout",cout,arcValueTest.getCout());
+	}
+	
+	@Test
 	public void testGetValeur()
 	{
-		assertTrue("Test du getValeur",5==arcValueTest.getCout().getValeur());
+		assertTrue("Test du getValeur",5==arcValueTest.getValeur());
 	}
+	
+	@Test
+	public void testSetValeur()
+	{
+		arcValueTest.setValeur(9);
+		assertTrue("Test du setValeur",9==arcValueTest.getValeur());
+	}
+	
+	@Test
+	public void testClone()
+	{
+		ArcValue<Integer> arcValueClone = arcValueTest.clone();
+		assertEquals("Clone ne marche pas",arcValueTest,arcValueClone);
+		assertNotSame("Le clone a le même cout",arcValueTest.getCout(),arcValueClone.getCout());
+		arcValueClone.setValeur(0);
+		assertNotEquals("Modifier le clone modifie l'original",arcValueTest.getCout(),arcValueClone.getCout());
+	}
+	
+	
 
 }

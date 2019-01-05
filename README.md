@@ -5,11 +5,11 @@ L'objectif final étant de pouvoir effectuer un maximum  d'algorithmes sur les g
 
 V 0.1
 Actuellement ce package ne dispose que d'objets basiques : 
--Sommet : contient un attribut Id qui peut-être n'importe quel objet.
--Arc : comporte 2 sommets.
--EnsembleSommet : HashSet de Sommets.
--EnsembleArc : HashSet d'Arc.
--Graphe : comporte un EnsembleSommet et un EnsembleArc formant ainsi un graphe.
+- Sommet : contient un attribut Id qui peut-être n'importe quel objet.
+- Arc : comporte 2 sommets.
+- EnsembleSommet : HashSet de Sommets.
+- EnsembleArc : HashSet d'Arc.
+- Graphe : comporte un EnsembleSommet et un EnsembleArc formant ainsi un graphe.
 
 Pour le moment il n'y a que des setters et des getters définis ainsi que les méthodes toString qui ont été redéfinies.
 
@@ -50,10 +50,10 @@ Les coûts ont enfin été ajoutés:
 - Graphe et GrapheValue descendent de AbstractGraphe.
 
 Les algorithmes de graphes ont été décomposés en plusieurs sous parties:
--FermetureTransitive
--Parcours
--DetectionCircuit
--AntiTransitif
+- FermetureTransitive
+- Parcours
+- DetectionCircuit
+- AntiTransitif
 
 V 0.6.2
 
@@ -63,9 +63,17 @@ Les interfaces ont été rajoutées, les classes Graphe doivent implémenter les
 Les différentes classes d'Ensemble et de Graphe ont donc été mise à jour en conséquence.
 Les test unitaires ont été mis à jours.
 
-Remarque : 
--La méthode firstSommet de EnsembleSommet est un peu crade donc est à modifier dès que possible.
--Essayer de voir si on peut trouver une manière de réexploiter facilement des Algorithme/Méthodes (exemple : ne pas avoir à écrire tout RoyWarshall lors de la fermeture anti-Transitive) afin de rendre le projet plus facilement maléable.
--Implémenter une méthode union pour les Ensemble et réussir à l'ajouter à l'interface sans poser de problèmes pour les Graphes
+V 0.7
 
-Prochaine étape : Résoudre les problèmes posés en remarque ou continuer à implémenter des algorithmes tout en modifiant les autre classe si besoin.
+La classe CFC ont été ajoutées ainsi que la classe CalculCFC comprenant l'algorithme de Foulkes.
+La Méthode getCout pour les grapheValue et les ensemblesValue a été modifiée.
+Plusieurs méthode clone ont été ajoutées et/ou modifiées afin de mieux encapsuler les différents éléments et empêcher toute modification de l'exterieur.
+Les test unitaires ont été renforcés.
+La classe plusCC a été ajoutée et l'algorithme de Dijktra a été implémenté.
+
+Remarque : 
+- La méthode firstSommet de EnsembleSommet est un peu crade donc est à modifier dès que possible.
+- Essayer de voir si on peut trouver une manière de réexploiter facilement des Algorithme/Méthodes (exemple : ne pas avoir à écrire tout RoyWarshall lors de la fermeture anti-Transitive) afin de rendre le projet plus facilement maléable.
+- Implémenter une méthode union pour les Ensemble et réussir à l'ajouter à l'interface sans poser de problèmes pour les Graphes
+
+Prochaine étape : Résoudre les problèmes posés en remarque ou continuer à implémenter des algorithmes tout en modifiant les autre classes si besoin.

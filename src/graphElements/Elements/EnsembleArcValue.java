@@ -26,6 +26,7 @@ public class EnsembleArcValue<S> extends AbstractEnsembleArc<S,ArcValue<S>> impl
 			if(AV.getDepart()==depart&&AV.getArrivee()==arrivee)
 			{
 				absent=false;
+				break;
 			}
 		}
 		if(absent)
@@ -35,19 +36,78 @@ public class EnsembleArcValue<S> extends AbstractEnsembleArc<S,ArcValue<S>> impl
 	}
 	
 	
-	@Override
+	/*@Override
 	public boolean getCout(Sommet<S> depart, Sommet<S> arrivee,Cout result)
 	{
 		boolean succes=false;
 		for(ArcValue<S> arcV : this)
 		{
-			if (arcV.getDepart()==depart && arcV.getArrivee()==arrivee)
+			if (arcV.getDepart().equals(depart) && arcV.getArrivee().equals(arrivee))
 			{
-				result.setValeur(arcV.getCout().getValeur());
+				result.setValeur(arcV.getValeur());
+				succes=true;
+				break;
+			}
+		}
+		return succes;
+	}*/
+	
+	//getCout version2
+	@Override
+	public Cout getCout(Sommet<S> depart, Sommet<S> arrivee)
+	{
+		Cout cout=null;
+		for(ArcValue<S> arcV : this)
+		{
+			if (arcV.getDepart().equals(depart) && arcV.getArrivee().equals(arrivee))
+			{
+				cout=arcV.getCout();
+				break;
+			}
+		}
+		return cout;
+	}
+	
+	@Override
+	public boolean setCout(Sommet<S> depart, Sommet<S> arrivee,Cout cout)
+	{
+		boolean succes=false;
+		for(ArcValue<S> arcV : this)
+		{
+			if (arcV.getDepart().equals(depart) && arcV.getArrivee().equals(arrivee))
+			{
+				arcV.setValeur(cout.getValeur());
 				succes=true;
 				break;
 			}
 		}
 		return succes;
 	}
+	
+	@Override
+	public EnsembleArcValue<S> clone ()
+	{
+		EnsembleArcValue<S> Clone=new EnsembleArcValue<S>();
+		for(ArcValue<S> arc : this)
+		{
+			Clone.ajouteArc(arc.clone());
+		}
+		return Clone;
+	}
+	
+	
+	
+	/*
+	public Cout getCout(Sommet<S> depart, Sommet<S> arrivee)
+	{
+		assert (this.existeArc(depart, arrivee));
+		for(ArcValue<S> arcV : this)
+		{
+			if (arcV.getDepart()==depart && arcV.getArrivee()==arrivee)
+			{
+				return arcV.getCout();
+			}
+		}
+		throw new Exception();
+	}*/
 }

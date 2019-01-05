@@ -7,8 +7,14 @@ public class Arc<S>
 	
 	public Arc(Sommet<S> dep, Sommet<S> arr)
 	{
-		setDepart(dep);
-		setArrivee(arr);
+		setDepart(dep.clone());
+		setArrivee(arr.clone());
+	}
+	
+	public Arc(Arc<S> arc)
+	{
+		setDepart(arc.getDepart());
+		setArrivee(arc.getArrivee());
 	}
 	
 	@Override
@@ -21,19 +27,19 @@ public class Arc<S>
 	
 	public Sommet<S> getDepart() 
 	{
-		return depart;
+		return depart.clone();
 	}
 	public Sommet<S> getArrivee() 
 	{
-		return arrivee;
+		return arrivee.clone();
 	}
 	public void setDepart(Sommet<S> depart) 
 	{
-		this.depart = depart;
+		this.depart = depart.clone();
 	}
 	public void setArrivee(Sommet<S> arrivee) 
 	{
-		this.arrivee = arrivee;
+		this.arrivee = arrivee.clone();
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -57,6 +63,12 @@ public class Arc<S>
 			}
 		}
 		return callback;
+	}
+	
+	@Override
+	public Arc<S> clone()
+	{
+		return new Arc<S>(this);
 	}
 	
 	@Override

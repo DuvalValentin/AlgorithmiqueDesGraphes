@@ -2,7 +2,7 @@ package graphElements.Interfaces;
 
 import graphElements.Elements.Cout;
 
-public interface InterfaceArcValue<S> extends InterfaceArc<S>
+public interface InterfaceArcValue<S> extends InterfaceArc<S>, InterfaceCout
 {
 	Cout getCout();
 }

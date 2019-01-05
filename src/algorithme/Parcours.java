@@ -7,7 +7,7 @@ import graphElements.Elements.*;
 
 public class Parcours
 {
-	public static <S> void DFS (Graphe<S> G, Sommet<S> x)
+	public static <S,A extends Arc<S>> void DFS (Graphe<S> G, Sommet<S> x)
 	{
 		EnsembleArc<S> V; //Ensemble des arcs visités
 		EnsembleSommet<S> D;//Ensemble des sommets non visités
@@ -21,7 +21,7 @@ public class Parcours
 		//Init
 		D=new EnsembleSommet<S>(G.getX());
 		D.remove(x);
-		V=new EnsembleArc<S>();
+		V=new EnsembleArc<S>();//A changer pour pouvoir utiliser AbstractGraphe
 		X=G.listSucc(x);
 		if (X.isEmpty())
 		{
@@ -40,7 +40,7 @@ public class Parcours
 			if(!Y.isEmpty())
 			{
 				z=Y.firstSommet();
-				Arc<S> arc =new Arc<S>(y,z);
+				Arc<S> arc =new Arc<S>(y,z);//A changer pour pouvoir utiliser AbstractGraphe
 				Gavisiter.supprArc(arc);
 				V.add(arc);
 				if (D.contains(z))

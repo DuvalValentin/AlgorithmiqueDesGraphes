@@ -7,8 +7,8 @@ public class FermetureTransitive
 	private static <S> Graphe<S> Composition (Graphe<S> G1,Graphe<S> G2)
 	{
 		EnsembleSommet<S>X=G1.getX();
-		EnsembleArc<S>Gamma1=(EnsembleArc<S>) G1.getGamma();//TODO cast bizzare
-		EnsembleArc<S>Gamma2=(EnsembleArc<S>) G2.getGamma();//TODO cast bizzare
+		EnsembleArc<S>Gamma1=G1.getGamma();
+		EnsembleArc<S>Gamma2=G2.getGamma();
 		Graphe<S> G3 = new Graphe<S>(X,new EnsembleArc<S>());
 		for(Sommet<S> x : X)
 		{
@@ -72,16 +72,18 @@ public class FermetureTransitive
 	{
 		EnsembleSommet<S>X=G.getX();
 		GrapheValue<S> RW=new GrapheValue<S>(G);
-	  Cout Cxz=new Cout(), Czy=new Cout(), Cxy=new Cout();
+	  Cout Cxz,Czy,Cxy;
 		for(Sommet<S> z : X) 
 		{
 			for(Sommet<S> x : X)
 			{
-				if(RW.getCout(x,z,Cxz))//Si getValue rend faux c'est que l'arc x,z n'existe pas, 
+				Cxz=RW.getCout(x,z);
+				if(Cxz!=null)//Si getValue rend faux c'est que l'arc x,z n'existe pas, 
 				{
 					for(Sommet<S> y : X)
 					{
-						if(RW.getCout(z,y,Czy))
+						Czy=RW.getCout(z,y);
+						if(Czy!=null)
 						{
 							Cxy=Cout.somme(Cxz, Czy);
 							RW.ajouteArc(x, y, Cxy);
@@ -92,4 +94,6 @@ public class FermetureTransitive
 		}
 		return RW;
 	}
+	
+	//TODO Roy-Warshall avec routage
 }

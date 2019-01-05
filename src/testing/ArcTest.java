@@ -67,4 +67,13 @@ public class ArcTest
 	{
 		assertSame("Test du HashCode",13,arcTest.hashCode());
 	}
+	
+	@Test
+	public void testClone()
+	{
+		Arc<Integer> arcClone = arcTest.clone();
+		assertEquals("Clone ne marche pas",arcTest,arcClone);
+		arcClone.setArrivee(new Sommet<Integer>(9));
+		assertNotEquals("Modifier le clone modifie l'original",arcTest,arcClone);
+	}
 }
