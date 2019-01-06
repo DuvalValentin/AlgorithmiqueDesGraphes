@@ -46,23 +46,23 @@ public class Arc<S>
 	@Override
 	public boolean equals(Object obj)
 	{
-		boolean callback;
+		boolean result;
 		if(obj.getClass()!=getClass())
 		{
-			callback=false;
+			result=false;
 		}
 		else
 		{
 			if(((Arc<S>)obj).getDepart().equals(getDepart())&&((Arc<S>)obj).getArrivee().equals(getArrivee()))
 			{
-				callback=true;
+				result=true;
 			}
 			else
 			{
-				callback=false;
+				result=false;
 			}
 		}
-		return callback;
+		return result;
 	}
 	
 	@Override

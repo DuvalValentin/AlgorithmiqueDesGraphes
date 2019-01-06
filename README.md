@@ -1,5 +1,5 @@
 # AlgorithmiqueDesGraphes
-Version 0.6.2
+Version 0.8
 Le but de ces packages est de disposer d'un ensemble d'outils facile à utiliser permettant de manipuler des Graphes.
 L'objectif final étant de pouvoir effectuer un maximum  d'algorithmes sur les graphes.
 
@@ -71,9 +71,15 @@ Plusieurs méthode clone ont été ajoutées et/ou modifiées afin de mieux enca
 Les test unitaires ont été renforcés.
 La classe plusCC a été ajoutée et l'algorithme de Dijktra a été implémenté.
 
+V 0.8
+
+La classe TableauPlusCC a été ajoutées (elle contient les tableaux d et pred necessaires au calcul du plus court chemin).
+Les algorithmes de plus court chemin ont été implémentés (il ne reste plus que Ford).
+Tous les algorithmes du cours (hors feuille annexe) ont été ajoutés.
+
 Remarque : 
 - La méthode firstSommet de EnsembleSommet est un peu crade donc est à modifier dès que possible.
 - Essayer de voir si on peut trouver une manière de réexploiter facilement des Algorithme/Méthodes (exemple : ne pas avoir à écrire tout RoyWarshall lors de la fermeture anti-Transitive) afin de rendre le projet plus facilement maléable.
-- Implémenter une méthode union pour les Ensemble et réussir à l'ajouter à l'interface sans poser de problèmes pour les Graphes
+- Implémenter une méthode union pour les Ensemble et réussir à l'ajouter à l'interface sans poser de problèmes pour les Graphes.
 
-Prochaine étape : Résoudre les problèmes posés en remarque ou continuer à implémenter des algorithmes tout en modifiant les autre classes si besoin.
+Prochaine étape : Faire une mise à jour des différents ensembles pour qu'ils contiennent un objet de type HashSet plutôt que d'être des descendant de hashSet (pour une meilleure encapsulation).
