@@ -6,23 +6,45 @@ import graphElements.Interfaces.InterfaceCout;
 
 public class Cout implements InterfaceCout
 {
+	//Valeur
 	private float valeur;
-	
+	//Constructeur
 	public Cout()
 	{
 		valeur=0;
 	}
-	
 	public Cout(float valeur)
 	{
 		setValeur(valeur);
 	}
-	
 	public Cout(Cout cout)
 	{
 		setValeur(cout.getValeur());
 	}
-	
+	//Getter
+	@Override
+	public float getValeur()
+	{
+		return valeur;
+	}
+	//Setter
+	@Override
+	public void setValeur(float valeur)
+	{
+		this.valeur = valeur;
+	}
+	//Somme de deux couts
+	public static Cout somme(Cout c1, Cout c2)
+	{
+		float somme=c1.getValeur()+c2.getValeur();
+		return new Cout(somme);
+	}
+	//toString/equals/hashCode
+	@Override
+	public String toString()
+	{
+		return ""+valeur;
+	}
 	@Override
 	public boolean equals(Object obj)
 	{
@@ -44,30 +66,9 @@ public class Cout implements InterfaceCout
 		}
 		return callback;
 	}
-	@Override 
-	public Cout clone()
-	{
-		return new Cout(this);
-	}
-	
 	@Override
-	public float getValeur()
+	public int hashCode()
 	{
-		return valeur;
-	}
-	@Override
-	public void setValeur(float valeur)
-	{
-		this.valeur = valeur;
-	}
-	
-	public static Cout somme(Cout c1, Cout c2)
-	{
-		float somme=c1.getValeur()+c2.getValeur();
-		return new Cout(somme);
-	}
-	public String toString()
-	{
-		return ""+valeur;
+		return (int)valeur;
 	}
 }

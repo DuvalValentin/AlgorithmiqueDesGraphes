@@ -1,63 +1,29 @@
 package graphElements.Elements;
 
+import java.util.HashSet;
 import graphElements.Abstract.AbstractEnsembleArc;
-import graphElements.Abstract.AbstractEnsemble;
 import graphElements.Interfaces.InterfaceEnsembleArcValue;
 
 public class EnsembleArcValue<S> extends AbstractEnsembleArc<S,ArcValue<S>> implements InterfaceEnsembleArcValue<S> 
 {
-	private static final long serialVersionUID = -7163498825360866323L;
-	
-	public EnsembleArcValue(AbstractEnsemble<ArcValue<S>> ensemble)
+	//Constructeur
+	public EnsembleArcValue(EnsembleArcValue<S> Ensemble)
 	{
-		super(ensemble);
+		for (ArcValue<S> arc : Ensemble.ensemble)
+		{
+			ajouteArc(new ArcValue<S>(arc));
+		}
 	}
 	public EnsembleArcValue()
 	{
 		super();
 	}
-	
-	@Override
-	public void ajouteArc(Sommet<S> depart,Sommet<S>arrivee,Cout value)
-	{
-		boolean absent=true;
-		for(ArcValue<S> AV : this)
-		{
-			if(AV.getDepart()==depart&&AV.getArrivee()==arrivee)
-			{
-				absent=false;
-				break;
-			}
-		}
-		if(absent)
-		{
-			add(new ArcValue<S>(depart,arrivee,value));
-		}
-	}
-	
-	
-	/*@Override
-	public boolean getCout(Sommet<S> depart, Sommet<S> arrivee,Cout result)
-	{
-		boolean succes=false;
-		for(ArcValue<S> arcV : this)
-		{
-			if (arcV.getDepart().equals(depart) && arcV.getArrivee().equals(arrivee))
-			{
-				result.setValeur(arcV.getValeur());
-				succes=true;
-				break;
-			}
-		}
-		return succes;
-	}*/
-	
-	//getCout version2
+	//getter
 	@Override
 	public Cout getCout(Sommet<S> depart, Sommet<S> arrivee)
 	{
 		Cout cout=null;
-		for(ArcValue<S> arcV : this)
+		for(ArcValue<S> arcV : ensemble)
 		{
 			if (arcV.getDepart().equals(depart) && arcV.getArrivee().equals(arrivee))
 			{
@@ -67,14 +33,15 @@ public class EnsembleArcValue<S> extends AbstractEnsembleArc<S,ArcValue<S>> impl
 		}
 		return cout;
 	}
-	
+	//setter
 	@Override
-	public boolean setCout(Sommet<S> depart, Sommet<S> arrivee,Cout cout)
+	public boolean setValeur(Sommet<S> depart, Sommet<S> arrivee,Cout cout)
 	{
 		boolean succes=false;
-		for(ArcValue<S> arcV : this)
+		ArcValue<S> arcS=new ArcValue<S>(depart,arrivee,cout);
+		for(ArcValue<S> arcV : ensemble)
 		{
-			if (arcV.getDepart().equals(depart) && arcV.getArrivee().equals(arrivee))
+			if (arcV.memeArc(arcS))
 			{
 				arcV.setValeur(cout.getValeur());
 				succes=true;
@@ -83,31 +50,42 @@ public class EnsembleArcValue<S> extends AbstractEnsembleArc<S,ArcValue<S>> impl
 		}
 		return succes;
 	}
-	
+	//ajout et suppression d'élément
 	@Override
-	public EnsembleArcValue<S> clone ()
+	public void ajouteArc(ArcValue<S> arc)
 	{
-		EnsembleArcValue<S> Clone=new EnsembleArcValue<S>();
-		for(ArcValue<S> arc : this)
-		{
-			Clone.ajouteArc(arc.clone());
-		}
-		return Clone;
+		super.ajouteArc(new ArcValue<S>(arc));
 	}
-	
-	
-	
-	/*
-	public Cout getCout(Sommet<S> depart, Sommet<S> arrivee)
+	@Override
+	public void ajouteArc(Sommet<S> depart,Sommet<S>arrivee,Cout value)
 	{
-		assert (this.existeArc(depart, arrivee));
-		for(ArcValue<S> arcV : this)
+		boolean absent=true;
+		for(ArcValue<S> AV : ensemble)
 		{
-			if (arcV.getDepart()==depart && arcV.getArrivee()==arrivee)
+			if(AV.getDepart()==depart&&AV.getArrivee()==arrivee)
 			{
-				return arcV.getCout();
+				absent=false;
+				break;
 			}
 		}
-		throw new Exception();
-	}*/
+		if(absent)
+		{
+			ajouteArc(new ArcValue<S>(depart,arrivee,value));
+		}
+	}
+	@Override
+	public void supprArc(Sommet<S>depart,Sommet<S>arrivee)
+	{
+		Cout cout=getCout(depart,arrivee);
+		if(cout!=null)
+		{
+			ArcValue<S> suppr=new ArcValue<S>(depart,arrivee,cout);
+			supprArc(suppr);
+		}
+	}
+	@Override
+	public HashSet<ArcValue<S>> getEnsemble()
+	{
+		return new HashSet<ArcValue<S>>(ensemble);
+	}
 }

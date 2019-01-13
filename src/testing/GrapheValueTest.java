@@ -72,6 +72,8 @@ public class GrapheValueTest
 		assertEquals("Test des constructeurs avec et sans paramètres",GV,GV1);
 		assertEquals("Test du constructeur avec un graphe en paramètre",GV,GV2);
 		assertNotSame("On vérifie que les deux objets sont différents",GV,GV2);
+		GV2.setValeur(s1, s2, c5);
+		assertNotEquals("Modifier le clone modifie l'original",GV,GV2);
 	}
 
 	@Test
@@ -103,16 +105,9 @@ public class GrapheValueTest
 	}
 
 	@Test
-	public void testSetCout()
+	public void testSetValeur()
 	{
-		GV.setCout(s1, s2, c9);
-		Cout cout1=GV.getCout(s1, s2);
-		assertEquals("Le cout n'a pas été modifié",c9,cout1);
-		Cout cout2=GV2.getCout(s1, s2);
-		assertEquals("Les deux graphes ne sont plus égaux",GV,GV2);
-		assertNotEquals("Modifier le cout modifie le graphe avec un graphe en entrée",cout1,cout2);
-		GV2.supprArc(s1,s2);
-		assertNotEquals("L'arc est enlevé dans les deux graphes",GV,GV2);
+		GV.setValeur(s1, s2, c9);
+		assertEquals("Le cout n'a pas été modifié",c9,GV.getCout(s1,s2));
 	}
-
 }

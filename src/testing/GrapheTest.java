@@ -57,33 +57,6 @@ public class GrapheTest
 	}
 	
 	@Test
-	public void testCloneEquals()
-	{
-		Graphe<Integer> Clone =G.clone();
-		assertEquals("Test du clonage même variable à l'interieur",Clone,G);
-		assertNotSame("Test du clonage différent pointeur",Clone,G);
-	}
-	/* commenté tant que les setters sont privés
-	@Test
-	public void testSetX()
-	{
-		EnsembleSommet<Integer> xSet=new EnsembleSommet<Integer>();
-		xSet.ajouteSommet(s1);xSet.ajouteSommet(s2);xSet.ajouteSommet(s3);
-		G.setX(xSet);
-		assertEquals("Test de setX",xSet,G.getX());
-	}
-	
-	@Test
-	public void testSetGamma()
-	{
-		EnsembleArc<Integer> gammaSet=new EnsembleArc<Integer>();
-		gammaSet.ajouteArc(a12);gammaSet.ajouteArc(a44);gammaSet.ajouteArc(a32);
-		G.setGamma(gammaSet);
-		assertEquals("Test de setX",gammaSet,G.getGamma());
-	}
-	*/
-	
-	@Test
 	public void testGetters()
 	{
 		assertEquals("Test du getX",X,G.getX());
@@ -96,8 +69,8 @@ public class GrapheTest
 	public void testExistSommet()
 	{
 		Sommet<Integer> es=new Sommet<Integer>(100);
-		assertTrue("Test de existSommet pour un sommet existant",G.existSommet(s1));
-		assertFalse("Test de existSommet pour un sommet non existant",G.existSommet(es));
+		assertTrue("Test de existSommet pour un sommet existant",G.existeSommet(s1));
+		assertFalse("Test de existSommet pour un sommet non existant",G.existeSommet(es));
 	}
 	
 	@Test
@@ -132,15 +105,15 @@ public class GrapheTest
 	{
 		Sommet<Integer> s5 = new Sommet<Integer>(5);
 		G.ajouteSommet(s5);
-		assertTrue("Test du ajouteSommet sur un graphe",G.existSommet(s5));
+		assertTrue("Test du ajouteSommet sur un graphe",G.existeSommet(s5));
 	}
 	
 	@Test 
 	public void testSupprSommet()
 	{
 		G.supprSommet(s2);
-		assertFalse("Test de la suppression de sommet de suprrSommet",G.getX().contains(s2));
-		assertFalse("Test de la suppression des arcs liés au sommet de suprrSommet",G.getGamma().contains(a12)||G.getGamma().contains(a23)||G.getGamma().contains(a32));
+		assertFalse("Test de la suppression de sommet de suprrSommet",G.existeSommet(s2));
+		assertFalse("Test de la suppression des arcs liés au sommet de suprrSommet",G.existeArc(a12)||G.existeArc(a23)||G.existeArc(a32));
 	}
 	
 	@Test
@@ -201,20 +174,20 @@ public class GrapheTest
 	public void encapsulation()
 	{
 		//Graphe<Integer> Gbis=new Graphe<Integer>(G);
-		X.remove(s3);
+		X.supprSommet(s3);
 		assertNotEquals("On modifie le X ayant initialisé G", X, G.getX());
-		Gamma.remove(a32);
+		Gamma.supprArc(a32);
 		assertNotEquals("On modifie le Gamma ayant initialisé G",Gamma,G.getGamma());
 		EnsembleSommet<Integer> Xg =G.getX();
-		Xg.remove(s3);
+		Xg.supprSommet(s3);
 		assertNotEquals("On modifie l'ensemble donné par getX",Xg,G.getX());
 		EnsembleArc<Integer> Gammag = G.getGamma();
-		Gammag.remove(a23);
+		Gammag.supprArc(a32);
 		assertNotEquals("On modifie l'ensemble donné par getGamma",Gammag,G.getGamma());
 		s4=new Sommet<Integer>(6);
-		assertFalse("On modifie un des sommets par l'exterieur",G.existSommet(s4));
+		assertFalse("On modifie un des sommets par l'exterieur",G.existeSommet(s4));
 		s3.setId(9);
-		assertFalse("On modifie un des sommets par l'exterieur",G.existSommet(s3));
+		assertFalse("On modifie un des sommets par l'exterieur",G.existeSommet(s3));
 		Graphe<Integer>G2=new Graphe<Integer>(G);
 		G2.supprArc(a12);
 		assertNotEquals("On modifie le graphe créé à partir de G",G,G2);

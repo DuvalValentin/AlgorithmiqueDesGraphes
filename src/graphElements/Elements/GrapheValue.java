@@ -5,6 +5,7 @@ import graphElements.Interfaces.*;
 
 public class GrapheValue<S> extends AbstractGraphe<S,ArcValue<S>> implements InterfaceGrapheValue<S>
 {
+	//Constructeur
 	public GrapheValue()
 	{
 		super();
@@ -18,44 +19,27 @@ public class GrapheValue<S> extends AbstractGraphe<S,ArcValue<S>> implements Int
 	{
 		super(G);
 	}
-	
+	//Getters
 	@Override
 	public EnsembleArcValue<S> getGamma()
 	{
-		return (EnsembleArcValue<S>)super.getGamma();
+		return new EnsembleArcValue<S>((EnsembleArcValue<S>)super.getGamma());
 	}
-	
-	/*@Override
-	public boolean getCout(Sommet<S> depart, Sommet<S> arrivee,Cout cout)
-	{
-		return ((EnsembleArcValue<S>)Gamma).getCout(depart,arrivee,cout);
-	}*/
-	
 	@Override
 	public Cout getCout(Sommet<S> depart, Sommet<S> arrivee)
 	{
 		return ((EnsembleArcValue<S>)Gamma).getCout(depart,arrivee);
 	}
-	
+	//Setter
+	@Override
+	public boolean setValeur(Sommet<S> depart, Sommet<S> arrivee, Cout cout)
+	{
+		return ((EnsembleArcValue<S>)Gamma).setValeur(depart,arrivee,cout);
+	}
+	//Ajout d'éléments
 	@Override
 	public void ajouteArc(Sommet<S> depart, Sommet<S> arrivee,Cout cout)
 	{
 		ajouteArc(new ArcValue<S>(depart,arrivee,cout));
-	}
-	
-	//@Override
-	public void supprArc(Sommet<S>depart,Sommet<S>arrivee)
-	{
-		Cout cout=getCout(depart,arrivee);
-		if(cout!=null)
-		{
-			ArcValue<S> suppr=new ArcValue<S>(depart,arrivee,cout);
-			supprArc(suppr);
-		}
-	}
-	@Override
-	public boolean setCout(Sommet<S> depart, Sommet<S> arrivee, Cout cout)
-	{
-		return ((EnsembleArcValue<S>)Gamma).setCout(depart,arrivee,cout);
 	}
 }

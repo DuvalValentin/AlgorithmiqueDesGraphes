@@ -1,0 +1,7 @@
+Ordre des méthodes au sein d'une classe : 
+-Constructeurs
+-Setter/Getters
+-Tests d'existence
+-Tests de vérification (ajoutable/correctGamma)
+-Modifications (ajout/suppression)
+-toString/equals/hashCode

@@ -25,6 +25,16 @@ public class ArcValueTest
 	}
 
 	@Test
+	public void testConstructeurClone()
+	{
+		ArcValue<Integer> arcValueClone =new ArcValue<Integer>(arcValueTest);
+		assertEquals("Le constructeur clone",arcValueTest,arcValueClone);
+		assertNotSame("Le constructeur clone créé un objet identique",arcValueTest,arcValueClone);
+		arcValueClone.setValeur(0);
+		assertNotEquals("Modifier le clone modifie l'original",arcValueTest,arcValueClone);
+	}
+	
+	@Test
 	public void testGetCout()
 	{
 		assertEquals("Test du getCout",cout,arcValueTest.getCout());
@@ -42,17 +52,14 @@ public class ArcValueTest
 		arcValueTest.setValeur(9);
 		assertTrue("Test du setValeur",9==arcValueTest.getValeur());
 	}
-	
 	@Test
-	public void testClone()
+	public void testMemeArc()
 	{
-		ArcValue<Integer> arcValueClone = arcValueTest.clone();
-		assertEquals("Clone ne marche pas",arcValueTest,arcValueClone);
-		assertNotSame("Le clone a le même cout",arcValueTest.getCout(),arcValueClone.getCout());
-		arcValueClone.setValeur(0);
-		assertNotEquals("Modifier le clone modifie l'original",arcValueTest.getCout(),arcValueClone.getCout());
+		Sommet<Integer> wrongSommet= new Sommet<Integer>(6);
+		Cout wrongCout = new Cout(10);
+		ArcValue<Integer> memeArc = new ArcValue<Integer>(depart,arrivee,wrongCout);
+		ArcValue<Integer> wrongArc = new ArcValue<Integer>(depart,wrongSommet,cout);
+		assertTrue("MemeArc pour deux arcs avec seulement le cout différent",arcValueTest.memeArc(memeArc));
+		assertFalse("MemeArc pour deux arcs avec seulement l'arrivée differente",arcValueTest.memeArc(wrongArc));
 	}
-	
-	
-
 }

@@ -16,6 +16,16 @@ public class SommetTest
 		sommetTest= new Sommet<Integer>(value);
 	}
 	
+	@Test
+	public void testConstructorClone()
+	{
+		Sommet<Integer> sommetClone=new Sommet<Integer>(sommetTest);
+		assertEquals("Le constructeur clone",sommetTest,sommetClone);
+		assertNotSame("Le constructeur clone créé un objet identique",sommetTest,sommetClone);
+		sommetClone.setId(7);
+		assertNotEquals("Modifier le clone modifie l'original",sommetTest,sommetClone);
+	}
+	
 	@Test 
 	public void testEquals()
 	{
@@ -43,14 +53,5 @@ public class SommetTest
 	public void testHashCode()
 	{
 		assertSame("HashCode",5,sommetTest.hashCode());
-	}
-	
-	@Test 
-	public void testClone()
-	{
-		Sommet<Integer> sommetClone = sommetTest.clone();
-		assertEquals("Clone ne fonctionne pas",sommetTest,sommetClone);
-		sommetClone.setId(9);
-		assertNotEquals("modifier le clone modifie l'original",sommetTest,sommetClone);
 	}
 }

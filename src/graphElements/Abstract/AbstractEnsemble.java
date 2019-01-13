@@ -1,29 +1,46 @@
 package graphElements.Abstract;
 
 import java.util.HashSet;
-public abstract class AbstractEnsemble<E> extends HashSet<E> //possibilité de le passer en abstract
-{
-	private static final long serialVersionUID = -4354387895748449845L;
 
+import graphElements.Interfaces.InterfaceAbstractEnsemble;
+public abstract class AbstractEnsemble<E> implements InterfaceAbstractEnsemble<E>
+{
+	//L'ensemble encapsulé
+	protected HashSet<E> ensemble;
+	//Constructeur
 	public AbstractEnsemble ()
 	{
-		super();
+		ensemble=new HashSet<E>();
 	}
-	public AbstractEnsemble (AbstractEnsemble<E> ensemble)
+	@Override
+	public boolean isEmpty()
 	{
-		for (E e : ensemble)
-		{
-			add(e);
-		}
+		return ensemble.isEmpty();
 	}
-	
+	@Override
+	public void clear()
+	{
+		ensemble.clear();
+	}
+	/*
+	public void intersection(AbstractEnsemble<E> Ensemble)
+	{
+		//TODO problème ici on ne peut pas changer un ensemble sur lequel on applique un for
+		for(E element : ensemble)
+		{
+			if(!Ensemble.ensemble.contains(element))
+			{
+				ensemble.remove(element);
+			}
+		}
+	}*/
 	@Override
 	public String toString()
 	{
 		StringBuffer str=new StringBuffer("{");
-		if(!isEmpty())
+		if(!ensemble.isEmpty())
 		{
-			for(E e: this)
+			for(E e: ensemble)
 			{
 				str=str.append(e.toString()+",");
 			}
@@ -36,19 +53,23 @@ public abstract class AbstractEnsemble<E> extends HashSet<E> //possibilité de l
 		
 		return str.toString();
 	}
-	
 	@SuppressWarnings("unchecked")
 	@Override
-	public AbstractEnsemble<E> clone()
+	public boolean equals(Object obj)
 	{
-		return (AbstractEnsemble<E>)super.clone();
-	}
-	
-	public void union(AbstractEnsemble<E> ensemble)
-	{
-		for(E element : ensemble)
+		boolean result=false;
+		if(obj!=null)
 		{
-			add(element);
+			if(obj.getClass()==getClass())
+			{
+
+				if(((AbstractEnsemble<E>)obj).ensemble.equals(ensemble))
+				{
+					result=true;
+				}
+			}
+
 		}
+		return result;
 	}
 }

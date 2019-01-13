@@ -39,7 +39,7 @@ public class DetectionCircuitTest
 		Gline=new Graphe<Integer>();
 		Gline.ajouteSommet(s1);Gline.ajouteSommet(s2);Gline.ajouteSommet(s3);Gline.ajouteSommet(s4);
 		Gline.ajouteArc(a12);Gline.ajouteArc(a23);Gline.ajouteArc(a34);
-		Gcirc=Gline.clone();
+		Gcirc=new Graphe<Integer>(Gline);
 		Gcirc.ajouteArc(a32);
 	}
 

@@ -40,7 +40,7 @@ public class ExempleUtilisation
 		//Opération élémentaires
 		G.getX();//Obtenir l'ensemble de sommet du graphe
 		G.getGamma();//Obtenir l'ensemble d'arc du graphe
-		G.existSommet(s4);//Savoir si le sommet est présent dans le graphe
+		G.existeSommet(s4);//Savoir si le sommet est présent dans le graphe
 		G.existeArc(a32);//Savoir si l'arc est présent dans le graphe
 		G.listPred(s2);//Obtenir une liste de prédécesseurs d'un sommet
 		G.listSucc(s3);//Obtenir une liste des successeurs d'un sommet
@@ -48,7 +48,7 @@ public class ExempleUtilisation
 		G.existeBoucle(s3);//Savoir si le existe une boucle au niveau d'un sommet (ATTENTION ici on ne tient pas compte de la fermeture transitive)
 		
 		//Appels aux algorithmes
-		Parcours.DFS(G,s1);//Juste un parcours du graphe (ne fait absolument rien)
+		Parcours.DFS(G);//Juste un parcours du graphe (ne fait absolument rien)
 		Parcours.WFS(G,s1);//Pareil	
 		System.out.println();
 		//System.out.println("Le graphe composé de G (arcs en deux temps) : "+FermetureTransitive.Composition(G, G));//En commentaire tant que composition est privé

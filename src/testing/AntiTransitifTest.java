@@ -42,7 +42,7 @@ public class AntiTransitifTest
 		Gres=new Graphe<Integer>();
 		Gres.ajouteSommet(s1);Gres.ajouteSommet(s2);Gres.ajouteSommet(s3);Gres.ajouteSommet(s4);
 		Gres.ajouteArc(a12);Gres.ajouteArc(a23);Gres.ajouteArc(a34);
-		Gini=Gres.clone();
+		Gini=new Graphe<Integer>(Gres);
 		Gini.ajouteArc(a13);Gini.ajouteArc(a14);Gini.ajouteArc(a24);
 	}
 

@@ -16,13 +16,14 @@ public class CoutTest
 	{
 		coutTest=new Cout(5);
 	}
-
+	
 	@Test
-	public void testClone()
+	public void testConstructeurClone()
 	{
-		Cout coutClone=coutTest.clone();
-		assertEquals("Clone ne marche pas",coutTest,coutClone);
-		coutClone.setValeur(3);
+		Cout coutClone = new Cout(coutTest);
+		assertEquals("Le constructeur clone",coutTest,coutClone);
+		assertNotSame("Le constructeur clone créé un objet identique",coutTest,coutClone);
+		coutClone.setValeur(9);
 		assertNotEquals("Modifier le clone modifie l'original",coutTest,coutClone);
 	}
 

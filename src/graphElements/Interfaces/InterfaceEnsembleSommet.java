@@ -2,13 +2,14 @@ package graphElements.Interfaces;
 
 import graphElements.Elements.Sommet;
 
-public interface InterfaceEnsembleSommet<S> extends InterfaceAbstractEnsemble
+public interface InterfaceEnsembleSommet<S> 
 {
 	//Obtenir un sommet
-	Sommet<S> firstSommet();
+	Sommet<S> firstSommet();//Rend une copie du "premier" sommet de l'ensemble
 	//Test d'existence d'un sommet
-	boolean existSommet(Sommet<S> sommet);
+	//Un sommet A existe si il y a un sommet B dans l'ensemble tel que A equals B
+	boolean existeSommet(Sommet<S> sommet);//Rend true si le sommet existe
 	//Ajout et suppression de sommet
-	void ajouteSommet(Sommet<S> sommet);
-	void supprSommet(Sommet<S> sommet);
+	void ajouteSommet(Sommet<S> sommet);//Ajoute le sommet si il n'existe pas
+	void supprSommet(Sommet<S> sommet);//Supprime le sommet si il existe
 }

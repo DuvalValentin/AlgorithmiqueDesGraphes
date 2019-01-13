@@ -1,8 +1,9 @@
 package graphElements.Interfaces;
 
-public interface InterfaceSommet<S> extends Cloneable
+public interface InterfaceSommet<S>
 {
+	//Un sommet contient un attribut id GÉNÉRIQUE
 	//Getter et Setters
-	S getId();
-	void setId(S id);
+	S getId();//Renvoie une copie de id
+	void setId(S id);//Change id
 }

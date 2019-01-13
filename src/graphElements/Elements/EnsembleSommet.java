@@ -1,5 +1,7 @@
 package graphElements.Elements;
 
+import java.util.HashSet;
+
 import graphElements.Abstract.AbstractEnsemble;
 import graphElements.Interfaces.InterfaceEnsembleSommet;
 
@@ -9,51 +11,61 @@ public class EnsembleSommet<S> extends AbstractEnsemble<Sommet<S>> implements In
 	{
 		super();
 	}
-	public EnsembleSommet(EnsembleSommet<S> ensemble)
+	public EnsembleSommet(EnsembleSommet<S> Ensemble)
 	{
-		for (Sommet<S> sommet : ensemble)
+		for (Sommet<S> sommet : Ensemble.ensemble)
 		{
-			ajouteSommet(sommet.clone());
+			ajouteSommet(new Sommet<S>(sommet));
 		}
-	}
-	
-	private static final long serialVersionUID = 7278825382690341067L;
-	
-	@Override
-	public EnsembleSommet<S> clone ()
-	{
-		return (EnsembleSommet<S>)super.clone();
 	}
 	
 	@Override
 	public Sommet<S> firstSommet()
 	{
+		//TODO à améliorer si possible
 		@SuppressWarnings("unchecked")
-		Sommet<S>[] tab=new Sommet[size()]; 
-		return toArray(tab)[0];
+		Sommet<S>[] tab=new Sommet[ensemble.size()]; 
+		return ensemble.toArray(tab)[0];
 	}
 	
 	@Override
-	public boolean existSommet (Sommet<S> sommet)
+	public boolean existeSommet (Sommet<S> sommet)
 	{
-		return contains(sommet);
+		return ensemble.contains(sommet);
 	}
 	@Override
 	public void ajouteSommet(Sommet<S> sommet)
 	{
-		add(sommet.clone());
+		ensemble.add(new Sommet<S>(sommet));
 	}
 	@Override
 	public void supprSommet(Sommet<S> sommet)
 	{
-		remove(sommet);
+		ensemble.remove(sommet);
 	}
-	//TODO ajouter méthode dans une interface
-	public void union(EnsembleSommet<S> ensemble)
+
+	@Override
+	public HashSet<Sommet<S>> getEnsemble()
+	{
+		return new HashSet<Sommet<S>>(ensemble);
+	}
+	@Override
+	public void union(AbstractEnsemble<Sommet<S>> Ensemble)
+	{
+		for(Sommet<S> sommet : Ensemble.getEnsemble())
+		{
+			ajouteSommet(sommet);
+		}
+	}
+	@Override
+	public void intersection(AbstractEnsemble<Sommet<S>> Ensemble)
 	{
 		for(Sommet<S> sommet : ensemble)
 		{
-			ajouteSommet(sommet);
+			if(!Ensemble.getEnsemble().contains(sommet))//TODO on veut faire un existeSommet ici
+			{
+				this.supprSommet(sommet);
+			}
 		}
 	}
 }

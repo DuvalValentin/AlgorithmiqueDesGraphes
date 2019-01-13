@@ -25,7 +25,7 @@ public class DetectionCircuit
 		EnsembleSommet<S> Ent=SG.pointsEntree();
 		while(!Ent.isEmpty())
 		{
-			for(Sommet<S> S : Ent)
+			for(Sommet<S> S : Ent.getEnsemble())
 			{
 				SG.supprSommet(S);
 			}
@@ -40,7 +40,7 @@ public class DetectionCircuit
 		EnsembleSommet<S> Sor=SG.pointsSortie();
 		while(!Sor.isEmpty())
 		{
-			for(Sommet<S> S : Sor)
+			for(Sommet<S> S : Sor.getEnsemble())
 			{
 				SG.supprSommet(S);
 			}

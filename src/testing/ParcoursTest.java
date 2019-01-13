@@ -29,7 +29,7 @@ public class ParcoursTest
 		s3=new Sommet<Integer>(3);
 		s4=new Sommet<Integer>(4);
 		X=new EnsembleSommet<Integer>();
-		X.add(s1);X.add(s2);X.add(s3);X.add(s4);
+		X.ajouteSommet(s1);X.ajouteSommet(s2);X.ajouteSommet(s3);X.ajouteSommet(s4);
 		
 		a12 = new Arc<Integer>(s1,s2);
 		a23 = new Arc<Integer>(s2,s3);
@@ -37,7 +37,7 @@ public class ParcoursTest
 		a34 = new Arc<Integer>(s3,s4);
 		a44 = new Arc<Integer>(s4,s4);
 		Gamma=new EnsembleArc<Integer>();
-		Gamma.add(a12);Gamma.add(a23);Gamma.add(a32);Gamma.add(a34);Gamma.add(a44);
+		Gamma.ajouteArc(a12);Gamma.ajouteArc(a23);Gamma.ajouteArc(a32);Gamma.ajouteArc(a34);Gamma.ajouteArc(a44);
 		
 		G=new Graphe<Integer>(X,Gamma);
 		
@@ -47,7 +47,7 @@ public class ParcoursTest
 	@Test
 	public void testDFS()
 	{
-		Parcours.DFS(G, s1);
+		Parcours.DFS(G);
 	}
 
 	@Test

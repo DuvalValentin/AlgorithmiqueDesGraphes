@@ -22,6 +22,16 @@ public class ArcTest
 	}
 	
 	@Test
+	public void testConstructeurClone()
+	{
+		Arc<Integer> arcClone = new Arc<Integer>(arcTest);
+		assertEquals("Le constructeur clone",arcTest,arcClone);
+		assertNotSame("Le constructeur clone créé un objet identique",arcTest,arcClone);
+		arcClone.setArrivee(new Sommet<Integer>(9));
+		assertNotEquals("Modifier le clone modifie l'original",arcTest,arcClone);
+	}
+	
+	@Test
 	public void testGetDepart()
 	{
 		assertEquals("Le getDepart de Arc n'est pas fonctionnel",arcTest.getDepart(),depart);
@@ -50,7 +60,7 @@ public class ArcTest
 	}
 	
 	@Test
-	public void testEquals()
+	public void testEqualsMemeArc()
 	{
 		Arc<Integer> arcEq = new Arc<Integer>(depart,arrivee);
 		Arc<Integer> arcNDepEq = new Arc<Integer>(new Sommet<Integer>(6),arrivee);
@@ -60,20 +70,15 @@ public class ArcTest
 		assertNotEquals("Le equals de Arc rends vrai pour deux arcs avec un depart différent",arcTest,arcNDepEq);
 		assertNotEquals("Le equals de Arc rends vrai pour deux arcs avec une arrivee différente",arcTest,arcNArrEq);
 		assertNotEquals("Le equals de Arc rends vrai pour deux arcs avec un depart et une arrivee différents",arcTest,arcNEq);
+		assertTrue("Le memeArc de Arc rends faux pour deux arcs sensé être les même",arcTest.memeArc(arcEq));
+		assertFalse("Le memeArc de Arc rends vrai pour deux arcs avec un depart différent",arcTest.memeArc(arcNDepEq));
+		assertFalse("Le memeArc de Arc rends vrai pour deux arcs avec une arrivee différente",arcTest.memeArc(arcNArrEq));
+		assertFalse("Le memeArc de Arc rends vrai pour deux arcs avec un depart et une arrivee différents",arcTest.memeArc(arcNEq));
 	}
 	
 	@Test
 	public void testHashCode()
 	{
 		assertSame("Test du HashCode",13,arcTest.hashCode());
-	}
-	
-	@Test
-	public void testClone()
-	{
-		Arc<Integer> arcClone = arcTest.clone();
-		assertEquals("Clone ne marche pas",arcTest,arcClone);
-		arcClone.setArrivee(new Sommet<Integer>(9));
-		assertNotEquals("Modifier le clone modifie l'original",arcTest,arcClone);
 	}
 }

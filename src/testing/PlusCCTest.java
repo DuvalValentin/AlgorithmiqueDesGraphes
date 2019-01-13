@@ -44,8 +44,8 @@ public class PlusCCTest
 		
 		TableauFin=new TableauPlusCC<Integer>(s1);
 		TableauFin.initSommet(s2);TableauFin.initSommet(s3);TableauFin.initSommet(s4);
-		TableauFin.modifCout(s2, c1);TableauFin.modifCout(s3, c3);TableauFin.modifCout(s4, c6);
-		TableauFin.modifSommet(s2, s1);TableauFin.modifSommet(s3, s2);TableauFin.modifSommet(s4, s3);
+		TableauFin.modifDistance(s2, c1);TableauFin.modifDistance(s3, c3);TableauFin.modifDistance(s4, c6);
+		TableauFin.modifPredecesseur(s2, s1);TableauFin.modifPredecesseur(s3, s2);TableauFin.modifPredecesseur(s4, s3);
 	}
 
 	@Test

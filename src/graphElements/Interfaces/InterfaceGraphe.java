@@ -5,5 +5,6 @@ import graphElements.Elements.EnsembleArc;
 
 public interface InterfaceGraphe<S> extends InterfaceAbstractGraphe<S,Arc<S>>, InterfaceEnsembleArc<S>
 {
-	public EnsembleArc<S> getGamma();
+	//Getter
+	public EnsembleArc<S> getGamma();//Renvoi une copie de Gamma
 }

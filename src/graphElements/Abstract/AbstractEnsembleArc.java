@@ -3,71 +3,41 @@ package graphElements.Abstract;
 import graphElements.Elements.Arc;
 import graphElements.Elements.EnsembleSommet;
 import graphElements.Elements.Sommet;
+import graphElements.Interfaces.InterfaceAbstractEnsemble;
 import graphElements.Interfaces.InterfaceAbstractEnsembleArc;
 
-public abstract class AbstractEnsembleArc<S,A extends Arc<S>> extends AbstractEnsemble<A> implements InterfaceAbstractEnsembleArc<S, A>
+public abstract class AbstractEnsembleArc<S,A extends Arc<S>> extends AbstractEnsemble<A> implements InterfaceAbstractEnsembleArc<S,A>,InterfaceAbstractEnsemble<A>
 {
 	//Constructeurs
-	@SuppressWarnings("unchecked")
-	public AbstractEnsembleArc(AbstractEnsemble<A> ensemble)
-	{
-		for (A arc : ensemble)
-		{
-			ajouteArc((A)arc.clone());
-		}
-	}
 	public AbstractEnsembleArc()
 	{
 		super();
 	}
-
-	private static final long serialVersionUID = -4099925554493145279L;
-
+	//Test d'existence d'éléments
 	@Override
-	public EnsembleSommet<S> listSucc(Sommet<S> sommet)
+	public boolean existeArc(A arc)
 	{
-		EnsembleSommet<S> XSucc=new EnsembleSommet<S>();
-		for (Arc<S> arc : this)
+		return existeArc(arc.getDepart(),arc.getArrivee());
+	}
+	@Override
+	public boolean existeArc(Sommet<S> depart, Sommet<S> arrivee)
+	{
+		boolean result=false;
+		for(A arc : ensemble)
 		{
-			if (arc.getDepart().equals(sommet))
+			if(arc.getDepart().equals(depart)&&arc.getArrivee().equals(arrivee))
 			{
-				XSucc.add(arc.getArrivee());
+				result=true;
+				break;
 			}
 		}
-		return XSucc;
-	}
-
-	@Override
-	public EnsembleSommet<S> listPred(Sommet<S> sommet)
-	{
-		EnsembleSommet<S> XPred=new EnsembleSommet<S>();
-		for (Arc<S> arc : this)
-		{
-			if (arc.getArrivee().equals(sommet))
-			{
-				XPred.add(arc.getDepart());
-			}
-		}
-		return XPred;
-	}
-	
-	@Override
-	public boolean existeArc(Arc<S> arc)
-	{
-		return contains(arc);
-	}
-	
-	@Override
-	public boolean existeArc(Sommet<S> arrivee, Sommet<S> depart)
-	{
-		Arc<S> arc=new Arc<S>(arrivee,depart);
-		return existeArc(arc);
+		return result;
 	}
 	@Override
 	public boolean existeBoucle()
 	{
 		boolean resultat=false;
-		for(A Arc : this)
+		for(A Arc : ensemble)
 		{
 			if(Arc.getDepart().equals(Arc.getArrivee()))
 			{
@@ -77,37 +47,81 @@ public abstract class AbstractEnsembleArc<S,A extends Arc<S>> extends AbstractEn
 		}
 		return resultat;
 	}
-	
 	@Override
 	public boolean existeBoucle(Sommet<S> sommet)
 	{
-		Arc<S> arc = new Arc<S>(sommet,sommet);
-		return existeArc(arc);
+		return existeArc(sommet,sommet);
 	}
-	
+	//Séléction d'éléments
 	@Override
-	public void ajouteArc(A arc)
+	public EnsembleSommet<S> listSucc(Sommet<S> sommet)
 	{
-		add(arc);
+		EnsembleSommet<S> XSucc=new EnsembleSommet<S>();
+		for (A arc : ensemble)
+		{
+			if (arc.getDepart().equals(sommet))
+			{
+				XSucc.ajouteSommet(arc.getArrivee());
+			}
+		}
+		return XSucc;
 	}
 	@Override
-	public void supprArc(A arc)
+	public EnsembleSommet<S> listPred(Sommet<S> sommet)
 	{
-		remove(arc);
+		EnsembleSommet<S> XPred=new EnsembleSommet<S>();
+		for (A arc : ensemble)
+		{
+			if (arc.getArrivee().equals(sommet))
+			{
+				XPred.ajouteSommet(arc.getDepart());
+			}
+		}
+		return XPred;
 	}
-	//TODO mettre dans l'interface
-	public void union(AbstractEnsembleArc<S,A> ensemble)
+	//Ajouts et suppressions d'éléments ----------------------------------------
+	@Override
+	public void ajouteArc(A arc)//Redéfinie pour chaque enfant (entre autre afin de faire des new)
 	{
-		for(A arc : ensemble)
+		if(!this.existeArc(arc))
+		{
+			ensemble.add(arc);
+		}
+	}
+	@Override
+	public void supprArc(A arcS)
+	{
+		for(A arcE : ensemble)
+		{
+			if(arcE.memeArc(arcS))
+			{
+				ensemble.remove(arcE);
+				break;
+			}
+		}
+		
+	}
+	@Override
+	public void union(AbstractEnsemble<A> Ensemble)
+	{
+		for(A arc : Ensemble.ensemble)
 		{
 			ajouteArc(arc);
 		}
 	}
 	
-	@SuppressWarnings("unchecked")
-	@Override
-	public  AbstractEnsembleArc<S,A> clone ()
+	/*public static AbstractEnsembleArc<S,A> union(AbstractEnsembleArc<S,A> Ensemble1,AbstractEnsembleArc<S,A> Ensemble2)
 	{
-		return (AbstractEnsembleArc<S,A>)super.clone();
+	}*/
+	@Override
+	public void intersection(AbstractEnsemble<A> Ensemble)
+	{
+		for(A arc : ensemble)
+		{
+			if(!Ensemble.getEnsemble().contains(arc))//TODO on veut faire un existeArc ici, Intersection marchera mal pour arc valué
+			{
+				supprArc(arc);//TODO on ne peut pas faire ça
+			}
+		}
 	}
 }

@@ -1,5 +1,5 @@
 # AlgorithmiqueDesGraphes
-Version 0.8
+Version 0.9
 Le but de ces packages est de disposer d'un ensemble d'outils facile à utiliser permettant de manipuler des Graphes.
 L'objectif final étant de pouvoir effectuer un maximum  d'algorithmes sur les graphes.
 
@@ -77,9 +77,14 @@ La classe TableauPlusCC a été ajoutées (elle contient les tableaux d et pred 
 Les algorithmes de plus court chemin ont été implémentés (il ne reste plus que Ford).
 Tous les algorithmes du cours (hors feuille annexe) ont été ajoutés.
 
-Remarque : 
-- La méthode firstSommet de EnsembleSommet est un peu crade donc est à modifier dès que possible.
-- Essayer de voir si on peut trouver une manière de réexploiter facilement des Algorithme/Méthodes (exemple : ne pas avoir à écrire tout RoyWarshall lors de la fermeture anti-Transitive) afin de rendre le projet plus facilement maléable.
-- Implémenter une méthode union pour les Ensemble et réussir à l'ajouter à l'interface sans poser de problèmes pour les Graphes.
+V 0.9
+Les Ensembles ont été mis à jour, désormais ce ne sont plus des HashSet mais des objet contenant un HashSet, le reste a donc été modifié en conséquences.
+Toutes les méthodes clones ont été suprimées. (remplacé par les new Object(object)).
+Des tests unitaires concerant l'encapsulation ont été rajoutés.
+L'Algorithme de Tarjan a été implémenté.
+Modification de existeArc pour mieux coller avec les ensemble d'arc valués.
+Création de la méthode meme arc permetant de savoir si deux arcs ont un même départ et une même arrivée (indépendament du reste).
+La partie remarque a été décalée dans le fichier Question importantes du moment.
+Beaucoup de commentaires rajoutés dans les interfaces.
 
-Prochaine étape : Faire une mise à jour des différents ensembles pour qu'ils contiennent un objet de type HashSet plutôt que d'être des descendant de hashSet (pour une meilleure encapsulation).
+Prochaine étape :Rendre l'union/intersection statique.Créer une fonction pour savoir si un Ensemble est un sous ensemble d'un autre Ensemble (utiliser Union en statique). Les algorithmes CFC doivent rendre un graphe d'ensemble de graphe. Implémenter algorithme de Ford et commencer les algorithmes d'ordonnancement.

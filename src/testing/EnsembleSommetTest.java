@@ -23,24 +23,16 @@ public class EnsembleSommetTest
 		s5=new Sommet<Integer>(5);
 		ensembleSommetTest.ajouteSommet(s4);
 		ensembleSommetTest.ajouteSommet(s3);
-		
 	}
 
 	@Test
-	public void testEnsembleSommet()
+	public void testConstructeurClone()
 	{
-		EnsembleSommet<Integer> ensembleSommet=new EnsembleSommet<Integer>(ensembleSommetTest);
-		assertEquals("Le constructeur à argument de EnsembleSommet ne marche pas",ensembleSommetTest,ensembleSommet);
-	}
-	
-	@Test
-	public void testClone()
-	{
-		EnsembleSommet<Integer> ensembleSommet=ensembleSommetTest.clone();
-		assertEquals("La méthode clone de EnsembleSommet ne marche pas",ensembleSommetTest,ensembleSommet);
-		assertNotSame("Le clone pointe vers le même objet",ensembleSommetTest,ensembleSommet);
-		ensembleSommetTest.ajouteSommet(s5);
-		assertNotEquals("La méthode clone créé un objet lié à l'objet cloné",ensembleSommetTest,ensembleSommet);
+		EnsembleSommet<Integer> ensembleSommetClone=new EnsembleSommet<Integer>(ensembleSommetTest);
+		assertEquals("Le constructeur clone",ensembleSommetTest,ensembleSommetClone);
+		assertNotSame("Le constructeur clone créé un objet identique",ensembleSommetTest,ensembleSommetClone);
+		ensembleSommetClone.ajouteSommet(s5);
+		assertNotEquals("Les ensembles sont liés",ensembleSommetTest,ensembleSommetClone);
 	}
 	
 	@Test 
@@ -53,14 +45,21 @@ public class EnsembleSommetTest
 	@Test
 	public void testExistSommet()
 	{
-		assertTrue("Test de l'existence d'un sommet present",ensembleSommetTest.existSommet(s3));
-		assertFalse("Test de l'existence d'un sommet non present",ensembleSommetTest.existSommet(s5));
+		assertTrue("Test de l'existence d'un sommet present",ensembleSommetTest.existeSommet(s3));
+		assertFalse("Test de l'existence d'un sommet non present",ensembleSommetTest.existeSommet(s5));
 	}
 	
 	@Test
 	public void testSupprSommet()
 	{
 		ensembleSommetTest.supprSommet(s4);
-		assertFalse("Le sommet n'a pas été supprimé",ensembleSommetTest.existSommet(s4));
+		assertFalse("Le sommet n'a pas été supprimé",ensembleSommetTest.existeSommet(s4));
+	}
+	
+	@Test
+	public void testEncapsulation()
+	{
+		s3.setId(9);
+		assertFalse("Modification d'un sommet depuis l'exterieur",ensembleSommetTest.existeSommet(s3));
 	}
 }
