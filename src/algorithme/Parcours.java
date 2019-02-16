@@ -7,9 +7,9 @@ import graphElements.Elements.*;
 
 public class Parcours
 {
-	public static <S,A extends Arc<S>> void DFS (Graphe<S> G)
+	public static <S,A extends Arc<S>> void DFS (GrapheNonValue<S> G)
 	{
-		EnsembleArc<S> V; //Ensemble des arcs visités
+		EnsembleArcNonValue<S> V; //Ensemble des arcs visités
 		EnsembleSommet<S> D;//Ensemble des sommets non visités
 		EnsembleSommet<S> T=new EnsembleSommet<S>(); //Ensemble des sommets visités
 		EnsembleSommet<S> Y;//Ensemble de successeur de y
@@ -19,8 +19,8 @@ public class Parcours
 		Sommet<S>z;
 		//Init
 		D=new EnsembleSommet<S>(G.getX());//Ensemble de sommets non visité
-		V=new EnsembleArc<S>();//Ensemble d'arc parcourus TODO A changer pour pouvoir utiliser AbstractGraphe
-		Graphe<S> Gavisiter=new Graphe<S>(G);//A changer pour pouvoir utiliser AbstractGraphe
+		V=new EnsembleArcNonValue<S>();//Ensemble d'arc parcourus TODO à changer pour que DFS puisse prendre un AbstractGraph en entrée
+		GrapheNonValue<S> Gavisiter=new GrapheNonValue<S>(G);//TODO à changer pour que DFS puisse prendre un AbstractGraph en entrée
 
 		while(!D.isEmpty())
 		{
@@ -61,9 +61,9 @@ public class Parcours
 		assert G.getX().equals(T) : "DFS ne marche pas";
 	}
 	
-	public static <S> void WFS (Graphe<S> G, Sommet<S> x)
+	public static <S> void WFS (GrapheNonValue<S> G, Sommet<S> x)
 	{
-		EnsembleArc<S> V;//Ensemble des arcs parcours
+		EnsembleArcNonValue<S> V;//Ensemble des arcs parcours
 		EnsembleSommet<S> D;//Ensemble des sommets non visités
 		EnsembleSommet<S> T;//Ensemble des sommets visités
 		EnsembleSommet<S> S;//Liste de successeur de y
@@ -74,7 +74,7 @@ public class Parcours
 		D.supprSommet(x);
 		A.add(x);
 		T=new EnsembleSommet<S>();
-		V=new EnsembleArc<S>();
+		V=new EnsembleArcNonValue<S>();
 		while(!A.isEmpty())
 		{
 			y=A.poll();

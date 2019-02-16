@@ -87,4 +87,10 @@ Création de la méthode meme arc permetant de savoir si deux arcs ont un même 
 La partie remarque a été décalée dans le fichier Question importantes du moment.
 Beaucoup de commentaires rajoutés dans les interfaces.
 
-Prochaine étape :Rendre l'union/intersection statique.Créer une fonction pour savoir si un Ensemble est un sous ensemble d'un autre Ensemble (utiliser Union en statique). Les algorithmes CFC doivent rendre un graphe d'ensemble de graphe. Implémenter algorithme de Ford et commencer les algorithmes d'ordonnancement.
+V 0.10.1
+Union et intesection sont désormais statiques mais pas encore comme je le souhaiterais, l'alogorithme de Ford a été implémenté.
+Découverte du coverage, les tests couvrents désormais 100% les packages abstract et elements (il reste encore les algorithmes à couvrir correctement).
+
+Urgent : Mettre en place un pattern factory pour pallier à différents problèmes dans le code.
+
+Prochaine étape :Créer une fonction pour savoir si un Ensemble est un sous ensemble d'un autre Ensemble (utiliser Union en statique). Les algorithmes CFC doivent rendre un graphe d'ensemble de graphe. Commencer les algorithmes d'ordonnancement.

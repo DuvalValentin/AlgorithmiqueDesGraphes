@@ -87,4 +87,17 @@ public class TableauPlusCCTest
 	{
 		assertEquals("getPredecesseur",s1,tableau.getPredecesseur(s2));
 	}
+	
+	@Test
+	public void testToString()
+	{
+		assertEquals(s1.toString()+"=>"+d.toString()+pred.toString(),tableau.toString());
+	}
+	@SuppressWarnings("unlikely-arg-type")
+	@Test
+	public void testEquals()
+	{
+		assertFalse(tableau.equals(null));
+		assertFalse(tableau.equals("ngrjhn"));
+	}
 }

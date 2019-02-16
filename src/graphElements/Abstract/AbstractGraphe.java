@@ -2,12 +2,12 @@ package graphElements.Abstract;
 
 import java.util.HashSet;
 
-import graphElements.Elements.Arc;
 import graphElements.Elements.EnsembleSommet;
 import graphElements.Elements.Sommet;
-import graphElements.Interfaces.InterfaceAbstractGraphe;
+import graphElements.Interfaces.InterfaceArc;
+import graphElements.Interfaces.InterfaceGraphe;
 
-public abstract class AbstractGraphe<S,A extends Arc<S>> implements InterfaceAbstractGraphe<S, A>
+public abstract class AbstractGraphe<S,A extends InterfaceArc<S>> implements InterfaceGraphe<S,A>
 {
 	//Ensembles -------------------------------------------------------------
 	protected EnsembleSommet<S> X;
@@ -19,7 +19,7 @@ public abstract class AbstractGraphe<S,A extends Arc<S>> implements InterfaceAbs
 		setX(x);
 		setGamma(gamma);
 	}
-	public AbstractGraphe(AbstractGraphe<S, A> G)
+	public AbstractGraphe(AbstractGraphe<S,A> G)
 	{
 		setX(G.getX());
 		setGamma(G.getGamma());
@@ -31,7 +31,7 @@ public abstract class AbstractGraphe<S,A extends Arc<S>> implements InterfaceAbs
 		return new EnsembleSommet<S>(X);
 	}
 	@Override
-	public AbstractEnsembleArc<S, A> getGamma()
+	public AbstractEnsembleArc<S,A> getGamma()
 	{
 		return Gamma;
 	}
@@ -40,13 +40,12 @@ public abstract class AbstractGraphe<S,A extends Arc<S>> implements InterfaceAbs
 	{
 		X = new EnsembleSommet<S>(x);
 	}
-	protected void setGamma(AbstractEnsembleArc<S,A> gamma) 
+	protected void setGamma(AbstractEnsembleArc<S,A> gamma)
 	{
 		if (correctGamma(gamma))
 		{
 			Gamma = gamma;
 		}
-		assert gamma.equals(Gamma) : "Le gamma passé en paramètre n'est pas correct";
 	}
 	//Existences d'arc et de sommets ---------------------------------------
 	@Override
@@ -72,7 +71,7 @@ public abstract class AbstractGraphe<S,A extends Arc<S>> implements InterfaceAbs
 	@Override
 	public boolean existeBoucle(Sommet<S> sommet)
 	{
-		return Gamma.existeArc(sommet,sommet);
+		return Gamma.existeBoucle(sommet);
 	}
 	//Vérification des éléments -------------------------------------------
 	@Override
@@ -97,7 +96,7 @@ public abstract class AbstractGraphe<S,A extends Arc<S>> implements InterfaceAbs
 		return ajoutable;
 	}
 	@Override
-	public boolean correctGamma(AbstractEnsembleArc<S, A> gamma)
+	public boolean correctGamma(AbstractEnsembleArc<S,A> gamma)
 	{
 		boolean result=true;
 		
@@ -113,7 +112,7 @@ public abstract class AbstractGraphe<S,A extends Arc<S>> implements InterfaceAbs
 	@Override
 	public boolean isEmpty()
 	{
-		return X.ensemble.isEmpty()&&Gamma.ensemble.isEmpty();
+		return X.ensemble.isEmpty();
 	}
 	//Selections d'éléments -----------------------------------------------
 	//Selction d'un élément
@@ -208,11 +207,20 @@ public abstract class AbstractGraphe<S,A extends Arc<S>> implements InterfaceAbs
 		Gamma.supprArc(depart, arrivee);
 	}
 	//Union
-	@Override
-	public void union(InterfaceAbstractGraphe<S, A> G)
+	public static <S,A extends InterfaceArc<S>> AbstractGraphe<S,A> union(AbstractGraphe<S,A> Graphe1,AbstractGraphe<S,A> Graphe2)
 	{
-		X.union(G.getX());
-		Gamma.union(G.getGamma());
+		AbstractGraphe<S,A> union = Graphe1.clone();
+		
+		for(Sommet<S> sommet : Graphe2.getX().getEnsemble())
+		{
+			union.ajouteSommet(sommet);
+		}
+		
+		for(A arc : Graphe2.getGamma().getEnsemble())
+		{
+			union.ajouteArc(arc);
+		}
+		return union;
 	}
 	//toString equals et hashCode ------------------------------------------------------------
 	@Override
@@ -243,4 +251,6 @@ public abstract class AbstractGraphe<S,A extends Arc<S>> implements InterfaceAbs
 	{
 		return X.hashCode()+Gamma.hashCode();
 	}
+	@Override
+	public abstract AbstractGraphe<S,A> clone();
 }

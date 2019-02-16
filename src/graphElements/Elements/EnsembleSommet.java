@@ -1,11 +1,11 @@
 package graphElements.Elements;
 
 import java.util.HashSet;
-
 import graphElements.Abstract.AbstractEnsemble;
-import graphElements.Interfaces.InterfaceEnsembleSommet;
+import graphElements.Interfaces.InterfaceEnsemble;
+import graphElements.Interfaces.InterfaceOperationsElementairesEnsembleSommet;
 
-public class EnsembleSommet<S> extends AbstractEnsemble<Sommet<S>> implements InterfaceEnsembleSommet<S>
+public class EnsembleSommet<S> extends AbstractEnsemble<Sommet<S>> implements InterfaceOperationsElementairesEnsembleSommet<S>, InterfaceEnsemble<Sommet<S>>
 {
 	public EnsembleSommet()
 	{
@@ -22,7 +22,7 @@ public class EnsembleSommet<S> extends AbstractEnsemble<Sommet<S>> implements In
 	@Override
 	public Sommet<S> firstSommet()
 	{
-		//TODO à améliorer si possible
+		//TODO améliorer la méthode fisrtSommet() de Sommet
 		@SuppressWarnings("unchecked")
 		Sommet<S>[] tab=new Sommet[ensemble.size()]; 
 		return ensemble.toArray(tab)[0];
@@ -49,23 +49,28 @@ public class EnsembleSommet<S> extends AbstractEnsemble<Sommet<S>> implements In
 	{
 		return new HashSet<Sommet<S>>(ensemble);
 	}
-	@Override
-	public void union(AbstractEnsemble<Sommet<S>> Ensemble)
+	
+	public static <S> EnsembleSommet<S> union(EnsembleSommet<S> Ensemble1,EnsembleSommet<S> Ensemble2)
 	{
-		for(Sommet<S> sommet : Ensemble.getEnsemble())
+		EnsembleSommet<S> union = new EnsembleSommet<S>(Ensemble1);
+		for(Sommet<S> sommet : Ensemble2.getEnsemble())
 		{
-			ajouteSommet(sommet);
+			union.ajouteSommet(sommet);
 		}
+		return union;
 	}
-	@Override
-	public void intersection(AbstractEnsemble<Sommet<S>> Ensemble)
+	
+	public static <S > EnsembleSommet<S> intersection(EnsembleSommet<S> Ensemble1,EnsembleSommet<S> Ensemble2)
 	{
-		for(Sommet<S> sommet : ensemble)
+		EnsembleSommet<S> intersection = new EnsembleSommet<S>(Ensemble1);
+		for(Sommet<S> sommet : Ensemble1.getEnsemble())
 		{
-			if(!Ensemble.getEnsemble().contains(sommet))//TODO on veut faire un existeSommet ici
+			if(!Ensemble2.existeSommet(sommet))
 			{
-				this.supprSommet(sommet);
+				intersection.supprSommet(sommet);
 			}
 		}
+		return intersection;
 	}
+	
 }

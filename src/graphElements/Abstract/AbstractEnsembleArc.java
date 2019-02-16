@@ -1,12 +1,11 @@
 package graphElements.Abstract;
 
-import graphElements.Elements.Arc;
 import graphElements.Elements.EnsembleSommet;
 import graphElements.Elements.Sommet;
-import graphElements.Interfaces.InterfaceAbstractEnsemble;
-import graphElements.Interfaces.InterfaceAbstractEnsembleArc;
+import graphElements.Interfaces.InterfaceArc;
+import graphElements.Interfaces.InterfaceEnsembleArc;
 
-public abstract class AbstractEnsembleArc<S,A extends Arc<S>> extends AbstractEnsemble<A> implements InterfaceAbstractEnsembleArc<S,A>,InterfaceAbstractEnsemble<A>
+public abstract class AbstractEnsembleArc<S,A extends InterfaceArc<S>> extends AbstractEnsemble<A> implements InterfaceEnsembleArc<S,A>
 {
 	//Constructeurs
 	public AbstractEnsembleArc()
@@ -37,7 +36,7 @@ public abstract class AbstractEnsembleArc<S,A extends Arc<S>> extends AbstractEn
 	public boolean existeBoucle()
 	{
 		boolean resultat=false;
-		for(A Arc : ensemble)
+		for(InterfaceArc<S> Arc : ensemble)
 		{
 			if(Arc.getDepart().equals(Arc.getArrivee()))
 			{
@@ -99,23 +98,32 @@ public abstract class AbstractEnsembleArc<S,A extends Arc<S>> extends AbstractEn
 				break;
 			}
 		}
-		
 	}
+	/*
 	@Override
-	public void union(AbstractEnsemble<A> Ensemble)
+	public AbstractEnsemble<A> union(AbstractEnsemble<A> Ensemble)
 	{
+		AbstractEnsemble<A> union= new EnsembleArcNonValue<A>(this);
 		for(A arc : Ensemble.ensemble)
 		{
 			ajouteArc(arc);
 		}
-	}
-	
-	/*public static AbstractEnsembleArc<S,A> union(AbstractEnsembleArc<S,A> Ensemble1,AbstractEnsembleArc<S,A> Ensemble2)
-	{
 	}*/
-	@Override
+	
+	/*public static <S,A extends InterfaceArc<S>> AbstractEnsembleArc<S,A> union(AbstractEnsembleArc<S,A> Ensemble1,AbstractEnsembleArc<S,A> Ensemble2) throws CloneNotSupportedException
+	{
+		@SuppressWarnings("unchecked")
+		AbstractEnsembleArc<S,A> union=(AbstractEnsembleArc<S,A>) Ensemble1.clone();
+		for(A arc : Ensemble2.getEnsemble())
+		{
+			union.ajouteArc(arc);
+		}
+		return union;
+	}*/
+	/*@Override
 	public void intersection(AbstractEnsemble<A> Ensemble)
 	{
+		//faire un new arc pour régler le problème puis mettre ça dans la factory
 		for(A arc : ensemble)
 		{
 			if(!Ensemble.getEnsemble().contains(arc))//TODO on veut faire un existeArc ici, Intersection marchera mal pour arc valué
@@ -123,5 +131,5 @@ public abstract class AbstractEnsembleArc<S,A extends Arc<S>> extends AbstractEn
 				supprArc(arc);//TODO on ne peut pas faire ça
 			}
 		}
-	}
+	}*/
 }

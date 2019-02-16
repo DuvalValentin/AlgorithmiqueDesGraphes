@@ -26,13 +26,17 @@ public class SommetTest
 		assertNotEquals("Modifier le clone modifie l'original",sommetTest,sommetClone);
 	}
 	
+	@SuppressWarnings("unlikely-arg-type")
 	@Test 
 	public void testEquals()
 	{
 		Sommet<Integer> sommetEq = new Sommet<Integer>(5);
 		Sommet<Integer> sommetNEq = new Sommet<Integer>(7);
-		assertTrue("Equals rend faux pour deux Sommets censés être equals",sommetTest.getId().equals(sommetEq.getId()));
-		assertFalse("Equals rend vrai pour deux Sommets censéq être not equals",sommetTest.getId().equals(sommetNEq.getId()));	
+		String string= "okidoki";
+		assertTrue("Equals rend faux pour deux Sommets censés être equals",sommetTest.equals(sommetEq));
+		assertFalse("Equals rend vrai pour deux Sommets censés être not equals",sommetTest.equals(sommetNEq));
+		assertFalse("Equals rend vrai pour lorsque comparé à null",sommetTest.equals(null));
+		assertFalse("Equals rend vrai pour lorsque comparé à un objet n'étant pas un sommet",sommetTest.equals(string));
 	}
 	
 	@Test
@@ -49,9 +53,15 @@ public class SommetTest
 		assertEquals("Le setId de Sommet n'est pas fonctionnel",sommetTest.getId(),value2);
 	}
 	
+	@Test 
+	public void testToString()
+	{
+		assertEquals("ToString ne marche pas bien",value.toString(),sommetTest.toString());
+	}
+	
 	@Test
 	public void testHashCode()
 	{
-		assertSame("HashCode",5,sommetTest.hashCode());
+		assertSame("HashCode",value.hashCode(),sommetTest.hashCode());
 	}
 }

@@ -4,9 +4,9 @@ import graphElements.Elements.*;
 
 public class DetectionCircuit
 {
-	public static <S> boolean Roy_Warshall(Graphe<S> G)
+	public static <S> boolean Roy_Warshall(GrapheNonValue<S> G)
 	{
-		Graphe<S> RW=FermetureTransitive.Roy_Warshall(G);
+		GrapheNonValue<S> RW=FermetureTransitive.Roy_Warshall(G);
 		boolean result;
 		if(RW.existeBoucle())
 		{
@@ -19,9 +19,9 @@ public class DetectionCircuit
 		return result;
 	}
 	//TODO DFS et WFS
-	public static <S> boolean MarimontEntree(Graphe<S> G)
+	public static <S> boolean MarimontEntree(GrapheNonValue<S> G)
 	{
-		Graphe<S>SG=new Graphe<S>(G);//sous graphe
+		GrapheNonValue<S>SG=new GrapheNonValue<S>(G);//sous graphe
 		EnsembleSommet<S> Ent=SG.pointsEntree();
 		while(!Ent.isEmpty())
 		{
@@ -34,9 +34,9 @@ public class DetectionCircuit
 		return !SG.isEmpty();
 	}
 	
-	public static <S> boolean MarimontSortie(Graphe<S> G)
+	public static <S> boolean MarimontSortie(GrapheNonValue<S> G)
 	{
-		Graphe<S>SG=new Graphe<S>(G);//sous graphe
+		GrapheNonValue<S>SG=new GrapheNonValue<S>(G);//sous graphe
 		EnsembleSommet<S> Sor=SG.pointsSortie();
 		while(!Sor.isEmpty())
 		{

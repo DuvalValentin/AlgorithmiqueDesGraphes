@@ -4,13 +4,13 @@ import graphElements.Elements.*;
 
 public class FermetureTransitive
 {
-	private static <S> Graphe<S> Composition (Graphe<S> G1,Graphe<S> G2)
+	private static <S> GrapheNonValue<S> Composition (GrapheNonValue<S> G1,GrapheNonValue<S> G2) 
 	{
 		assert G1.getX().equals(G2.getX()) : "La composition ne marche que pour deux Graphe se reposant sur le même ensemble de Sommet";
 		EnsembleSommet<S>X=G1.getX();//L'ensemble de sommet
-		EnsembleArc<S>Gamma1=G1.getGamma();//L'ensemble d'arc du graphe1
-		EnsembleArc<S>Gamma2=G2.getGamma();//L'ensemble d'arc du graphe2
-		Graphe<S> G3 = new Graphe<S>(X,new EnsembleArc<S>());//Le graphe final
+		EnsembleArcNonValue<S>Gamma1=G1.getGamma();//L'ensemble d'arc du graphe1
+		EnsembleArcNonValue<S>Gamma2=G2.getGamma();//L'ensemble d'arc du graphe2
+		GrapheNonValue<S> G3 = new GrapheNonValue<S>(X,new EnsembleArcNonValue<S>());//Le graphe final
 		for(Sommet<S> x : X.getEnsemble())
 		{
 			for(Sommet<S> y : X.getEnsemble())
@@ -31,24 +31,24 @@ public class FermetureTransitive
 		return G3;
 	}
 	
-	public static <S> Graphe<S> PuissanceDeGraphe (Graphe<S> G)
+	public static <S> GrapheNonValue<S> PuissanceDeGraphe (GrapheNonValue<S> G)  throws CloneNotSupportedException
 	{
-		Graphe<S> P;//Le graphe résultat
-		Graphe<S> R;
-		P=new Graphe<S>();
-		R=new Graphe<S>(G);
+		GrapheNonValue<S> P;//Le graphe résultat
+		GrapheNonValue<S> R;
+		P=new GrapheNonValue<S>();
+		R=new GrapheNonValue<S>(G);
 		while(!R.equals(P))
 		{
-			P=new Graphe<S>(R);
-			R.union(Composition(G,R));
+			P=new GrapheNonValue<S>(R);
+			R= (GrapheNonValue<S>) GrapheNonValue.union(R, Composition(G,R));
 		}
 		return(P);
 	}
 	//Non valué
-	public static <S> Graphe<S> Roy_Warshall(Graphe<S> G)
+	public static <S> GrapheNonValue<S> Roy_Warshall(GrapheNonValue<S> G)
 	{
 		EnsembleSommet<S>X=G.getX();
-		Graphe<S> RW=new Graphe<S>(G);
+		GrapheNonValue<S> RW=new GrapheNonValue<S>(G);
 		for(Sommet<S> z : X.getEnsemble())//sommet pivot
 		{
 			for(Sommet<S> x : X.getEnsemble())//sommet précédant z

@@ -19,6 +19,18 @@ public class TableauPlusCC<S> implements InterfaceTableauPlusCC<S>
 		initSommet(principal);
 		modifDistance(principal,new Cout());
 	}
+	public TableauPlusCC(Sommet<S>prin,GrapheValue<S>G)
+	{
+		d=new HashMap<Sommet<S>,Cout>();
+		pred= new HashMap<Sommet<S>,Sommet<S>>();
+		principal=prin;
+		for(Sommet<S> sommet : G.getX().getEnsemble())
+		{
+			initSommet(sommet);
+			modifDistance(sommet,G.getCout(principal, sommet));
+		}
+		modifDistance(principal,new Cout());
+	}
 	//Getters
 	public HashMap<Sommet<S>,Cout> getD()
 	{
@@ -65,20 +77,15 @@ public class TableauPlusCC<S> implements InterfaceTableauPlusCC<S>
 	@Override
 	public boolean equals(Object obj)
 	{
-		boolean result;
-		if(obj.getClass()!=getClass())
+		boolean result=false;
+		if(obj!=null)
 		{
-			result=false;
-		}
-		else
-		{
-			if(((TableauPlusCC<S>)obj).getPrincipal().equals(getPrincipal())&&((TableauPlusCC<S>)obj).getD().equals(getD())&&((TableauPlusCC<S>)obj).getPred().equals(getPred()))
+			if(obj.getClass()==getClass())
 			{
-				result=true;
-			}
-			else
-			{
-				result=false;
+				if(((TableauPlusCC<S>)obj).getPrincipal().equals(getPrincipal())&&((TableauPlusCC<S>)obj).getD().equals(getD())&&((TableauPlusCC<S>)obj).getPred().equals(getPred()))
+				{
+					result=true;
+				}
 			}
 		}
 		return result;

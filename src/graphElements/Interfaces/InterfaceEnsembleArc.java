@@ -1,10 +1,5 @@
 package graphElements.Interfaces;
 
-import graphElements.Elements.Arc;
-import graphElements.Elements.Sommet;
-
-public interface InterfaceEnsembleArc<S> extends InterfaceAbstractEnsembleArc<S,Arc<S>>
+public interface InterfaceEnsembleArc<S,A extends InterfaceArc<S>> extends InterfaceOperationsElementairesEnsembleArc<S,A>,InterfaceEnsemble<A>
 {
-	//Ajout d'élément
-	void ajouteArc(Sommet<S>depart,Sommet<S>arrivee);//Ajoute l'arc
 }

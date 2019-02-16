@@ -8,8 +8,8 @@ import graphElements.Elements.*;
 
 public class ParcoursTest
 {
-	private Graphe<Integer> G;
-	private EnsembleArc<Integer>Gamma;
+	private GrapheNonValue<Integer> G;
+	private EnsembleArcNonValue<Integer>Gamma;
 	private EnsembleSommet<Integer> X;
 	private Sommet<Integer> s1;
 	private Sommet<Integer> s2;
@@ -36,10 +36,10 @@ public class ParcoursTest
 		a32 = new Arc<Integer>(s3,s2);
 		a34 = new Arc<Integer>(s3,s4);
 		a44 = new Arc<Integer>(s4,s4);
-		Gamma=new EnsembleArc<Integer>();
+		Gamma=new EnsembleArcNonValue<Integer>();
 		Gamma.ajouteArc(a12);Gamma.ajouteArc(a23);Gamma.ajouteArc(a32);Gamma.ajouteArc(a34);Gamma.ajouteArc(a44);
 		
-		G=new Graphe<Integer>(X,Gamma);
+		G=new GrapheNonValue<Integer>(X,Gamma);
 		
 
 	}

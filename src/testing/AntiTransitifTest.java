@@ -21,8 +21,8 @@ public class AntiTransitifTest
 	private Arc<Integer> a24;
 	private Arc<Integer> a34;
 	
-	private Graphe<Integer> Gini;
-	private Graphe<Integer> Gres;
+	private GrapheNonValue<Integer> Gini;
+	private GrapheNonValue<Integer> Gres;
 
 	@Before
 	public void setUp()
@@ -39,10 +39,10 @@ public class AntiTransitifTest
 		a24=new Arc<Integer>(s2,s4);
 		a34=new Arc<Integer>(s3,s4);
 		
-		Gres=new Graphe<Integer>();
+		Gres=new GrapheNonValue<Integer>();
 		Gres.ajouteSommet(s1);Gres.ajouteSommet(s2);Gres.ajouteSommet(s3);Gres.ajouteSommet(s4);
 		Gres.ajouteArc(a12);Gres.ajouteArc(a23);Gres.ajouteArc(a34);
-		Gini=new Graphe<Integer>(Gres);
+		Gini=new GrapheNonValue<Integer>(Gres);
 		Gini.ajouteArc(a13);Gini.ajouteArc(a14);Gini.ajouteArc(a24);
 	}
 

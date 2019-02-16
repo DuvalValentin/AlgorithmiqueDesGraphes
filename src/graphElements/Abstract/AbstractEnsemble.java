@@ -2,8 +2,8 @@ package graphElements.Abstract;
 
 import java.util.HashSet;
 
-import graphElements.Interfaces.InterfaceAbstractEnsemble;
-public abstract class AbstractEnsemble<E> implements InterfaceAbstractEnsemble<E>
+import graphElements.Interfaces.InterfaceEnsemble;
+public abstract class AbstractEnsemble<E> implements InterfaceEnsemble<E>
 {
 	//L'ensemble encapsulé
 	protected HashSet<E> ensemble;
@@ -26,6 +26,7 @@ public abstract class AbstractEnsemble<E> implements InterfaceAbstractEnsemble<E
 	public void intersection(AbstractEnsemble<E> Ensemble)
 	{
 		//TODO problème ici on ne peut pas changer un ensemble sur lequel on applique un for
+		//FIXME 
 		for(E element : ensemble)
 		{
 			if(!Ensemble.ensemble.contains(element))
@@ -71,5 +72,16 @@ public abstract class AbstractEnsemble<E> implements InterfaceAbstractEnsemble<E
 
 		}
 		return result;
+	}
+	
+	@Override
+	public int hashCode()
+	{
+		int somme=0;
+		for(E element : ensemble)
+		{
+			somme+=element.hashCode();
+		}
+		return somme;
 	}
 }

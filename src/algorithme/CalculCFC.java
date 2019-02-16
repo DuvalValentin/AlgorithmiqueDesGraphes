@@ -5,10 +5,11 @@ import java.util.Stack;
 
 import graphElements.Abstract.AbstractGraphe;
 import graphElements.Elements.*;
+import graphElements.Interfaces.InterfaceArc;
 
 public class CalculCFC
 {
-	public static <S,A extends Arc<S>> CFC<S> Foulkes(AbstractGraphe<S,A> G)
+	public static <S,A extends InterfaceArc<S>> CFC<S> Foulkes(AbstractGraphe<S,A> G) 
 	{
 		//FermetureTransitive.Roy_Warshall(G);
 		//Ici on considère que G est fermé transitivement
@@ -27,7 +28,7 @@ public class CalculCFC
 					{
 						if(G.existeArc(x, y)&&G.existeArc(y, x))
 						{
-							cfc.get(x).union(cfc.get(y));
+						cfc.replace(x, EnsembleSommet.union(cfc.get(x), cfc.get(y)));
 						}
 					}
 				}
@@ -36,13 +37,13 @@ public class CalculCFC
 					PasPris.supprSommet(x);
 					cfc.replace(y, cfc.get(x));
 				}
-				Pris.union(cfc.get(x));
+				Pris =EnsembleSommet.union(Pris, cfc.get(x));
 			}
 		}
 		return cfc;
 	}
 	
-	public static <S,A extends Arc<S>> CFC<S> TarjanDFS (Graphe<S> G)
+	public static <S,A extends Arc<S>> CFC<S> TarjanDFS (GrapheNonValue<S> G)
 	{
 		EnsembleSommet<S> D;//Ensemble des sommets non visités
 		EnsembleSommet<S> Y;
@@ -60,7 +61,7 @@ public class CalculCFC
 			pospile.put(sommet, 0);
 		}
 		D=new EnsembleSommet<S>(G.getX());
-		Graphe<S> Gavisiter=new Graphe<S>(G); //TODO a changer pour passer en abstract Graphe
+		GrapheNonValue<S> Gavisiter=new GrapheNonValue<S>(G); //TODO à changer pour que TarjanDFS puisse prendre un AbstractGraph en entrée
 
 		while(!D.isEmpty())
 		{
@@ -87,6 +88,11 @@ public class CalculCFC
 					}
 					else
 					{
+						//Pour le moment la répétition permet au tout de marcher
+						for(int i = pospile.get(z);i<A.size();i++)//pospile.get(z) correspond à la position du sommet au dessus de z sur la pile
+						{
+							CFC.get(z).ajouteSommet(A.get(i));
+						}
 						for(int i = pospile.get(z);i<A.size();i++)//pospile.get(z) correspond à la position du sommet au dessus de z sur la pile
 						{
 							CFC.memeCFC(z,A.get(i));

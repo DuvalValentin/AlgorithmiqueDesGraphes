@@ -3,7 +3,7 @@ package graphElements.Elements;
 import graphElements.Abstract.AbstractGraphe;
 import graphElements.Interfaces.*;
 
-public class GrapheValue<S> extends AbstractGraphe<S,ArcValue<S>> implements InterfaceGrapheValue<S>
+public class GrapheValue<S> extends AbstractGraphe<S,InterfaceArcValue<S>> implements InterfaceGrapheValue<S>
 {
 	//Constructeur
 	public GrapheValue()
@@ -41,5 +41,12 @@ public class GrapheValue<S> extends AbstractGraphe<S,ArcValue<S>> implements Int
 	public void ajouteArc(Sommet<S> depart, Sommet<S> arrivee,Cout cout)
 	{
 		ajouteArc(new ArcValue<S>(depart,arrivee,cout));
+	}
+	
+
+	@Override
+	public GrapheValue<S> clone()
+	{
+		return new GrapheValue<S>(this);
 	}
 }

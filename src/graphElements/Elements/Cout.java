@@ -48,23 +48,19 @@ public class Cout implements InterfaceCout
 	@Override
 	public boolean equals(Object obj)
 	{
-		boolean callback;
-		if(obj.getClass()!=getClass())
+		boolean result=false;
+		if(obj!=null)
 		{
-			callback=false;
-		}
-		else
-		{
-			if(((Cout)obj).getValeur()==(getValeur()))
+			if(obj.getClass()==getClass())
 			{
-				callback=true;
-			}
-			else
-			{
-				callback=false;
+				if(((Cout)obj).getValeur()==(getValeur()))
+				{
+					result=true;
+				}
 			}
 		}
-		return callback;
+		
+		return result;
 	}
 	@Override
 	public int hashCode()

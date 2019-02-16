@@ -21,11 +21,11 @@ public class CalculCFCTest
 	private Arc<Integer> a34;
 	private Arc<Integer>a41;
 	
-	private Graphe<Integer>G1;
+	private GrapheNonValue<Integer>G1;
 	private CFC<Integer> CFCres1;
 	private EnsembleSommet<Integer> ES23;
 
-	private Graphe<Integer>G2;
+	private GrapheNonValue<Integer>G2;
 	private CFC<Integer> CFCres2;
 	private EnsembleSommet<Integer> ES1234;
 	
@@ -43,7 +43,7 @@ public class CalculCFCTest
 		a32=new Arc<Integer>(s3,s2);
 		a34=new Arc<Integer>(s3,s4);
 		
-		G1=new Graphe<Integer>();
+		G1=new GrapheNonValue<Integer>();
 		
 		G1.ajouteSommet(s1);G1.ajouteSommet(s2);G1.ajouteSommet(s3);G1.ajouteSommet(s4);
 		G1.ajouteArc(a12);G1.ajouteArc(a23);G1.ajouteArc(a32);G1.ajouteArc(a34);
@@ -53,7 +53,7 @@ public class CalculCFCTest
 		ES23.ajouteSommet(s2);ES23.ajouteSommet(s3);
 		CFCres1.replace(s2, ES23);CFCres1.replace(s3, ES23);
 		
-		G2=new Graphe<Integer>();
+		G2=new GrapheNonValue<Integer>();
 		a41=new Arc<Integer>(s4,s1);
 		G2.ajouteSommet(s1);G2.ajouteSommet(s2);G2.ajouteSommet(s3);G2.ajouteSommet(s4);
 		

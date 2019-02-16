@@ -25,7 +25,7 @@ public class Sommet<S> implements InterfaceSommet<S>
 	@Override
 	public void setId(S s) 
 	{
-		assert s!= null: "Objet null passé en paramètre";
+		//assert s!= null: "Objet null passé en paramètre";
 		id = s;
 	}
 	//toString/equals/hashCode
@@ -56,7 +56,5 @@ public class Sommet<S> implements InterfaceSommet<S>
 	{
 		return getId().hashCode();
 	}
-	
-	
 }
 

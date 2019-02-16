@@ -59,7 +59,8 @@ public class ArcTest
 		assertEquals("Le setArrivee de Arc n'est pas fonctionnel",arcTest.getDepart(),changerArrivee);
 	}
 	
-	@Test
+		@SuppressWarnings("unlikely-arg-type")
+		@Test
 	public void testEqualsMemeArc()
 	{
 		Arc<Integer> arcEq = new Arc<Integer>(depart,arrivee);
@@ -74,6 +75,14 @@ public class ArcTest
 		assertFalse("Le memeArc de Arc rends vrai pour deux arcs avec un depart différent",arcTest.memeArc(arcNDepEq));
 		assertFalse("Le memeArc de Arc rends vrai pour deux arcs avec une arrivee différente",arcTest.memeArc(arcNArrEq));
 		assertFalse("Le memeArc de Arc rends vrai pour deux arcs avec un depart et une arrivee différents",arcTest.memeArc(arcNEq));
+		assertFalse(arcTest.equals("cnjfbb"));
+		assertFalse(arcTest.equals(null));
+	}
+	
+	@Test
+	public void testToString()
+	{
+		assertEquals("("+depart.toString()+","+arrivee.toString()+")",arcTest.toString());
 	}
 	
 	@Test

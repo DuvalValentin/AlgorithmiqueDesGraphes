@@ -2,9 +2,8 @@ package graphElements.Interfaces;
 
 import graphElements.Elements.EnsembleSommet;
 import graphElements.Elements.Sommet;
-import graphElements.Elements.Arc;
 
-public interface InterfaceAbstractEnsembleArc<S, A extends Arc<S>> 
+public interface InterfaceOperationsElementairesEnsembleArc<S,A extends InterfaceArc<S>> 
 {
 	//Liste des successeurs et prédessesseurs
 	EnsembleSommet<S> listSucc(Sommet<S> sommet);//Liste des successeurs
@@ -19,7 +18,6 @@ public interface InterfaceAbstractEnsembleArc<S, A extends Arc<S>>
 	//L'arc peut être ajouté seulement si il n'existe pas déja, l'arc est supprimé seulement si il existe
 	void ajouteArc(A arc);//Ajoute l'arc 
 	void supprArc(A arc);//Supprime l'arc
-	void supprArc(Sommet<S>depart, Sommet<S>arrivee);//Pareil mais avec deux sommets en entrée
-	
-//TODO créer une fonction pour savoir si un ensemble est un sous-ensemble de this 
+	void supprArc(Sommet<S>depart, Sommet<S>arrivee);//Pareil mais avec deux sommets en entrée	
+	//TODO créer une fonction pour savoir si un ensemble est un sous-ensemble de this 
 }

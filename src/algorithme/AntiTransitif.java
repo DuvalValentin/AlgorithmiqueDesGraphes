@@ -4,11 +4,11 @@ import graphElements.Elements.*;
 
 public class AntiTransitif
 {
-	public static <S> Graphe<S> TauMinalite(Graphe<S> G)
+	public static <S> GrapheNonValue<S> TauMinalite(GrapheNonValue<S> G)
 	{
 		EnsembleSommet<S>X=G.getX();
-		Graphe<S> RW=new Graphe<S>(G);
-		Graphe<S> TauMin=new Graphe<S>(G);//Graphe tauMinimal
+		GrapheNonValue<S> RW=new GrapheNonValue<S>(G);
+		GrapheNonValue<S> TauMin=new GrapheNonValue<S>(G);//Graphe tauMinimal
 		
 		for(Sommet<S> z : X.getEnsemble()) 
 		{

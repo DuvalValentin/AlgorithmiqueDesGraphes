@@ -20,8 +20,8 @@ public class DetectionCircuitTest
 	private Arc<Integer> a32;
 	private Arc<Integer> a34;
 	
-	private Graphe<Integer> Gcirc;
-	private Graphe<Integer> Gline;
+	private GrapheNonValue<Integer> Gcirc;
+	private GrapheNonValue<Integer> Gline;
 	
 	@Before
 	public void setUp()
@@ -36,10 +36,10 @@ public class DetectionCircuitTest
 		a32=new Arc<Integer>(s3,s2);
 		a34=new Arc<Integer>(s3,s4);
 		
-		Gline=new Graphe<Integer>();
+		Gline=new GrapheNonValue<Integer>();
 		Gline.ajouteSommet(s1);Gline.ajouteSommet(s2);Gline.ajouteSommet(s3);Gline.ajouteSommet(s4);
 		Gline.ajouteArc(a12);Gline.ajouteArc(a23);Gline.ajouteArc(a34);
-		Gcirc=new Graphe<Integer>(Gline);
+		Gcirc=new GrapheNonValue<Integer>(Gline);
 		Gcirc.ajouteArc(a32);
 	}
 

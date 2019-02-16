@@ -22,7 +22,7 @@ public class CFC<S> extends HashMap<Sommet<S>,EnsembleSommet<S>>
 	{
 		EnsembleSommet<S> X = get(x);
 		EnsembleSommet<S> Y = get(y);
-		X.union(Y);
+		X=EnsembleSommet.union(X, Y);
 		replace(x, X);
 		replace(y, X);
 	}

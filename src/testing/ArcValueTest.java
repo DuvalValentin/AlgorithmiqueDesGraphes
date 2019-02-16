@@ -62,4 +62,25 @@ public class ArcValueTest
 		assertTrue("MemeArc pour deux arcs avec seulement le cout différent",arcValueTest.memeArc(memeArc));
 		assertFalse("MemeArc pour deux arcs avec seulement l'arrivée differente",arcValueTest.memeArc(wrongArc));
 	}
+	
+	@SuppressWarnings("unlikely-arg-type")
+	@Test
+	public void testEquals()
+	{
+		assertFalse(arcValueTest.equals("bguyG"));
+	}
+	
+	@Test
+	public void testHashCode()
+	{
+		int result=depart.hashCode()+arrivee.hashCode()+cout.hashCode();
+		assertEquals(result,arcValueTest.hashCode());
+	}
+	
+	@Test
+	public void testToString()
+	{
+		String string = "("+depart.toString()+","+arrivee.toString()+")=>["+cout.toString()+"]";
+		assertEquals(string,arcValueTest.toString());
+	}
 }

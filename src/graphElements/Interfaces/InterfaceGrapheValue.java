@@ -1,10 +1,9 @@
 package graphElements.Interfaces;
 
-import graphElements.Elements.ArcValue;
-import graphElements.Elements.EnsembleArcValue;
+import graphElements.Abstract.AbstractEnsembleArc;
 
-public interface InterfaceGrapheValue<S> extends InterfaceAbstractGraphe<S,ArcValue<S>>, InterfaceEnsembleArcValue<S>
+public interface InterfaceGrapheValue<S> extends InterfaceGraphe<S,InterfaceArcValue<S>>, InterfaceOperationsElementairesEnsembleArcValue<S>
 {
 	//Getter
-	public EnsembleArcValue<S> getGamma();//Renvoie une copie de Gamma
+	public AbstractEnsembleArc<S,InterfaceArcValue<S>> getGamma();//Renvoie une copie de Gamma
 }

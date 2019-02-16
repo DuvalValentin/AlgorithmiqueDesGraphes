@@ -10,11 +10,13 @@ import graphElements.Elements.Cout;
 public class CoutTest
 {
 	Cout coutTest;
+	float valeur=5;
 
 	@Before
 	public void setUp() 
 	{
-		coutTest=new Cout(5);
+		
+		coutTest=new Cout(valeur);
 	}
 	
 	@Test
@@ -30,7 +32,7 @@ public class CoutTest
 	@Test
 	public void testGetValeur()
 	{
-		assertTrue("GetValeur",5==coutTest.getValeur());
+		assertTrue("GetValeur",valeur==coutTest.getValeur());
 	}
 
 	@Test
@@ -44,5 +46,25 @@ public class CoutTest
 	public void testSomme()
 	{
 		assertTrue("Somme",10==Cout.somme(coutTest, coutTest).getValeur());
+	}
+	
+	@SuppressWarnings("unlikely-arg-type")
+	@Test
+	public void testEquals()
+	{
+		assertFalse(coutTest.equals("jnbb"));
+		assertFalse(coutTest.equals(null));
+	}
+	
+	@Test
+	public void testToString()
+	{
+		assertEquals(""+valeur,coutTest.toString());
+	}
+	
+	@Test
+	public void testHashCode()
+	{
+		assertTrue(valeur==coutTest.hashCode());
 	}
 }

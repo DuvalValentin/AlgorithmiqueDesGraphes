@@ -9,11 +9,11 @@ import graphElements.Elements.*;
 
 public class FermetureTransitiveTest
 {
-	private Graphe<Integer> G;
-	private Graphe<Integer> GT;
+	private GrapheNonValue<Integer> G;
+	private GrapheNonValue<Integer> GT;
 	
-	private EnsembleArc<Integer>Gamma;
-	private EnsembleArc<Integer>GammaT;
+	private EnsembleArcNonValue<Integer>Gamma;
+	private EnsembleArcNonValue<Integer>GammaT;
 	private EnsembleSommet<Integer> X;
 	private Sommet<Integer> s1;
 	private Sommet<Integer> s2;
@@ -46,19 +46,19 @@ public class FermetureTransitiveTest
 		a32 = new Arc<Integer>(s3,s2);
 		a34 = new Arc<Integer>(s3,s4);
 		a44 = new Arc<Integer>(s4,s4);
-		Gamma=new EnsembleArc<Integer>();
+		Gamma=new EnsembleArcNonValue<Integer>();
 		Gamma.ajouteArc(a12);Gamma.ajouteArc(a23);Gamma.ajouteArc(a32);Gamma.ajouteArc(a34);Gamma.ajouteArc(a44);
 		
-		G=new Graphe<Integer>(X,Gamma);
+		G=new GrapheNonValue<Integer>(X,Gamma);
 		
 		a13 = new Arc<Integer>(s1,s3);
 		a14 = new Arc<Integer>(s1,s4);
 		a22 = new Arc<Integer>(s2,s2);
 		a24 = new Arc<Integer>(s2,s4);
 		a33 = new Arc<Integer>(s3,s3);
-		GammaT=new EnsembleArc<Integer>(Gamma);
+		GammaT=new EnsembleArcNonValue<Integer>(Gamma);
 		GammaT.ajouteArc(a13);GammaT.ajouteArc(a14);GammaT.ajouteArc(a22);GammaT.ajouteArc(a24);GammaT.ajouteArc(a33);
-		GT=new Graphe<Integer>(X,GammaT);
+		GT=new GrapheNonValue<Integer>(X,GammaT);
 	}
 
 	/*
@@ -77,15 +77,15 @@ public class FermetureTransitiveTest
 	}//Commenté tant que composition est privé */
 	
 	@Test
-	public void testPuissanceGraphe()
+	public void testPuissanceGraphe() throws CloneNotSupportedException
 	{
-		Graphe<Integer> PG = FermetureTransitive.PuissanceDeGraphe(G);
+		GrapheNonValue<Integer> PG = FermetureTransitive.PuissanceDeGraphe(G);
 		assertEquals("La puissance de graphe ne marche pas",GT,PG);
 	}
 	@Test
 	public void testRoy_Warshall()
 	{
-		Graphe<Integer>RW=FermetureTransitive.Roy_Warshall(G);
+		GrapheNonValue<Integer>RW=FermetureTransitive.Roy_Warshall(G);
 		assertEquals("Roy_Warshall ne marche pas",GT,RW);
 	}
 }

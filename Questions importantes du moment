@@ -3,7 +3,6 @@ Comment réaliser une intersection dans la classe abstraite ?
 Comment faire pour ne pas avoir à recopier tout le code d'une méthode pour l'écriture d'un algorithme ? (aller voir pattern du visiteur)
 Comment faire une itération sur mes Ensemble ? (créer un itérateur spécialisé pour les Ensembles)
 Comment faire pour que l'attribut de Cout soit générique (en gros que ce soit un nombre flottant entier ou autre) ? 
-
-
+Est il possible de préciser dans la méthode d'une interface que la classe de l'objet en entrée ou celui en sortie soient les mêmes que l'objet sur lequel la méthode est appelée ?
 Est il correct de créer une méthode clone qui permet de créer de simuler de nouvelles instances dans les classes abstraites => Oui.
 Pourquoi on ne peut pas faire de méthode statique avec des types génériques => Par ce que le type générique est défini à l'instanciation.

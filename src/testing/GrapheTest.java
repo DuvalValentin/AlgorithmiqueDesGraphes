@@ -3,17 +3,16 @@ package testing;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
-
 import graphElements.Elements.Arc;
-import graphElements.Elements.EnsembleArc;
+import graphElements.Elements.EnsembleArcNonValue;
 import graphElements.Elements.EnsembleSommet;
-import graphElements.Elements.Graphe;
+import graphElements.Elements.GrapheNonValue;
 import graphElements.Elements.Sommet;
 
 public class GrapheTest
 {
-	private Graphe<Integer> G;
-	private EnsembleArc<Integer>Gamma;
+	private GrapheNonValue<Integer> G;
+	private EnsembleArcNonValue<Integer>Gamma;
 	private EnsembleSommet<Integer> X;
 	private Sommet<Integer> s1;
 	private Sommet<Integer> s2;
@@ -40,10 +39,10 @@ public class GrapheTest
 		a32 = new Arc<Integer>(s3,s2);
 		a34 = new Arc<Integer>(s3,s4);
 		a44 = new Arc<Integer>(s4,s4);
-		Gamma=new EnsembleArc<Integer>();
+		Gamma=new EnsembleArcNonValue<Integer>();
 		Gamma.ajouteArc(a12);Gamma.ajouteArc(a23);Gamma.ajouteArc(a32);Gamma.ajouteArc(a34);Gamma.ajouteArc(a44);
 		
-		G=new Graphe<Integer>(X,Gamma);
+		G=new GrapheNonValue<Integer>(X,Gamma);
 	}
 
 	@Test
@@ -51,7 +50,7 @@ public class GrapheTest
 	{
 		assertEquals("Test du constructeur et des getteurs",X,G.getX());
 		assertEquals("Test du constructeur et des getteurs",Gamma,G.getGamma());
-		Graphe<Integer> G1=new Graphe<Integer>(G);
+		GrapheNonValue<Integer> G1=new GrapheNonValue<Integer>(G);
 		assertEquals("Test du constructeur prenant un graphe en entrée",G,G1);
 		assertNotSame("On vérifie que les deux graphes n'ont pas la même réferrence",G,G1);
 	}
@@ -101,6 +100,12 @@ public class GrapheTest
 	}
 	
 	@Test
+	public void testFirstSommet()
+	{
+		assertEquals(s1,G.firstSommet());
+	}
+	
+	@Test
 	public void testAjouteSommet()
 	{
 		Sommet<Integer> s5 = new Sommet<Integer>(5);
@@ -125,6 +130,7 @@ public class GrapheTest
 		G.ajouteArc(a51);
 		G.ajouteArc(a41);
 		G.ajouteArc(s3, s1);
+		G.ajouteArc(a32);
 		assertTrue("Test de l'ajout d'un arc ajoutable",G.existeArc(a41));
 		assertFalse("Test de l'ajout d'un arc non ajoutable",G.existeArc(a51));
 		assertTrue("Test de l'ajout d'un arc avec 2 sommets en paramètres",G.existeArc(s3,s1));
@@ -142,8 +148,31 @@ public class GrapheTest
 	@Test
 	public void testIsEmpty()
 	{
-		Graphe<Integer> Ge = new Graphe<Integer>();
+		GrapheNonValue<Integer> Ge = new GrapheNonValue<Integer>();
 		assertTrue("Test de isEmpty et du constructeur sans paramètres",Ge.isEmpty());
+		Ge.ajouteSommet(s1);
+		assertFalse(Ge.isEmpty());
+	}
+	
+	@Test
+	public void testCorrectGamma()
+	{
+		GrapheNonValue<Integer> graphe;
+		EnsembleSommet<Integer> x = new EnsembleSommet<Integer>();
+		x.ajouteSommet(s1);x.ajouteSommet(s2);
+		EnsembleArcNonValue<Integer> gamma = new EnsembleArcNonValue<Integer>();
+		gamma.ajouteArc(a12);gamma.ajouteArc(a23);
+		graphe=new GrapheNonValue<Integer>(x,gamma);
+		boolean erreur=false;
+		try
+		{
+			graphe.getGamma();
+		}
+		catch(Exception e)
+		{
+			erreur=true;
+		}
+		assertTrue(erreur);
 	}
 	
 	@Test
@@ -155,15 +184,26 @@ public class GrapheTest
 	}
 	
 	@Test
+	public void testPointsSortie()
+	{
+		Sommet<Integer> s5 = new Sommet<Integer>(5);
+		G.ajouteSommet(s5);
+		G.ajouteArc(s4, s5);
+		EnsembleSommet<Integer> Ps=new EnsembleSommet<Integer>();
+		Ps.ajouteSommet(s5);
+		assertEquals("Test de pointsSortie",Ps,G.pointsSortie());
+	}
+	
+	@Test
 	public void testUnion()
 	{
 		Sommet<Integer> s5 = new Sommet<Integer>(5);
 		Arc<Integer> a15 = new Arc<Integer>(s1,s5);
-		Graphe<Integer> Gajout=new Graphe<Integer>();
+		GrapheNonValue<Integer> Gajout=new GrapheNonValue<Integer>();
 		Gajout.ajouteSommet(s1); Gajout.ajouteSommet(s5);
 		Gajout.ajouteArc(a15);
-		Gajout.union(G);
-		Graphe<Integer> Gunion=new Graphe<Integer>(G);
+		Gajout =(GrapheNonValue<Integer>) GrapheNonValue.union(Gajout, G);
+		GrapheNonValue<Integer> Gunion=new GrapheNonValue<Integer>(G);
 		Gunion.ajouteSommet(s5);
 		Gunion.ajouteArc(a15);
 		assertEquals("Test de l'union",Gunion,Gajout);
@@ -181,17 +221,42 @@ public class GrapheTest
 		EnsembleSommet<Integer> Xg =G.getX();
 		Xg.supprSommet(s3);
 		assertNotEquals("On modifie l'ensemble donné par getX",Xg,G.getX());
-		EnsembleArc<Integer> Gammag = G.getGamma();
+		EnsembleArcNonValue<Integer> Gammag = G.getGamma();
 		Gammag.supprArc(a32);
 		assertNotEquals("On modifie l'ensemble donné par getGamma",Gammag,G.getGamma());
 		s4=new Sommet<Integer>(6);
 		assertFalse("On modifie un des sommets par l'exterieur",G.existeSommet(s4));
 		s3.setId(9);
 		assertFalse("On modifie un des sommets par l'exterieur",G.existeSommet(s3));
-		Graphe<Integer>G2=new Graphe<Integer>(G);
+		GrapheNonValue<Integer>G2=new GrapheNonValue<Integer>(G);
 		G2.supprArc(a12);
 		assertNotEquals("On modifie le graphe créé à partir de G",G,G2);
 		a32.setDepart(s4);
 		assertFalse("On modifie un arc par l'exterieur",G.existeArc(a32));
+	}
+	
+	@Test
+	public void testToString()
+	{
+		String string ="["+X+" | "+Gamma+"]";
+		assertEquals(string,G.toString());
+	}
+	
+	@Test
+	public void testHashCode()
+	{
+		int hash = X.hashCode()+Gamma.hashCode();
+		assertEquals(hash,G.hashCode());
+	}
+	
+	@SuppressWarnings("unlikely-arg-type")
+	@Test 
+	public void testEquals()
+	{
+		assertFalse(G.equals(null));
+		assertFalse(G.equals("gjqhru"));
+		GrapheNonValue<Integer> graphe=new GrapheNonValue<Integer>(G);
+		graphe.supprSommet(s3);
+		assertFalse(G.equals(graphe));
 	}
 }

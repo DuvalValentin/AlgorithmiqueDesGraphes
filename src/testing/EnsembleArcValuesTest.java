@@ -1,8 +1,12 @@
 package testing;
 
 import static org.junit.Assert.*;
+
+import java.util.HashSet;
+
 import org.junit.Before;
 import org.junit.Test;
+
 import graphElements.Elements.ArcValue;
 import graphElements.Elements.Cout;
 import graphElements.Elements.EnsembleArcValue;
@@ -10,7 +14,7 @@ import graphElements.Elements.Sommet;
 
 public class EnsembleArcValuesTest
 {
-	private EnsembleArcValue<Integer> ensembleArcValueTest;
+	private EnsembleArcValue<Integer> ensembleArcValueTest, ensembleEmpty;
 	
 	private Sommet<Integer> s1, s2;
 	
@@ -37,6 +41,7 @@ public class EnsembleArcValuesTest
 		ensembleArcValueTest.ajouteArc(av115);
 		ensembleArcValueTest.ajouteArc(av121);
 		ensembleArcValueTest.ajouteArc(av217);
+		ensembleEmpty= new EnsembleArcValue<Integer>();
 		
 	}
 
@@ -51,16 +56,36 @@ public class EnsembleArcValuesTest
 	}
 	
 	@Test
+	public void testGetEnsemble()
+	{
+		HashSet<ArcValue<Integer>> ensemble = new HashSet<ArcValue<Integer>>();
+		ensemble.add(av115);ensemble.add(av121);ensemble.add(av217);
+		assertEquals(ensemble,ensembleArcValueTest.getEnsemble());
+	}
+	
+	@Test
 	public void testAjouteArc()
 	{
 		ensembleArcValueTest.ajouteArc(av113);
 		assertEquals("Le ajouteArc ajoute même si l'arc est présent",av115.getCout(),ensembleArcValueTest.getCout(s1, s1));
+		ensembleArcValueTest.ajouteArc(s2,s1,c5);
+		assertEquals(c5,ensembleArcValueTest.getCout(s1, s1));
+	}
+	
+	@Test
+	public void testSupprArc()
+	{
+		ensembleArcValueTest.supprArc(s1,s1);
+		assertFalse(ensembleArcValueTest.existeArc(s1,s1));
+		assertFalse(ensembleArcValueTest.existeArc(s2,s2));
+		ensembleArcValueTest.supprArc(s2, s2);
 	}
 
 	@Test
 	public void testGetCout()
 	{
 		assertEquals("getCout ne marche pas ",av121.getCout(),ensembleArcValueTest.getCout(s1, s2));
+		assertEquals(null,ensembleArcValueTest.getCout(s2, s2));
 	}
 	
 	@Test
@@ -68,7 +93,34 @@ public class EnsembleArcValuesTest
 	{
 		ensembleArcValueTest.setValeur(s1, s2, c7);
 		assertEquals("setValeur ne marche pas",c7,ensembleArcValueTest.getCout(s1,s2));
+		ensembleEmpty.setValeur(s1, s2, c7);//on vérifie que ça ne plante pas
 	}
+	
+	@Test
+	public void testUnion()
+	{
+		EnsembleArcValue<Integer> ajout = new EnsembleArcValue<Integer>(ensembleArcValueTest);
+		ajout.ajouteArc(s2, s2,c5); //TODO rajouter des cas ou on ajoute un arc avec un cout différent
+		EnsembleArcValue<Integer> copie = new EnsembleArcValue<Integer>(ensembleArcValueTest);
+		EnsembleArcValue<Integer> unionVide = EnsembleArcValue.union(ensembleArcValueTest, ensembleEmpty);
+		assertEquals(copie,unionVide);
+		copie.ajouteArc(s2,s2,c5);
+		EnsembleArcValue<Integer> union = EnsembleArcValue.union(ensembleArcValueTest, ajout);
+		assertEquals(copie,union);
+	}
+	
+	@Test
+	public void testIntersection()
+	{
+		EnsembleArcValue<Integer> copie = new EnsembleArcValue<Integer>(ensembleArcValueTest);
+		copie.supprArc(av115);copie.supprArc(av121);copie.ajouteArc(s2, s2,c5);
+		EnsembleArcValue<Integer> intersection  = EnsembleArcValue.intersection(ensembleArcValueTest,copie);
+		copie.supprArc(s2,s2);
+		assertEquals(copie,intersection);
+		EnsembleArcValue<Integer> intersectionVide =  EnsembleArcValue.intersection(ensembleArcValueTest, ensembleEmpty);
+		assertEquals(ensembleEmpty,intersectionVide);
+	}
+	
 	@Test
 	public void encapsulation()
 	{

@@ -1,17 +1,19 @@
 package graphElements.Elements;
 
 import java.util.HashSet;
+
 import graphElements.Abstract.AbstractEnsembleArc;
+import graphElements.Interfaces.InterfaceArcValue;
 import graphElements.Interfaces.InterfaceEnsembleArcValue;
 
-public class EnsembleArcValue<S> extends AbstractEnsembleArc<S,ArcValue<S>> implements InterfaceEnsembleArcValue<S> 
+public class EnsembleArcValue<S> extends AbstractEnsembleArc<S,InterfaceArcValue<S>> implements InterfaceEnsembleArcValue<S> 
 {
 	//Constructeur
 	public EnsembleArcValue(EnsembleArcValue<S> Ensemble)
 	{
-		for (ArcValue<S> arc : Ensemble.ensemble)
+		for (InterfaceArcValue<S> arc : Ensemble.ensemble)
 		{
-			ajouteArc(new ArcValue<S>(arc));
+			ajouteArc(arc);
 		}
 	}
 	public EnsembleArcValue()
@@ -23,11 +25,11 @@ public class EnsembleArcValue<S> extends AbstractEnsembleArc<S,ArcValue<S>> impl
 	public Cout getCout(Sommet<S> depart, Sommet<S> arrivee)
 	{
 		Cout cout=null;
-		for(ArcValue<S> arcV : ensemble)
+		for(InterfaceArcValue<S> arcV : ensemble)
 		{
 			if (arcV.getDepart().equals(depart) && arcV.getArrivee().equals(arrivee))
 			{
-				cout=arcV.getCout();
+				cout=((ArcValue<S>) arcV).getCout();
 				break;
 			}
 		}
@@ -39,11 +41,11 @@ public class EnsembleArcValue<S> extends AbstractEnsembleArc<S,ArcValue<S>> impl
 	{
 		boolean succes=false;
 		ArcValue<S> arcS=new ArcValue<S>(depart,arrivee,cout);
-		for(ArcValue<S> arcV : ensemble)
+		for(InterfaceArcValue<S> arcV : ensemble)
 		{
 			if (arcV.memeArc(arcS))
 			{
-				arcV.setValeur(cout.getValeur());
+				((ArcValue<S>) arcV).setValeur(cout.getValeur());
 				succes=true;
 				break;
 			}
@@ -52,26 +54,14 @@ public class EnsembleArcValue<S> extends AbstractEnsembleArc<S,ArcValue<S>> impl
 	}
 	//ajout et suppression d'élément
 	@Override
-	public void ajouteArc(ArcValue<S> arc)
+	public void ajouteArc(InterfaceArcValue<S> arc)
 	{
-		super.ajouteArc(new ArcValue<S>(arc));
+		super.ajouteArc(new ArcValue<S>((ArcValue<S>) arc));//Le new permet de créer une nouvelle instance
 	}
 	@Override
 	public void ajouteArc(Sommet<S> depart,Sommet<S>arrivee,Cout value)
 	{
-		boolean absent=true;
-		for(ArcValue<S> AV : ensemble)
-		{
-			if(AV.getDepart()==depart&&AV.getArrivee()==arrivee)
-			{
-				absent=false;
-				break;
-			}
-		}
-		if(absent)
-		{
-			ajouteArc(new ArcValue<S>(depart,arrivee,value));
-		}
+		ajouteArc(new ArcValue<S>(depart,arrivee,value));
 	}
 	@Override
 	public void supprArc(Sommet<S>depart,Sommet<S>arrivee)
@@ -79,13 +69,37 @@ public class EnsembleArcValue<S> extends AbstractEnsembleArc<S,ArcValue<S>> impl
 		Cout cout=getCout(depart,arrivee);
 		if(cout!=null)
 		{
-			ArcValue<S> suppr=new ArcValue<S>(depart,arrivee,cout);
-			supprArc(suppr);
+			supprArc(new ArcValue<S>(depart,arrivee,cout));
 		}
 	}
 	@Override
-	public HashSet<ArcValue<S>> getEnsemble()
+	public HashSet<InterfaceArcValue<S>> getEnsemble()
 	{
-		return new HashSet<ArcValue<S>>(ensemble);
+		return new HashSet<InterfaceArcValue<S>>(ensemble);
 	}
+	
+	
+	public static <S> EnsembleArcValue<S> union(EnsembleArcValue<S> Ensemble1,EnsembleArcValue<S> Ensemble2)
+	{
+		EnsembleArcValue<S> union = new EnsembleArcValue<S>(Ensemble1);
+		for(InterfaceArcValue<S> arc : Ensemble2.getEnsemble())
+		{
+			union.ajouteArc(arc);
+		}
+		return union;
+	}
+	
+	public static <S,A extends InterfaceArcValue<S>> EnsembleArcValue<S> intersection (EnsembleArcValue<S> Ensemble1,EnsembleArcValue<S> Ensemble2)
+	{
+		EnsembleArcValue<S> intersection = new EnsembleArcValue<S>(Ensemble1);
+		for(InterfaceArcValue<S> arc : Ensemble1.getEnsemble())
+		{
+			if(!Ensemble2.existeArc(arc))
+			{
+				intersection.supprArc(arc);
+			}
+		}
+		return intersection;
+	}
+	
 }

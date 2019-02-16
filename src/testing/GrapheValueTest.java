@@ -34,7 +34,7 @@ public class GrapheValueTest
 	private GrapheValue<Integer>GV2;
 
 	@Before
-	public void setUp() 
+	public void setUp()
 	{
 		s1=new Sommet<Integer>(1);
 		s2=new Sommet<Integer>(2);
@@ -109,5 +109,13 @@ public class GrapheValueTest
 	{
 		GV.setValeur(s1, s2, c9);
 		assertEquals("Le cout n'a pas été modifié",c9,GV.getCout(s1,s2));
+	}
+	
+	@Test
+	public void testClone()
+	{
+		GrapheValue<Integer> clone = GV.clone();
+		assertEquals(GV,clone);
+		assertNotSame(GV,clone);
 	}
 }

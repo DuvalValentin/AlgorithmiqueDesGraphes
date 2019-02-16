@@ -5,7 +5,7 @@ import graphElements.Elements.*;
 
 public class ExempleUtilisation
 {
-	public static void main(String[] args) 
+	public static void main(String[] args)
 	{
 		
 		//Opérations de créations : 
@@ -28,11 +28,11 @@ public class ExempleUtilisation
 		X.ajouteSommet(s1);X.ajouteSommet(s2);X.ajouteSommet(s3);X.ajouteSommet(s4);
 		System.out.println("Un ensemble de sommets : "+X);
 		
-		EnsembleArc<Integer>Gamma= new EnsembleArc<Integer>();
+		EnsembleArcNonValue<Integer>Gamma= new EnsembleArcNonValue<Integer>();
 		Gamma.ajouteArc(a12);Gamma.ajouteArc(a23);Gamma.ajouteArc(a32);Gamma.ajouteArc(a34);
 		System.out.println("Un ensemble d'arcs : "+Gamma);
 		
-		Graphe<Integer> G = new Graphe<Integer>(X,Gamma);
+		GrapheNonValue<Integer> G = new GrapheNonValue<Integer>(X,Gamma); 
 		System.out.println("Un graphe : "+G.toString());
 		
 		
@@ -52,7 +52,14 @@ public class ExempleUtilisation
 		Parcours.WFS(G,s1);//Pareil	
 		System.out.println();
 		//System.out.println("Le graphe composé de G (arcs en deux temps) : "+FermetureTransitive.Composition(G, G));//En commentaire tant que composition est privé
-		System.out.println("Fermeture transitive par puissance de Graphe : "+FermetureTransitive.PuissanceDeGraphe(G));
+		try
+		{
+			System.out.println("Fermeture transitive par puissance de Graphe : "+FermetureTransitive.PuissanceDeGraphe(G));
+		} catch (CloneNotSupportedException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		System.out.println("Fermeture transitive par Roy-Warshall : "+FermetureTransitive.Roy_Warshall(G));
 		System.out.println("Fermeture anti-transitive par Tau-Minalité (ne marche pas si circuit) : "+AntiTransitif.TauMinalite(G));
 		System.out.println("Existence d'un circuit par Roy-Warshall: "+DetectionCircuit.Roy_Warshall(G));
