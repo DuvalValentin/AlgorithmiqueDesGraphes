@@ -1,27 +1,30 @@
 package graphElements.Elements;
 
+import factory.Factory;
 import graphElements.Interfaces.InterfaceArcValue;
+import graphElements.Interfaces.InterfaceCout;
+import graphElements.Interfaces.InterfaceSommet;
 
 public class ArcValue<S> extends Arc<S> implements InterfaceArcValue<S>
 {
 	//Le Cout
-	private Cout cout;
+	private InterfaceCout cout;
 	//Constructeurs
-	public ArcValue (Sommet<S> depart, Sommet<S> arrivee, Cout cout)
+	public ArcValue (InterfaceSommet<S> depart, InterfaceSommet<S> arrivee, InterfaceCout cout)
 	{
 		super(depart,arrivee);
-		this.cout=new Cout(cout);
+		this.cout=Factory.cout(cout);
 	}
-	public ArcValue(ArcValue<S> arcValue)
+	public ArcValue(InterfaceArcValue<S> arcValue)
 	{
 		super(arcValue.getDepart(),arcValue.getArrivee());
 		cout=arcValue.getCout();
 	}
 	//Getters
 	@Override
-	public Cout getCout()
+	public InterfaceCout getCout()
 	{
-		return new Cout(cout);
+		return Factory.cout(cout);
 	}
 	@Override
 	public float getValeur()

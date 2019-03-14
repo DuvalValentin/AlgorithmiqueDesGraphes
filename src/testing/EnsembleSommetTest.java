@@ -1,7 +1,8 @@
 package testing;
 
 import graphElements.Elements.EnsembleSommet;
-import graphElements.Elements.Sommet;
+import graphElements.Interfaces.InterfaceEnsembleSommet;
+import graphElements.Interfaces.InterfaceSommet;
 
 import org.junit.Before;
 import static org.junit.Assert.*;
@@ -10,20 +11,20 @@ import java.util.HashSet;
 
 import org.junit.Test;
 
+import factory.Factory;
+
 public class EnsembleSommetTest
 {
-	private EnsembleSommet<Integer> ensembleSommetTest;
-	private Sommet<Integer> s3;
-	private Sommet<Integer> s4;
-	private Sommet<Integer> s5;
+	private InterfaceEnsembleSommet<Integer> ensembleSommetTest;
+	private InterfaceSommet<Integer> s3,s4,s5;
 	
 	@Before
 	public void setup()
 	{
-		ensembleSommetTest = new EnsembleSommet<Integer>();
-		s3=new Sommet<Integer>(3);
-		s4=new Sommet<Integer>(4);
-		s5=new Sommet<Integer>(5);
+		ensembleSommetTest = Factory.ensembleSommet();
+		s3=Factory.sommet(3);
+		s4=Factory.sommet(4);
+		s5=Factory.sommet(5);
 		ensembleSommetTest.ajouteSommet(s4);
 		ensembleSommetTest.ajouteSommet(s3);
 	}
@@ -31,7 +32,7 @@ public class EnsembleSommetTest
 	@Test
 	public void testConstructeurClone()
 	{
-		EnsembleSommet<Integer> ensembleSommetClone=new EnsembleSommet<Integer>(ensembleSommetTest);
+		InterfaceEnsembleSommet<Integer> ensembleSommetClone=Factory.ensembleSommet(ensembleSommetTest);
 		assertEquals("Le constructeur clone",ensembleSommetTest,ensembleSommetClone);
 		assertNotSame("Le constructeur clone créé un objet identique",ensembleSommetTest,ensembleSommetClone);
 		ensembleSommetClone.ajouteSommet(s5);
@@ -69,7 +70,7 @@ public class EnsembleSommetTest
 	@Test
 	public void testGetEnsemble()
 	{
-		HashSet<Sommet<Integer>> ensemble = new HashSet<Sommet<Integer>>();
+		HashSet<InterfaceSommet<Integer>> ensemble = new HashSet<InterfaceSommet<Integer>>();
 		ensemble.add(s3); ensemble.add(s4);
 		assertEquals(ensemble,ensembleSommetTest.getEnsemble());
 	}
@@ -77,28 +78,28 @@ public class EnsembleSommetTest
 	@Test
 	public void testUnion()
 	{
-		EnsembleSommet<Integer> ajout = new EnsembleSommet<Integer>();
+		InterfaceEnsembleSommet<Integer> ajout = Factory.ensembleSommet();
 		ajout.ajouteSommet(s3);ajout.ajouteSommet(s5);
-		EnsembleSommet<Integer> union = new EnsembleSommet<Integer>();
+		InterfaceEnsembleSommet<Integer> union = Factory.ensembleSommet();
 		union.ajouteSommet(s3); union.ajouteSommet(s4); union.ajouteSommet(s5);
-		EnsembleSommet<Integer> resultatUnion = EnsembleSommet.union(ajout, ensembleSommetTest);
+		InterfaceEnsembleSommet<Integer> resultatUnion = EnsembleSommet.union(ajout, ensembleSommetTest);
 		assertEquals(union,resultatUnion);
-		EnsembleSommet<Integer> vide = new EnsembleSommet<Integer>();
-		EnsembleSommet<Integer> resultatVide = EnsembleSommet.union(vide, ensembleSommetTest);
+		InterfaceEnsembleSommet<Integer> vide = Factory.ensembleSommet();
+		InterfaceEnsembleSommet<Integer> resultatVide = EnsembleSommet.union(vide, ensembleSommetTest);
 		assertEquals(ensembleSommetTest,resultatVide);
 	}
 	
 	@Test
 	public void testIntersection()
 	{
-		EnsembleSommet<Integer> ajout = new EnsembleSommet<Integer>();
+		InterfaceEnsembleSommet<Integer> ajout = Factory.ensembleSommet();
 		ajout.ajouteSommet(s3);ajout.ajouteSommet(s5);
-		EnsembleSommet<Integer> intersection = new EnsembleSommet<Integer>();
+		InterfaceEnsembleSommet<Integer> intersection = Factory.ensembleSommet();
 		intersection.ajouteSommet(s3);
-		EnsembleSommet<Integer> resultatIntersection = EnsembleSommet.intersection(ajout, ensembleSommetTest);
+		InterfaceEnsembleSommet<Integer> resultatIntersection = EnsembleSommet.intersection(ajout, ensembleSommetTest);
 		assertEquals(intersection,resultatIntersection);
-		EnsembleSommet<Integer> vide = new EnsembleSommet<Integer>();
-		EnsembleSommet<Integer> resultatVide = EnsembleSommet.intersection(vide, ensembleSommetTest);
+		InterfaceEnsembleSommet<Integer> vide = Factory.ensembleSommet();
+		InterfaceEnsembleSommet<Integer> resultatVide = EnsembleSommet.intersection(vide, ensembleSommetTest);
 		assertEquals(vide,resultatVide);
 	}
 }

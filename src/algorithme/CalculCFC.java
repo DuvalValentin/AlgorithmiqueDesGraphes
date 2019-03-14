@@ -3,28 +3,28 @@ package algorithme;
 import java.util.HashMap;
 import java.util.Stack;
 
-import graphElements.Abstract.AbstractGraphe;
-import graphElements.Elements.*;
-import graphElements.Interfaces.InterfaceArc;
+import factory.Factory;
+import graphElements.Elements.EnsembleSommet;
+import graphElements.Interfaces.*;
 
 public class CalculCFC
 {
-	public static <S,A extends InterfaceArc<S>> CFC<S> Foulkes(AbstractGraphe<S,A> G) 
+	public static <S,A extends InterfaceArc<S>> InterfaceCFC<S> Foulkes(InterfaceGraphe<S,A> G) 
 	{
 		//FermetureTransitive.Roy_Warshall(G);
 		//Ici on considère que G est fermé transitivement
-		EnsembleSommet<S> ensembleSommet = G.getX();
-		EnsembleSommet<S> Pris = new EnsembleSommet<S>();
-		EnsembleSommet<S> PasPris = new EnsembleSommet<S>(ensembleSommet);
-		CFC<S>cfc = new CFC<S>(ensembleSommet);
-		for (Sommet<S> x : ensembleSommet.getEnsemble())
+		InterfaceEnsembleSommet<S> ensembleSommet =Factory.ensembleSommet(G.getX());
+		InterfaceEnsembleSommet<S> Pris = Factory.ensembleSommet();
+		InterfaceEnsembleSommet<S> PasPris = Factory.ensembleSommet(ensembleSommet);
+		InterfaceCFC<S>cfc = Factory.CFC(ensembleSommet);
+		for (InterfaceSommet<S> x : ensembleSommet.getEnsemble())
 		{
 			if(!Pris.existeSommet(x))
 			{
 				PasPris.supprSommet(x);
 				if(G.existeBoucle(x))
 				{
-					for (Sommet<S> y : PasPris.getEnsemble())
+					for (InterfaceSommet<S> y : PasPris.getEnsemble())
 					{
 						if(G.existeArc(x, y)&&G.existeArc(y, x))
 						{
@@ -32,7 +32,7 @@ public class CalculCFC
 						}
 					}
 				}
-				for(Sommet<S> y : cfc.get(x).getEnsemble())
+				for(InterfaceSommet<S> y : cfc.get(x).getEnsemble())
 				{
 					PasPris.supprSommet(x);
 					cfc.replace(y, cfc.get(x));
@@ -43,25 +43,25 @@ public class CalculCFC
 		return cfc;
 	}
 	
-	public static <S,A extends Arc<S>> CFC<S> TarjanDFS (GrapheNonValue<S> G)
+	public static <S,A extends InterfaceArc<S>> InterfaceCFC<S> TarjanDFS (InterfaceGrapheNonValue<S> G)
 	{
-		EnsembleSommet<S> D;//Ensemble des sommets non visités
-		EnsembleSommet<S> Y;
-		EnsembleSommet<S> Z;
-		Stack<Sommet<S>> A=new Stack<Sommet<S>>(); 
-		CFC<S> CFC;
-		HashMap<Sommet<S>,Integer> pospile=new HashMap<Sommet<S>,Integer>();
+		InterfaceEnsembleSommet<S> D;//Ensemble des sommets non visités
+		InterfaceEnsembleSommet<S> Y;
+		InterfaceEnsembleSommet<S> Z;
+		Stack<InterfaceSommet<S>> A=new Stack<InterfaceSommet<S>>(); 
+		InterfaceCFC<S> CFC;
+		HashMap<InterfaceSommet<S>,Integer> pospile=new HashMap<InterfaceSommet<S>,Integer>();
 		
-		Sommet<S>y;
-		Sommet<S>z;
+		InterfaceSommet<S>y;
+		InterfaceSommet<S>z;
 		//Init
-		CFC=new CFC<S>(G.getX());
-		for(Sommet<S> sommet : G.getX().getEnsemble())
+		CFC=Factory.CFC(G.getX());
+		for(InterfaceSommet<S> sommet : G.getX().getEnsemble())
 		{
 			pospile.put(sommet, 0);
 		}
-		D=new EnsembleSommet<S>(G.getX());
-		GrapheNonValue<S> Gavisiter=new GrapheNonValue<S>(G); //TODO à changer pour que TarjanDFS puisse prendre un AbstractGraph en entrée
+		D=Factory.ensembleSommet(G.getX());
+		InterfaceGrapheNonValue<S> Gavisiter=Factory.grapheNonValue(G); //TODO à changer pour que TarjanDFS puisse prendre un AbstractGraph en entrée
 
 		while(!D.isEmpty())
 		{

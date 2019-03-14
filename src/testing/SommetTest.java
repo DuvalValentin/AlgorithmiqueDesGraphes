@@ -3,23 +3,24 @@ import org.junit.Before;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
-import graphElements.Elements.Sommet;
+import factory.Factory;
+import graphElements.Interfaces.InterfaceSommet;
 
 public class SommetTest
 {
-	private Sommet<Integer> sommetTest;
+	private InterfaceSommet<Integer> sommetTest;
 	private Integer value;
 	@Before
 	public void setup()
 	{
 		value=5;
-		sommetTest= new Sommet<Integer>(value);
+		sommetTest= Factory.sommet(value);
 	}
 	
 	@Test
 	public void testConstructorClone()
 	{
-		Sommet<Integer> sommetClone=new Sommet<Integer>(sommetTest);
+		InterfaceSommet<Integer> sommetClone=Factory.sommet(sommetTest);
 		assertEquals("Le constructeur clone",sommetTest,sommetClone);
 		assertNotSame("Le constructeur clone créé un objet identique",sommetTest,sommetClone);
 		sommetClone.setId(7);
@@ -30,8 +31,8 @@ public class SommetTest
 	@Test 
 	public void testEquals()
 	{
-		Sommet<Integer> sommetEq = new Sommet<Integer>(5);
-		Sommet<Integer> sommetNEq = new Sommet<Integer>(7);
+		InterfaceSommet<Integer> sommetEq = Factory.sommet(5);
+		InterfaceSommet<Integer> sommetNEq = Factory.sommet(7);
 		String string= "okidoki";
 		assertTrue("Equals rend faux pour deux Sommets censés être equals",sommetTest.equals(sommetEq));
 		assertFalse("Equals rend vrai pour deux Sommets censés être not equals",sommetTest.equals(sommetNEq));

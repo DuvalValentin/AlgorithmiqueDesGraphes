@@ -2,45 +2,47 @@ package graphElements.Abstract;
 
 import java.util.HashSet;
 
-import graphElements.Elements.EnsembleSommet;
-import graphElements.Elements.Sommet;
+import factory.Factory;
 import graphElements.Interfaces.InterfaceArc;
+import graphElements.Interfaces.InterfaceEnsembleArc;
+import graphElements.Interfaces.InterfaceEnsembleSommet;
 import graphElements.Interfaces.InterfaceGraphe;
+import graphElements.Interfaces.InterfaceSommet;
 
 public abstract class AbstractGraphe<S,A extends InterfaceArc<S>> implements InterfaceGraphe<S,A>
 {
 	//Ensembles -------------------------------------------------------------
-	protected EnsembleSommet<S> X;
-	protected AbstractEnsembleArc<S,A> Gamma;
+	protected InterfaceEnsembleSommet<S> X;
+	protected InterfaceEnsembleArc<S,A> Gamma;
 	//Constructeurs ---------------------------------------------------------
-	public AbstractGraphe(){setX(new EnsembleSommet<S>());}
-	public AbstractGraphe(EnsembleSommet<S> x,AbstractEnsembleArc<S,A> gamma)
+	public AbstractGraphe(){setX(Factory.ensembleSommet());}
+	public AbstractGraphe(InterfaceEnsembleSommet<S> x,InterfaceEnsembleArc<S,A> gamma)
 	{
 		setX(x);
 		setGamma(gamma);
 	}
-	public AbstractGraphe(AbstractGraphe<S,A> G)
+	public AbstractGraphe(InterfaceGraphe<S,A> G)
 	{
 		setX(G.getX());
 		setGamma(G.getGamma());
 	}
 	//Getters ---------------------------------------------------------------
 	@Override
-	public EnsembleSommet<S> getX() 
+	public InterfaceEnsembleSommet<S> getX() 
 	{
-		return new EnsembleSommet<S>(X);
+		return Factory.ensembleSommet(X);
 	}
 	@Override
-	public AbstractEnsembleArc<S,A> getGamma()
+	public InterfaceEnsembleArc<S,A> getGamma()
 	{
-		return Gamma;
+		return Factory.ensembleArc(Gamma);
 	}
 	//Setters --------------------------------------------------------------
-	protected void setX(EnsembleSommet<S> x) 
+	protected void setX(InterfaceEnsembleSommet<S> x) 
 	{
-		X = new EnsembleSommet<S>(x);
+		X = Factory.ensembleSommet(x);
 	}
-	protected void setGamma(AbstractEnsembleArc<S,A> gamma)
+	protected void setGamma(InterfaceEnsembleArc<S,A> gamma)
 	{
 		if (correctGamma(gamma))
 		{
@@ -49,7 +51,7 @@ public abstract class AbstractGraphe<S,A extends InterfaceArc<S>> implements Int
 	}
 	//Existences d'arc et de sommets ---------------------------------------
 	@Override
-	public boolean existeSommet (Sommet<S> sommet)
+	public boolean existeSommet (InterfaceSommet<S> sommet)
 	{
 		return X.existeSommet(sommet);
 	}
@@ -59,7 +61,7 @@ public abstract class AbstractGraphe<S,A extends InterfaceArc<S>> implements Int
 		return Gamma.existeArc(arc);
 	}
 	@Override
-	public boolean existeArc (Sommet<S> arrivee,Sommet<S> depart)
+	public boolean existeArc (InterfaceSommet<S> arrivee,InterfaceSommet<S> depart)
 	{
 		return Gamma.existeArc(arrivee, depart);
 	}
@@ -69,7 +71,7 @@ public abstract class AbstractGraphe<S,A extends InterfaceArc<S>> implements Int
 		return Gamma.existeBoucle();
 	}
 	@Override
-	public boolean existeBoucle(Sommet<S> sommet)
+	public boolean existeBoucle(InterfaceSommet<S> sommet)
 	{
 		return Gamma.existeBoucle(sommet);
 	}
@@ -95,12 +97,12 @@ public abstract class AbstractGraphe<S,A extends InterfaceArc<S>> implements Int
 		}
 		return ajoutable;
 	}
+	
 	@Override
-	public boolean correctGamma(AbstractEnsembleArc<S,A> gamma)
+	public boolean correctGamma(InterfaceEnsembleArc<S,A> gamma)
 	{
 		boolean result=true;
-		
-		for(A arc : gamma.ensemble)
+		for(A arc : gamma.getEnsemble())
 		{
 			if(!ajoutableArc(arc))
 			{
@@ -112,34 +114,34 @@ public abstract class AbstractGraphe<S,A extends InterfaceArc<S>> implements Int
 	@Override
 	public boolean isEmpty()
 	{
-		return X.ensemble.isEmpty();
+		return X.getEnsemble().isEmpty();
 	}
 	//Selections d'éléments -----------------------------------------------
 	//Selction d'un élément
 	@Override
-	public Sommet<S> firstSommet()
+	public InterfaceSommet<S> firstSommet()
 	{
 		return X.firstSommet();
 	}
 	//Liste des prédecesseurs et successeurs
 	@Override
-	public EnsembleSommet<S> listSucc(Sommet<S> sommet)
+	public InterfaceEnsembleSommet<S> listSucc(InterfaceSommet<S> sommet)
 	{
 		return Gamma.listSucc(sommet);
 	}
 	@Override
-	public EnsembleSommet<S> listPred(Sommet<S> sommet)
+	public InterfaceEnsembleSommet<S> listPred(InterfaceSommet<S> sommet)
 	{
 		return Gamma.listPred(sommet);
 	}
 	//Liste des points d'entrées et de sorties
 	@Override
-	public EnsembleSommet<S> pointsEntree()
+	public InterfaceEnsembleSommet<S> pointsEntree()
 	{
-		EnsembleSommet<S> Ent=new EnsembleSommet<S>(X);
-		for(Sommet<S> S : X.ensemble)
+		InterfaceEnsembleSommet<S> Ent=Factory.ensembleSommet(X);
+		for(InterfaceSommet<S> S : X.getEnsemble())
 		{
-			for(A Arc : Gamma.ensemble)
+			for(A Arc : Gamma.getEnsemble())
 			{
 				if(Arc.getArrivee().equals(S))
 				{
@@ -151,12 +153,12 @@ public abstract class AbstractGraphe<S,A extends InterfaceArc<S>> implements Int
 		return Ent;
 	}
 	@Override
-	public EnsembleSommet<S> pointsSortie()
+	public InterfaceEnsembleSommet<S> pointsSortie()
 	{
-		EnsembleSommet<S> Sor=new EnsembleSommet<S>(X);
-		for(Sommet<S> S : X.ensemble)
+		InterfaceEnsembleSommet<S> Sor=Factory.ensembleSommet(X);
+		for(InterfaceSommet<S> S : X.getEnsemble())
 		{
-			for(A Arc : Gamma.ensemble)
+			for(A Arc : Gamma.getEnsemble())
 			{
 				if(Arc.getDepart().equals(S))
 				{
@@ -170,14 +172,14 @@ public abstract class AbstractGraphe<S,A extends InterfaceArc<S>> implements Int
 	//Ajouts et suppressions d'éléments ----------------------------------------
 	//Sommet
 	@Override
-	public void ajouteSommet(Sommet<S> sommet)
+	public void ajouteSommet(InterfaceSommet<S> sommet)
 	{
 		X.ajouteSommet(sommet);
 	}
 	@Override
-	public void supprSommet(Sommet<S> sommet)
+	public void supprSommet(InterfaceSommet<S> sommet)
 	{
-		HashSet<A> ens=new HashSet<A>(Gamma.ensemble);
+		HashSet<A> ens=new HashSet<A>(Gamma.getEnsemble());
 		for(A arc : ens)
 		{
 			if(arc.getDepart().equals(sommet) || arc.getArrivee().equals(sommet))
@@ -202,16 +204,16 @@ public abstract class AbstractGraphe<S,A extends InterfaceArc<S>> implements Int
 		Gamma.supprArc(arc);
 	}
 	@Override
-	public void supprArc(Sommet<S> depart, Sommet<S> arrivee)
+	public void supprArc(InterfaceSommet<S> depart, InterfaceSommet<S> arrivee)
 	{
 		Gamma.supprArc(depart, arrivee);
 	}
 	//Union
-	public static <S,A extends InterfaceArc<S>> AbstractGraphe<S,A> union(AbstractGraphe<S,A> Graphe1,AbstractGraphe<S,A> Graphe2)
+	public static <S,A extends InterfaceArc<S>> InterfaceGraphe<S,A> union(InterfaceGraphe<S,A> Graphe1,InterfaceGraphe<S,A> Graphe2)
 	{
-		AbstractGraphe<S,A> union = Graphe1.clone();
+		InterfaceGraphe<S,A> union = Factory.graphe(Graphe1);
 		
-		for(Sommet<S> sommet : Graphe2.getX().getEnsemble())
+		for(InterfaceSommet<S> sommet : Graphe2.getX().getEnsemble())
 		{
 			union.ajouteSommet(sommet);
 		}
@@ -251,6 +253,4 @@ public abstract class AbstractGraphe<S,A extends InterfaceArc<S>> implements Int
 	{
 		return X.hashCode()+Gamma.hashCode();
 	}
-	@Override
-	public abstract AbstractGraphe<S,A> clone();
 }

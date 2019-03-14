@@ -2,23 +2,26 @@ package algorithme;
 
 import java.util.Stack;
 
-import graphElements.Elements.*;
+import factory.Factory;
+import graphElements.Interfaces.*;
 
+/*TODO créer une classe d'exception si le graphe passé en paramètre ne respecte pas les préconditions
+ */
 public class PlusCC
 {
-	public static <S> TableauPlusCC<S> Dijkstra(GrapheValue<S> G,Sommet<S> x0)
+	public static <S> InterfaceTableauPlusCC<S> Dijkstra(InterfaceGrapheValue<S> G,InterfaceSommet<S> x0)
 	{
-		EnsembleSommet<S>M=new EnsembleSommet<S>(G.getX());//Liste des sommets non traités
-		EnsembleSommet<S>S=new EnsembleSommet<S>(G.listSucc(x0));//Liste de Successeur du sommet en cours
-		TableauPlusCC<S> Dijkstra=new TableauPlusCC<S>(x0,G);//Tableau résultat
+		InterfaceEnsembleSommet<S>M=Factory.ensembleSommet(G.getX());//Liste des sommets non traités
+		InterfaceEnsembleSommet<S>S=Factory.ensembleSommet(G.listSucc(x0));//Liste de Successeur du sommet en cours
+		InterfaceTableauPlusCC<S> Dijkstra=Factory.tableauPlusCC(x0,G);//Tableau résultat
 		float v;//valeur de la distance par un sommet intermédiaire
 		M.supprSommet(x0);
 		S.supprSommet(x0);//Supprime x si x se succède à lui même
 		while(!M.isEmpty())
 		{
-			Cout coutm=null;
-			Sommet<S> m=null;
-			for(Sommet<S> sommet : M.getEnsemble())
+			InterfaceCout coutm=null;
+			InterfaceSommet<S> m=null;
+			for(InterfaceSommet<S> sommet : M.getEnsemble())
 			{
 				if (coutm==null)
 				{
@@ -33,14 +36,14 @@ public class PlusCC
 						coutm=Dijkstra.getDistance(sommet);
 					}
 				}
-				if(coutm!=null)
-				{
+				//if(coutm!=null)
+				//{
 					S=G.listSucc(m);
-					for(Sommet<S> y : S.getEnsemble())
+					for(InterfaceSommet<S> y : S.getEnsemble())
 					{
 						if(M.existeSommet(y))
 						{
-							Cout cout= G.getCout(m, y);
+							InterfaceCout cout= G.getCout(m, y);
 							v=Dijkstra.getDistance(m).getValeur()+cout.getValeur();
 							if(v<Dijkstra.getDistance(y).getValeur())
 							{
@@ -49,32 +52,36 @@ public class PlusCC
 							}
 						}
 					}
-				}
+				//}
 			}
 			M.supprSommet(m);
 		}
 		return Dijkstra;
 	}
 	
-	public static <S> TableauPlusCC<S>  OrdinalRacine(GrapheValue<S> G,Sommet<S> x0)
+	public static <S> InterfaceTableauPlusCC<S>  OrdinalRacine(InterfaceGrapheValue<S> G,InterfaceSommet<S> x0)
 	{
-		GrapheValue<S> H=new GrapheValue<S>(G);//Le reste du graphe qu'il reste à parcourir
-		EnsembleSommet<S> E;//Liste des points d'entrée
-		EnsembleSommet<S> P;//Liste de prédecesseurs
-		Sommet<S> y,m;//y : le sommet que l'on traite m prédécesseur de y au coup le plus faible pour atteindre y,
-		TableauPlusCC<S> OrdinalRacine=new TableauPlusCC<S>(x0,G);
+		InterfaceGrapheValue<S> H=Factory.grapheValue(G);//Le reste du graphe qu'il reste à parcourir
+		InterfaceEnsembleSommet<S> E;//Liste des points d'entrée
+		InterfaceEnsembleSommet<S> P;//Liste de prédecesseurs
+		InterfaceSommet<S> y,m;//y : le sommet que l'on traite m prédécesseur de y au coup le plus faible pour atteindre y,
+		InterfaceTableauPlusCC<S> OrdinalRacine=Factory.tableauPlusCC(x0,G);
+		if(!G.listPred(x0).equals(Factory.ensembleSommet()))
+		{
+			System.err.println(x0+" n'est pas la racine de "+G);
+		}
 		H.supprSommet(x0);
 		E=H.pointsEntree();
 		while(!H.isEmpty()&&!E.isEmpty())
 		{
 			y=E.firstSommet();
 			P=G.listPred(y);
-			Cout coutm=null;
+			InterfaceCout coutm=null;
 			m=null;
-			Cout coutp;
-			for(Sommet<S> sommet : P.getEnsemble())
+			InterfaceCout coutp;
+			for(InterfaceSommet<S> sommet : P.getEnsemble())
 			{
-				coutp=Cout.somme(OrdinalRacine.getDistance(sommet),G.getCout(sommet, y));
+				coutp=InterfaceCout.somme(OrdinalRacine.getDistance(sommet),G.getCout(sommet, y));
 				if(coutm==null)
 				{
 					m=sommet;
@@ -89,7 +96,7 @@ public class PlusCC
 					}
 				}
 			}
-			OrdinalRacine.modifDistance(y, Cout.somme(OrdinalRacine.getDistance(m), G.getCout(m, y)));
+			OrdinalRacine.modifDistance(y, InterfaceCout.somme(OrdinalRacine.getDistance(m), G.getCout(m, y)));
 			OrdinalRacine.modifPredecesseur(y, m);
 			H.supprSommet(y);
 			E=H.pointsEntree();
@@ -101,17 +108,17 @@ public class PlusCC
 		return OrdinalRacine;
 	}
 	
-	public static <S> TableauPlusCC<S> BellmanFord(GrapheValue<S> G, Sommet<S> x0)
+	public static <S> InterfaceTableauPlusCC<S> BellmanFord(InterfaceGrapheValue<S> G, InterfaceSommet<S> x0)
 	{
-		TableauPlusCC<S> BellmanFord=new TableauPlusCC<S>(x0,G);//Tableau final
-		GrapheValue<S> Gm=new GrapheValue<S>(G);//G moins x0
-		Cout cout;//cout entre les sommet actuel et son successeur
+		InterfaceTableauPlusCC<S> BellmanFord=Factory.tableauPlusCC(x0,G);//Tableau final
+		InterfaceGrapheValue<S> Gm=Factory.grapheValue(G);//G moins x0
+		InterfaceCout cout;//cout entre les sommet actuel et son successeur
 		Gm.supprSommet(x0);
-		for(Sommet<S> x : G.getX().getEnsemble())
+		for(InterfaceSommet<S> x : G.getX().getEnsemble())
 		{
-			for(Sommet<S> y : G.listSucc(x).getEnsemble())
+			for(InterfaceSommet<S> y : G.listSucc(x).getEnsemble())
 			{
-				cout=Cout.somme(BellmanFord.getDistance(x), G.getCout(x, y));
+				cout=InterfaceCout.somme(BellmanFord.getDistance(x), G.getCout(x, y));
 				if(BellmanFord.getDistance(y)==null)
 				{
 					BellmanFord.modifPredecesseur(y, x);
@@ -128,11 +135,11 @@ public class PlusCC
 				
 			}
 		}
-		for(Sommet<S>x : G.getX().getEnsemble())
+		for(InterfaceSommet<S>x : G.getX().getEnsemble())
 		{
-			for(Sommet<S> y : G.listSucc(x).getEnsemble())
+			for(InterfaceSommet<S> y : G.listSucc(x).getEnsemble())
 			{
-				if(BellmanFord.getDistance(y).getValeur()>Cout.somme(BellmanFord.getDistance(x), G.getCout(x, y)).getValeur())
+				if(BellmanFord.getDistance(y).getValeur()>InterfaceCout.somme(BellmanFord.getDistance(x), G.getCout(x, y)).getValeur())
 				{
 					System.err.println("Il y a un circuit absorbant dans le graphe, la table obtenue par BellmanFord n'est pas exploitable");
 				}
@@ -141,18 +148,18 @@ public class PlusCC
 		return BellmanFord;
 	}
 	
-	public static <S> TableauPlusCC<S> Ford(GrapheValue<S> G, Sommet<S> x0)
+	public static <S> InterfaceTableauPlusCC<S> Ford(InterfaceGrapheValue<S> G, InterfaceSommet<S> x0)
 	{
-		TableauPlusCC<S> Ford = new TableauPlusCC<S>(x0,G);
-		Sommet<S> y,z;
-		EnsembleSommet<S> Y;
+		InterfaceTableauPlusCC<S> Ford = Factory.tableauPlusCC(x0,G);
+		InterfaceSommet<S> y,z;
+		InterfaceEnsembleSommet<S> Y;
 		boolean absorbant=false;
-		Stack<Sommet<S>> A=new Stack<Sommet<S>>();
-		EnsembleSommet<S> T = new EnsembleSommet<S>();
-		EnsembleSommet<S> D = new EnsembleSommet<S>(G.getX());
+		Stack<InterfaceSommet<S>> A=new Stack<InterfaceSommet<S>>();
+		InterfaceEnsembleSommet<S> T = Factory.ensembleSommet();
+		InterfaceEnsembleSommet<S> D = Factory.ensembleSommet(G.getX());
 		D.supprSommet(x0);
 		A.push(x0); 
-		GrapheValue<S> Gavisiter=new GrapheValue<S>(G);
+		InterfaceGrapheValue<S> Gavisiter=Factory.grapheValue(G);
 		while(!absorbant&&!A.empty())
 		{
 			y=A.peek();
@@ -164,7 +171,7 @@ public class PlusCC
 				if (D.existeSommet(z))
 				{
 					D.supprSommet(z);
-					Ford.modifDistance(z, Cout.somme(Ford.getDistance(y), G.getCout(y,z)));
+					Ford.modifDistance(z, InterfaceCout.somme(Ford.getDistance(y), G.getCout(y,z)));
 					Ford.modifPredecesseur(z, y);
 					A.push(z);
 				}
@@ -172,21 +179,21 @@ public class PlusCC
 				{
 					if(T.existeSommet(z))
 					{
-						if(Ford.getDistance(z).getValeur()>Cout.somme(Ford.getDistance(y), G.getCout(y,z)).getValeur())
+						if(Ford.getDistance(z).getValeur()>InterfaceCout.somme(Ford.getDistance(y), G.getCout(y,z)).getValeur())
 						{
 							T.supprSommet(z);
-							for (Sommet<S> sommet : G.listSucc(z).getEnsemble())
+							for (InterfaceSommet<S> sommet : G.listSucc(z).getEnsemble())
 							{
 								Gavisiter.ajouteArc(z, sommet, G.getCout(z, sommet));
 							}
-							Ford.modifDistance(z, Cout.somme(Ford.getDistance(y), G.getCout(y,z)));
+							Ford.modifDistance(z, InterfaceCout.somme(Ford.getDistance(y), G.getCout(y,z)));
 							Ford.modifPredecesseur(z, y);
 							A.push(z);
 						}
 					}
 					else
 					{
-						if(Ford.getDistance(z).getValeur()>Cout.somme(Ford.getDistance(y), G.getCout(y,z)).getValeur())
+						if(Ford.getDistance(z).getValeur()>InterfaceCout.somme(Ford.getDistance(y), G.getCout(y,z)).getValeur())
 						{
 							absorbant=true;
 						}
@@ -201,7 +208,7 @@ public class PlusCC
 		}
 		if(absorbant)
 		{
-			System.out.println("Circuit absorbant détécté, on ne peut pas calculer le plusCC");
+			System.err.println("Circuit absorbant détécté, on ne peut pas calculer le plusCC");
 		}
 		return Ford;
 	}

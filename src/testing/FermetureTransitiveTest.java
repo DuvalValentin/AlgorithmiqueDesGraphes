@@ -5,60 +5,48 @@ import org.junit.Before;
 import org.junit.Test;
 
 import algorithme.FermetureTransitive;
-import graphElements.Elements.*;
+import factory.Factory;
+import graphElements.Interfaces.*;
 
 public class FermetureTransitiveTest
 {
-	private GrapheNonValue<Integer> G;
-	private GrapheNonValue<Integer> GT;
+	private InterfaceGrapheNonValue<Integer> G, GT;
 	
-	private EnsembleArcNonValue<Integer>Gamma;
-	private EnsembleArcNonValue<Integer>GammaT;
-	private EnsembleSommet<Integer> X;
-	private Sommet<Integer> s1;
-	private Sommet<Integer> s2;
-	private Sommet<Integer> s3;
-	private Sommet<Integer> s4;
-	private Arc<Integer> a12;
-	private Arc<Integer> a23;
-	private Arc<Integer> a32;
-	private Arc<Integer> a34;
-	private Arc<Integer> a44;
+	private InterfaceEnsembleArcNonValue<Integer>Gamma, GammaT;
+	private InterfaceEnsembleSommet<Integer> X;
+	private InterfaceSommet<Integer> s1,s2,s3,s4;
+	private InterfaceArc<Integer> a12,a23,a32,a34,a44;
 	
-	private Arc<Integer> a13;
-	private Arc<Integer> a14;
-	private Arc<Integer> a22;
-	private Arc<Integer> a24;
-	private Arc<Integer> a33;
+	private InterfaceArc<Integer> a13,a14,a22,a24,a33;
 
 	@Before
 	public void setUp() throws Exception
 	{
-		s1=new Sommet<Integer>(1);
-		s2=new Sommet<Integer>(2);
-		s3=new Sommet<Integer>(3);
-		s4=new Sommet<Integer>(4);
-		X=new EnsembleSommet<Integer>();
+		s1=Factory.sommet(1);
+		s2=Factory.sommet(2);
+		s3=Factory.sommet(3);
+		s4=Factory.sommet(4);
+		X=Factory.ensembleSommet();
 		X.ajouteSommet(s1);X.ajouteSommet(s2);X.ajouteSommet(s3);X.ajouteSommet(s4);
 		
-		a12 = new Arc<Integer>(s1,s2);
-		a23 = new Arc<Integer>(s2,s3);
-		a32 = new Arc<Integer>(s3,s2);
-		a34 = new Arc<Integer>(s3,s4);
-		a44 = new Arc<Integer>(s4,s4);
-		Gamma=new EnsembleArcNonValue<Integer>();
+		a12 = Factory.arcNonValue(s1,s2);
+		a23 = Factory.arcNonValue(s2,s3);
+		a32 = Factory.arcNonValue(s3,s2);
+		a34 = Factory.arcNonValue(s3,s4);
+		a44 = Factory.arcNonValue(s4,s4);
+		Gamma=Factory.ensembleArcNonValue();
 		Gamma.ajouteArc(a12);Gamma.ajouteArc(a23);Gamma.ajouteArc(a32);Gamma.ajouteArc(a34);Gamma.ajouteArc(a44);
 		
-		G=new GrapheNonValue<Integer>(X,Gamma);
+		G=Factory.grapheNonValue(X, Gamma);
 		
-		a13 = new Arc<Integer>(s1,s3);
-		a14 = new Arc<Integer>(s1,s4);
-		a22 = new Arc<Integer>(s2,s2);
-		a24 = new Arc<Integer>(s2,s4);
-		a33 = new Arc<Integer>(s3,s3);
-		GammaT=new EnsembleArcNonValue<Integer>(Gamma);
+		a13 = Factory.arcNonValue(s1,s3);
+		a14 = Factory.arcNonValue(s1,s4);
+		a22 = Factory.arcNonValue(s2,s2);
+		a24 = Factory.arcNonValue(s2,s4);
+		a33 = Factory.arcNonValue(s3,s3);
+		GammaT=Factory.ensembleArcNonValue(Gamma);
 		GammaT.ajouteArc(a13);GammaT.ajouteArc(a14);GammaT.ajouteArc(a22);GammaT.ajouteArc(a24);GammaT.ajouteArc(a33);
-		GT=new GrapheNonValue<Integer>(X,GammaT);
+		GT=Factory.grapheNonValue(X, GammaT);
 	}
 
 	/*
@@ -77,15 +65,15 @@ public class FermetureTransitiveTest
 	}//Commenté tant que composition est privé */
 	
 	@Test
-	public void testPuissanceGraphe() throws CloneNotSupportedException
+	public void testPuissanceGraphe()
 	{
-		GrapheNonValue<Integer> PG = FermetureTransitive.PuissanceDeGraphe(G);
+		InterfaceGrapheNonValue<Integer> PG = FermetureTransitive.PuissanceDeGraphe(G);
 		assertEquals("La puissance de graphe ne marche pas",GT,PG);
 	}
 	@Test
 	public void testRoy_Warshall()
 	{
-		GrapheNonValue<Integer>RW=FermetureTransitive.Roy_Warshall(G);
+		InterfaceGrapheNonValue<Integer>RW=FermetureTransitive.Roy_Warshall(G);
 		assertEquals("Roy_Warshall ne marche pas",GT,RW);
 	}
 }

@@ -17,7 +17,7 @@ public class Cout implements InterfaceCout
 	{
 		setValeur(valeur);
 	}
-	public Cout(Cout cout)
+	public Cout(InterfaceCout cout)
 	{
 		setValeur(cout.getValeur());
 	}
@@ -32,12 +32,6 @@ public class Cout implements InterfaceCout
 	public void setValeur(float valeur)
 	{
 		this.valeur = valeur;
-	}
-	//Somme de deux couts
-	public static Cout somme(Cout c1, Cout c2)
-	{
-		float somme=c1.getValeur()+c2.getValeur();
-		return new Cout(somme);
 	}
 	//toString/equals/hashCode
 	@Override

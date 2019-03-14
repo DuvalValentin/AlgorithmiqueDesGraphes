@@ -5,24 +5,25 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import graphElements.Elements.Cout;
+import factory.Factory;
+import graphElements.Interfaces.InterfaceCout;
 
 public class CoutTest
 {
-	Cout coutTest;
+	InterfaceCout coutTest;
 	float valeur=5;
 
 	@Before
 	public void setUp() 
 	{
 		
-		coutTest=new Cout(valeur);
+		coutTest=Factory.cout(valeur);
 	}
 	
 	@Test
 	public void testConstructeurClone()
 	{
-		Cout coutClone = new Cout(coutTest);
+		InterfaceCout coutClone = Factory.cout(coutTest);
 		assertEquals("Le constructeur clone",coutTest,coutClone);
 		assertNotSame("Le constructeur clone créé un objet identique",coutTest,coutClone);
 		coutClone.setValeur(9);
@@ -45,7 +46,7 @@ public class CoutTest
 	@Test
 	public void testSomme()
 	{
-		assertTrue("Somme",10==Cout.somme(coutTest, coutTest).getValeur());
+		assertTrue("Somme",10==InterfaceCout.somme(coutTest, coutTest).getValeur());
 	}
 	
 	@SuppressWarnings("unlikely-arg-type")

@@ -1,69 +1,71 @@
 package graphElements.Elements;
 
 import java.util.HashSet;
-import graphElements.Abstract.AbstractEnsemble;
-import graphElements.Interfaces.InterfaceEnsemble;
-import graphElements.Interfaces.InterfaceOperationsElementairesEnsembleSommet;
 
-public class EnsembleSommet<S> extends AbstractEnsemble<Sommet<S>> implements InterfaceOperationsElementairesEnsembleSommet<S>, InterfaceEnsemble<Sommet<S>>
+import factory.Factory;
+import graphElements.Abstract.AbstractEnsemble;
+import graphElements.Interfaces.InterfaceEnsembleSommet;
+import graphElements.Interfaces.InterfaceSommet;
+
+public class EnsembleSommet<S> extends AbstractEnsemble<InterfaceSommet<S>> implements InterfaceEnsembleSommet<S>
 {
 	public EnsembleSommet()
 	{
 		super();
 	}
-	public EnsembleSommet(EnsembleSommet<S> Ensemble)
+	public EnsembleSommet(InterfaceEnsembleSommet<S> Ensemble)
 	{
-		for (Sommet<S> sommet : Ensemble.ensemble)
+		for (InterfaceSommet<S> sommet : Ensemble.getEnsemble())
 		{
-			ajouteSommet(new Sommet<S>(sommet));
+			ajouteSommet(Factory.sommet(sommet));
 		}
 	}
 	
 	@Override
-	public Sommet<S> firstSommet()
+	public InterfaceSommet<S> firstSommet()
 	{
 		//TODO améliorer la méthode fisrtSommet() de Sommet
 		@SuppressWarnings("unchecked")
-		Sommet<S>[] tab=new Sommet[ensemble.size()]; 
+		InterfaceSommet<S>[] tab=new Sommet[ensemble.size()];
 		return ensemble.toArray(tab)[0];
 	}
 	
 	@Override
-	public boolean existeSommet (Sommet<S> sommet)
+	public boolean existeSommet (InterfaceSommet<S> sommet)
 	{
 		return ensemble.contains(sommet);
 	}
 	@Override
-	public void ajouteSommet(Sommet<S> sommet)
+	public void ajouteSommet(InterfaceSommet<S> sommet)
 	{
-		ensemble.add(new Sommet<S>(sommet));
+		ensemble.add(Factory.sommet(sommet));
 	}
 	@Override
-	public void supprSommet(Sommet<S> sommet)
+	public void supprSommet(InterfaceSommet<S> sommet)
 	{
 		ensemble.remove(sommet);
 	}
 
 	@Override
-	public HashSet<Sommet<S>> getEnsemble()
+	public HashSet<InterfaceSommet<S>> getEnsemble()
 	{
-		return new HashSet<Sommet<S>>(ensemble);
+		return new HashSet<InterfaceSommet<S>>(ensemble);
 	}
 	
-	public static <S> EnsembleSommet<S> union(EnsembleSommet<S> Ensemble1,EnsembleSommet<S> Ensemble2)
+	public static <S> InterfaceEnsembleSommet<S> union(InterfaceEnsembleSommet<S> Ensemble1,InterfaceEnsembleSommet<S> Ensemble2)
 	{
-		EnsembleSommet<S> union = new EnsembleSommet<S>(Ensemble1);
-		for(Sommet<S> sommet : Ensemble2.getEnsemble())
+		InterfaceEnsembleSommet<S> union = Factory.ensembleSommet(Ensemble1);
+		for(InterfaceSommet<S> sommet : Ensemble2.getEnsemble())
 		{
 			union.ajouteSommet(sommet);
 		}
 		return union;
 	}
 	
-	public static <S > EnsembleSommet<S> intersection(EnsembleSommet<S> Ensemble1,EnsembleSommet<S> Ensemble2)
+	public static <S > InterfaceEnsembleSommet<S> intersection(InterfaceEnsembleSommet<S> Ensemble1,InterfaceEnsembleSommet<S> Ensemble2)
 	{
-		EnsembleSommet<S> intersection = new EnsembleSommet<S>(Ensemble1);
-		for(Sommet<S> sommet : Ensemble1.getEnsemble())
+		InterfaceEnsembleSommet<S> intersection = Factory.ensembleSommet(Ensemble1);
+		for(InterfaceSommet<S> sommet : Ensemble1.getEnsemble())
 		{
 			if(!Ensemble2.existeSommet(sommet))
 			{
@@ -72,5 +74,4 @@ public class EnsembleSommet<S> extends AbstractEnsemble<Sommet<S>> implements In
 		}
 		return intersection;
 	}
-	
 }

@@ -1,38 +1,39 @@
 package exemple;
 
 import algorithme.*;
-import graphElements.Elements.*;
+import factory.Factory;
+import graphElements.Interfaces.*;
 
 public class ExempleUtilisation
 {
-	public static void main(String[] args)
+	public static void main(String[] args) throws Exception
 	{
 		
 		//Opérations de créations : 
 		
-		Sommet<Integer> s1=new Sommet<Integer>(1);
-		Sommet<Integer> s2=new Sommet<Integer>(2);
-		Sommet<Integer> s3=new Sommet<Integer>(3);
-		Sommet<Integer> s4=new Sommet<Integer>(4);
+		InterfaceSommet<Integer> s1=Factory.sommet(1);
+		InterfaceSommet<Integer> s2=Factory.sommet(2);
+		InterfaceSommet<Integer> s3=Factory.sommet(3);
+		InterfaceSommet<Integer> s4=Factory.sommet(4);
 		System.out.println("Un sommet : "+s3);
 		
-		Arc<Integer>a12=new Arc<Integer>(s1,s2);
-		Arc<Integer>a23=new Arc<Integer>(s2,s3);
-		Arc<Integer>a32=new Arc<Integer>(s3,s2);
-		Arc<Integer>a34=new Arc<Integer>(s3,s4);
+		InterfaceArc<Integer>a12=Factory.arcNonValue(s1,s2);
+		InterfaceArc<Integer>a23=Factory.arcNonValue(s2,s3);
+		InterfaceArc<Integer>a32=Factory.arcNonValue(s3,s2);
+		InterfaceArc<Integer>a34=Factory.arcNonValue(s3,s4);
 
 		System.out.println("Un arc : "+a34);
 		
-		EnsembleSommet<Integer> X;
-		X=new EnsembleSommet<Integer>();
+		InterfaceEnsembleSommet<Integer> X;
+		X=Factory.ensembleSommet();
 		X.ajouteSommet(s1);X.ajouteSommet(s2);X.ajouteSommet(s3);X.ajouteSommet(s4);
 		System.out.println("Un ensemble de sommets : "+X);
 		
-		EnsembleArcNonValue<Integer>Gamma= new EnsembleArcNonValue<Integer>();
+		InterfaceEnsembleArcNonValue<Integer>Gamma= Factory.ensembleArcNonValue();
 		Gamma.ajouteArc(a12);Gamma.ajouteArc(a23);Gamma.ajouteArc(a32);Gamma.ajouteArc(a34);
 		System.out.println("Un ensemble d'arcs : "+Gamma);
 		
-		GrapheNonValue<Integer> G = new GrapheNonValue<Integer>(X,Gamma); 
+		InterfaceGrapheNonValue<Integer> G = Factory.grapheNonValue(X,Gamma); 
 		System.out.println("Un graphe : "+G.toString());
 		
 		
@@ -52,14 +53,9 @@ public class ExempleUtilisation
 		Parcours.WFS(G,s1);//Pareil	
 		System.out.println();
 		//System.out.println("Le graphe composé de G (arcs en deux temps) : "+FermetureTransitive.Composition(G, G));//En commentaire tant que composition est privé
-		try
-		{
-			System.out.println("Fermeture transitive par puissance de Graphe : "+FermetureTransitive.PuissanceDeGraphe(G));
-		} catch (CloneNotSupportedException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
+		System.out.println("Fermeture transitive par puissance de Graphe : "+FermetureTransitive.PuissanceDeGraphe(G));
+
 		System.out.println("Fermeture transitive par Roy-Warshall : "+FermetureTransitive.Roy_Warshall(G));
 		System.out.println("Fermeture anti-transitive par Tau-Minalité (ne marche pas si circuit) : "+AntiTransitif.TauMinalite(G));
 		System.out.println("Existence d'un circuit par Roy-Warshall: "+DetectionCircuit.Roy_Warshall(G));

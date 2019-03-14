@@ -4,48 +4,39 @@ import org.junit.Before;
 import org.junit.Test;
 
 import algorithme.Parcours;
-import graphElements.Elements.*;
+import factory.Factory;
+import graphElements.Interfaces.*;
 
 public class ParcoursTest
 {
-	private GrapheNonValue<Integer> G;
-	private EnsembleArcNonValue<Integer>Gamma;
-	private EnsembleSommet<Integer> X;
-	private Sommet<Integer> s1;
-	private Sommet<Integer> s2;
-	private Sommet<Integer> s3;
-	private Sommet<Integer> s4;
-	private Arc<Integer> a12;
-	private Arc<Integer> a23;
-	private Arc<Integer> a32;
-	private Arc<Integer> a34;
-	private Arc<Integer> a44;
+	private InterfaceGrapheNonValue<Integer> G;
+	private InterfaceEnsembleArcNonValue<Integer>Gamma;
+	private InterfaceEnsembleSommet<Integer> X;
+	private InterfaceSommet<Integer> s1,s2,s3,s4;
+	private InterfaceArc<Integer> a12,a23,a32,a34,a33;
 
 	@Before
 	public void setUp() throws Exception
 	{
-		s1=new Sommet<Integer>(1);
-		s2=new Sommet<Integer>(2);
-		s3=new Sommet<Integer>(3);
-		s4=new Sommet<Integer>(4);
-		X=new EnsembleSommet<Integer>();
+		s1=Factory.sommet(1);
+		s2=Factory.sommet(2);
+		s3=Factory.sommet(3);
+		s4=Factory.sommet(4);
+		X=Factory.ensembleSommet();
 		X.ajouteSommet(s1);X.ajouteSommet(s2);X.ajouteSommet(s3);X.ajouteSommet(s4);
 		
-		a12 = new Arc<Integer>(s1,s2);
-		a23 = new Arc<Integer>(s2,s3);
-		a32 = new Arc<Integer>(s3,s2);
-		a34 = new Arc<Integer>(s3,s4);
-		a44 = new Arc<Integer>(s4,s4);
-		Gamma=new EnsembleArcNonValue<Integer>();
-		Gamma.ajouteArc(a12);Gamma.ajouteArc(a23);Gamma.ajouteArc(a32);Gamma.ajouteArc(a34);Gamma.ajouteArc(a44);
+		a12 = Factory.arcNonValue(s1,s2);
+		a23 = Factory.arcNonValue(s2,s3);
+		a32 = Factory.arcNonValue(s3,s2);
+		a34 = Factory.arcNonValue(s3,s4);
+		a33 = Factory.arcNonValue(s3,s3);
+		Gamma=Factory.ensembleArcNonValue();
+		Gamma.ajouteArc(a12);Gamma.ajouteArc(a23);Gamma.ajouteArc(a32);Gamma.ajouteArc(a34);Gamma.ajouteArc(a33);
 		
-		G=new GrapheNonValue<Integer>(X,Gamma);
-		
-
+		G=Factory.grapheNonValue(X,Gamma);
 	}
-
 	@Test
-	public void testDFS()
+	public void testDFS() throws Exception
 	{
 		Parcours.DFS(G);
 	}
@@ -53,6 +44,6 @@ public class ParcoursTest
 	@Test
 	public void testWFS()
 	{
-		Parcours.WFS(G, s1);
+		Parcours.WFS(G,s1);
 	}
 }

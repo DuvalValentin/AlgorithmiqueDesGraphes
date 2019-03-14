@@ -7,48 +7,50 @@ import java.util.HashSet;
 import org.junit.Before;
 import org.junit.Test;
 
-import graphElements.Elements.ArcValue;
-import graphElements.Elements.Cout;
+import factory.Factory;
 import graphElements.Elements.EnsembleArcValue;
-import graphElements.Elements.Sommet;
+import graphElements.Interfaces.InterfaceArcValue;
+import graphElements.Interfaces.InterfaceCout;
+import graphElements.Interfaces.InterfaceEnsembleArcValue;
+import graphElements.Interfaces.InterfaceSommet;
 
 public class EnsembleArcValuesTest
 {
-	private EnsembleArcValue<Integer> ensembleArcValueTest, ensembleEmpty;
+	private InterfaceEnsembleArcValue<Integer> ensembleArcValueTest, ensembleEmpty;
 	
-	private Sommet<Integer> s1, s2;
+	private InterfaceSommet<Integer> s1, s2;
 	
-	private ArcValue<Integer> av115, av113, av121, av217;
+	private InterfaceArcValue<Integer> av115, av113, av121, av217;
 	
-	private Cout c1, c3, c5, c7;
+	private InterfaceCout c1, c3, c5, c7;
 	
 	@Before
 	public void setUp()
 	{
-		ensembleArcValueTest = new EnsembleArcValue<Integer>();
-		s1 = new Sommet<Integer>(1);
-		s2 = new Sommet<Integer>(2);
+		ensembleArcValueTest = Factory.ensembleArcValue();
+		s1 = Factory.sommet(1);
+		s2 = Factory.sommet(2);
 		
-		c1 = new Cout(1);
-		c3 = new Cout(3);
-		c5 = new Cout(5);
-		c7 = new Cout(7);
+		c1 = Factory.cout(1);
+		c3 = Factory.cout(3);
+		c5 = Factory.cout(5);
+		c7 = Factory.cout(7);
 		
-		av115=new ArcValue<Integer>(s1,s1,c5);
-		av113=new ArcValue<Integer>(s1,s1,c3);
-		av121=new ArcValue<Integer>(s1,s2,c1);
-		av217=new ArcValue<Integer>(s2,s1,c7);
+		av115=Factory.arcValue(s1,s1,c5);
+		av113=Factory.arcValue(s1,s1,c3);
+		av121=Factory.arcValue(s1,s2,c1);
+		av217=Factory.arcValue(s2,s1,c7);
 		ensembleArcValueTest.ajouteArc(av115);
 		ensembleArcValueTest.ajouteArc(av121);
 		ensembleArcValueTest.ajouteArc(av217);
-		ensembleEmpty= new EnsembleArcValue<Integer>();
+		ensembleEmpty=Factory.ensembleArcValue();
 		
 	}
 
 	@Test
 	public void testEnsembleArcValues()
 	{
-		EnsembleArcValue<Integer>ensembleArcValueClone=new EnsembleArcValue<Integer>(ensembleArcValueTest);
+		InterfaceEnsembleArcValue<Integer>ensembleArcValueClone=Factory.ensembleArcValue(ensembleArcValueTest);
 		assertEquals("Le constructeur clone",ensembleArcValueTest,ensembleArcValueClone);
 		assertNotSame("Le constructeur clone créé un objet identique",ensembleArcValueTest,ensembleArcValueClone);
 		ensembleArcValueClone.setValeur(s1, s1, c3);
@@ -58,7 +60,7 @@ public class EnsembleArcValuesTest
 	@Test
 	public void testGetEnsemble()
 	{
-		HashSet<ArcValue<Integer>> ensemble = new HashSet<ArcValue<Integer>>();
+		HashSet<InterfaceArcValue<Integer>> ensemble = new HashSet<InterfaceArcValue<Integer>>();
 		ensemble.add(av115);ensemble.add(av121);ensemble.add(av217);
 		assertEquals(ensemble,ensembleArcValueTest.getEnsemble());
 	}
@@ -99,25 +101,25 @@ public class EnsembleArcValuesTest
 	@Test
 	public void testUnion()
 	{
-		EnsembleArcValue<Integer> ajout = new EnsembleArcValue<Integer>(ensembleArcValueTest);
-		ajout.ajouteArc(s2, s2,c5); //TODO rajouter des cas ou on ajoute un arc avec un cout différent
-		EnsembleArcValue<Integer> copie = new EnsembleArcValue<Integer>(ensembleArcValueTest);
-		EnsembleArcValue<Integer> unionVide = EnsembleArcValue.union(ensembleArcValueTest, ensembleEmpty);
+		InterfaceEnsembleArcValue<Integer> ajout = Factory.ensembleArcValue(ensembleArcValueTest);
+		ajout.ajouteArc(s2, s2,c5);
+		InterfaceEnsembleArcValue<Integer> copie = Factory.ensembleArcValue(ensembleArcValueTest);
+		InterfaceEnsembleArcValue<Integer> unionVide = EnsembleArcValue.union(ensembleArcValueTest, ensembleEmpty);
 		assertEquals(copie,unionVide);
 		copie.ajouteArc(s2,s2,c5);
-		EnsembleArcValue<Integer> union = EnsembleArcValue.union(ensembleArcValueTest, ajout);
+		InterfaceEnsembleArcValue<Integer> union = EnsembleArcValue.union(ensembleArcValueTest, ajout);
 		assertEquals(copie,union);
 	}
 	
 	@Test
 	public void testIntersection()
 	{
-		EnsembleArcValue<Integer> copie = new EnsembleArcValue<Integer>(ensembleArcValueTest);
+		InterfaceEnsembleArcValue<Integer> copie = Factory.ensembleArcValue(ensembleArcValueTest);
 		copie.supprArc(av115);copie.supprArc(av121);copie.ajouteArc(s2, s2,c5);
-		EnsembleArcValue<Integer> intersection  = EnsembleArcValue.intersection(ensembleArcValueTest,copie);
+		InterfaceEnsembleArcValue<Integer> intersection  = EnsembleArcValue.intersection(ensembleArcValueTest,copie);
 		copie.supprArc(s2,s2);
 		assertEquals(copie,intersection);
-		EnsembleArcValue<Integer> intersectionVide =  EnsembleArcValue.intersection(ensembleArcValueTest, ensembleEmpty);
+		InterfaceEnsembleArcValue<Integer> intersectionVide =  EnsembleArcValue.intersection(ensembleArcValueTest, ensembleEmpty);
 		assertEquals(ensembleEmpty,intersectionVide);
 	}
 	

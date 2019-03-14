@@ -1,19 +1,21 @@
 package graphElements.Elements;
 
+import factory.Factory;
 import graphElements.Interfaces.InterfaceArc;
+import graphElements.Interfaces.InterfaceSommet;
 
 public class Arc<S> implements InterfaceArc<S>
 {
 	//Sommets
-	private Sommet<S> depart;
-	private Sommet<S> arrivee;
+	private InterfaceSommet<S> depart;
+	private InterfaceSommet<S> arrivee;
 	//Constructeurs
-	public Arc(Sommet<S> dep, Sommet<S> arr)
+	public Arc(InterfaceSommet<S> dep, InterfaceSommet<S> arr)
 	{
-		setDepart(new Sommet<S>(dep));
-		setArrivee(new Sommet<S>(arr));
+		setDepart(Factory.sommet(dep));
+		setArrivee(Factory.sommet(arr));
 	}
-	public Arc(Arc<S> arc)
+	public Arc(InterfaceArc<S> arc)
 	{
 		setDepart(arc.getDepart());
 		setArrivee(arc.getArrivee());
@@ -26,29 +28,29 @@ public class Arc<S> implements InterfaceArc<S>
 	}
 	//Getters
 	@Override
-	public Sommet<S> getDepart() 
+	public InterfaceSommet<S> getDepart() 
 	{
-		return new Sommet<S>(depart);
+		return Factory.sommet(depart);
 	}
 	@Override
-	public Sommet<S> getArrivee() 
+	public InterfaceSommet<S> getArrivee() 
 	{
-		return new Sommet<S>(arrivee);
+		return Factory.sommet(arrivee);
 	}
 	//Setters
 	@Override
-	public void setDepart(Sommet<S> depart) 
+	public void setDepart(InterfaceSommet<S> depart) 
 	{
-		this.depart = new Sommet<S>(depart);
+		this.depart = Factory.sommet(depart);
 	}
 	@Override
-	public void setArrivee(Sommet<S> arrivee) 
+	public void setArrivee(InterfaceSommet<S> arrivee) 
 	{
-		this.arrivee = new Sommet<S>(arrivee);
+		this.arrivee = Factory.sommet(arrivee);
 	}
 	//test pour savoir si deux arc sont équivalents
 	@Override
-	public boolean memeArc(Sommet<S> depart, Sommet<S> arrivee)
+	public boolean memeArc(InterfaceSommet<S> depart, InterfaceSommet<S> arrivee)
 	{
 		return(getDepart().equals(depart)&&getArrivee().equals(arrivee));
 	}

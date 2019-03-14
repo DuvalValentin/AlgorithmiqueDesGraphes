@@ -2,26 +2,31 @@ package graphElements.Elements;
 
 import java.util.HashMap;
 
-public class CFC<S> extends HashMap<Sommet<S>,EnsembleSommet<S>>
+import factory.Factory;
+import graphElements.Interfaces.InterfaceCFC;
+import graphElements.Interfaces.InterfaceEnsembleSommet;
+import graphElements.Interfaces.InterfaceSommet;
+
+public class CFC<S> extends HashMap<InterfaceSommet<S>,InterfaceEnsembleSommet<S>> implements InterfaceCFC<S>
 {
 	private static final long serialVersionUID = 7529318242814868720L;
 
 	//Constructeur
-	public CFC(EnsembleSommet<S> X)
+	public CFC(InterfaceEnsembleSommet<S> X)
 	{
-		for(Sommet<S> sommet : X.getEnsemble())
+		for(InterfaceSommet<S> sommet : X.getEnsemble())
 		{
-			EnsembleSommet<S> composante=new EnsembleSommet<S>();
+			InterfaceEnsembleSommet<S> composante=Factory.ensembleSommet();
 			composante.ajouteSommet(sommet);
 			this.put(sommet,composante);
 		}
 	}
 	
 	//Quand deux sommet sont dans la même CFC on fait l'union de leur CFC
-	public void memeCFC(Sommet<S> x, Sommet<S>y)
+	public void memeCFC(InterfaceSommet<S> x, InterfaceSommet<S>y)
 	{
-		EnsembleSommet<S> X = get(x);
-		EnsembleSommet<S> Y = get(y);
+		InterfaceEnsembleSommet<S> X = get(x);
+		InterfaceEnsembleSommet<S> Y = get(y);
 		X=EnsembleSommet.union(X, Y);
 		replace(x, X);
 		replace(y, X);

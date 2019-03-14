@@ -3,46 +3,49 @@ package testing;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
-import graphElements.Elements.Arc;
-import graphElements.Elements.EnsembleArcNonValue;
-import graphElements.Elements.EnsembleSommet;
+
+import factory.Factory;
 import graphElements.Elements.GrapheNonValue;
-import graphElements.Elements.Sommet;
+import graphElements.Interfaces.InterfaceArc;
+import graphElements.Interfaces.InterfaceEnsembleArcNonValue;
+import graphElements.Interfaces.InterfaceEnsembleSommet;
+import graphElements.Interfaces.InterfaceGrapheNonValue;
+import graphElements.Interfaces.InterfaceSommet;
 
 public class GrapheTest
 {
-	private GrapheNonValue<Integer> G;
-	private EnsembleArcNonValue<Integer>Gamma;
-	private EnsembleSommet<Integer> X;
-	private Sommet<Integer> s1;
-	private Sommet<Integer> s2;
-	private Sommet<Integer> s3;
-	private Sommet<Integer> s4;
-	private Arc<Integer> a12;
-	private Arc<Integer> a23;
-	private Arc<Integer> a32;
-	private Arc<Integer> a34;
-	private Arc<Integer> a44;
+	private InterfaceGrapheNonValue<Integer> G;
+	private InterfaceEnsembleArcNonValue<Integer>Gamma;
+	private InterfaceEnsembleSommet<Integer> X;
+	private InterfaceSommet<Integer> s1;
+	private InterfaceSommet<Integer> s2;
+	private InterfaceSommet<Integer> s3;
+	private InterfaceSommet<Integer> s4;
+	private InterfaceArc<Integer> a12;
+	private InterfaceArc<Integer> a23;
+	private InterfaceArc<Integer> a32;
+	private InterfaceArc<Integer> a34;
+	private InterfaceArc<Integer> a44;
 	
 	@Before
 	public void setUp()
 	{
-		s1=new Sommet<Integer>(1);
-		s2=new Sommet<Integer>(2);
-		s3=new Sommet<Integer>(3);
-		s4=new Sommet<Integer>(4);
-		X=new EnsembleSommet<Integer>();
+		s1=Factory.sommet(1);
+		s2=Factory.sommet(2);
+		s3=Factory.sommet(3);
+		s4=Factory.sommet(4);
+		X=Factory.ensembleSommet();
 		X.ajouteSommet(s1);X.ajouteSommet(s2);X.ajouteSommet(s3);X.ajouteSommet(s4);
 		
-		a12 = new Arc<Integer>(s1,s2);
-		a23 = new Arc<Integer>(s2,s3);
-		a32 = new Arc<Integer>(s3,s2);
-		a34 = new Arc<Integer>(s3,s4);
-		a44 = new Arc<Integer>(s4,s4);
-		Gamma=new EnsembleArcNonValue<Integer>();
+		a12 = Factory.arcNonValue(s1,s2);
+		a23 = Factory.arcNonValue(s2,s3);
+		a32 = Factory.arcNonValue(s3,s2);
+		a34 = Factory.arcNonValue(s3,s4);
+		a44 = Factory.arcNonValue(s4,s4);
+		Gamma=Factory.ensembleArcNonValue();
 		Gamma.ajouteArc(a12);Gamma.ajouteArc(a23);Gamma.ajouteArc(a32);Gamma.ajouteArc(a34);Gamma.ajouteArc(a44);
 		
-		G=new GrapheNonValue<Integer>(X,Gamma);
+		G=Factory.grapheNonValue(X, Gamma);
 	}
 
 	@Test
@@ -50,7 +53,7 @@ public class GrapheTest
 	{
 		assertEquals("Test du constructeur et des getteurs",X,G.getX());
 		assertEquals("Test du constructeur et des getteurs",Gamma,G.getGamma());
-		GrapheNonValue<Integer> G1=new GrapheNonValue<Integer>(G);
+		InterfaceGrapheNonValue<Integer> G1=Factory.grapheNonValue(G);
 		assertEquals("Test du constructeur prenant un graphe en entrée",G,G1);
 		assertNotSame("On vérifie que les deux graphes n'ont pas la même réferrence",G,G1);
 	}
@@ -67,7 +70,7 @@ public class GrapheTest
 	@Test
 	public void testExistSommet()
 	{
-		Sommet<Integer> es=new Sommet<Integer>(100);
+		InterfaceSommet<Integer> es=Factory.sommet(100);
 		assertTrue("Test de existSommet pour un sommet existant",G.existeSommet(s1));
 		assertFalse("Test de existSommet pour un sommet non existant",G.existeSommet(es));
 	}
@@ -75,7 +78,7 @@ public class GrapheTest
 	@Test
 	public void testExistArc()
 	{
-		Arc<Integer> ea = new Arc<Integer>(s4,s1);
+		InterfaceArc<Integer> ea = Factory.arcNonValue(s4,s1);
 		assertTrue("Test de existArc pour un arc existant",G.existeArc(a12));
 		assertTrue("Test de existArc avec 2 sommet en paramètres pour un arc existant",G.existeArc(s4,s4));
 		assertFalse("Test de existArc pour un arc non existant",G.existeArc(ea));
@@ -108,7 +111,7 @@ public class GrapheTest
 	@Test
 	public void testAjouteSommet()
 	{
-		Sommet<Integer> s5 = new Sommet<Integer>(5);
+		InterfaceSommet<Integer> s5 = Factory.sommet(5);
 		G.ajouteSommet(s5);
 		assertTrue("Test du ajouteSommet sur un graphe",G.existeSommet(s5));
 	}
@@ -124,9 +127,9 @@ public class GrapheTest
 	@Test
 	public void testAjouteArc()
 	{
-		Sommet<Integer> s5 = new Sommet<Integer>(5);
-		Arc<Integer> a51 = new Arc<Integer>(s5,s1);
-		Arc<Integer> a41 = new Arc<Integer> (s4,s1);
+		InterfaceSommet<Integer> s5 = Factory.sommet(5);
+		InterfaceArc<Integer> a51 = Factory.arcNonValue(s5, s1);
+		InterfaceArc<Integer> a41 = Factory.arcNonValue(s4, s1);
 		G.ajouteArc(a51);
 		G.ajouteArc(a41);
 		G.ajouteArc(s3, s1);
@@ -148,7 +151,7 @@ public class GrapheTest
 	@Test
 	public void testIsEmpty()
 	{
-		GrapheNonValue<Integer> Ge = new GrapheNonValue<Integer>();
+		InterfaceGrapheNonValue<Integer> Ge = Factory.grapheNonValue();
 		assertTrue("Test de isEmpty et du constructeur sans paramètres",Ge.isEmpty());
 		Ge.ajouteSommet(s1);
 		assertFalse(Ge.isEmpty());
@@ -157,12 +160,12 @@ public class GrapheTest
 	@Test
 	public void testCorrectGamma()
 	{
-		GrapheNonValue<Integer> graphe;
-		EnsembleSommet<Integer> x = new EnsembleSommet<Integer>();
+		InterfaceGrapheNonValue<Integer> graphe;
+		InterfaceEnsembleSommet<Integer> x = Factory.ensembleSommet();
 		x.ajouteSommet(s1);x.ajouteSommet(s2);
-		EnsembleArcNonValue<Integer> gamma = new EnsembleArcNonValue<Integer>();
+		InterfaceEnsembleArcNonValue<Integer> gamma = Factory.ensembleArcNonValue();
 		gamma.ajouteArc(a12);gamma.ajouteArc(a23);
-		graphe=new GrapheNonValue<Integer>(x,gamma);
+		graphe=Factory.grapheNonValue(x, gamma);
 		boolean erreur=false;
 		try
 		{
@@ -178,7 +181,7 @@ public class GrapheTest
 	@Test
 	public void testPointsEntree()
 	{
-		EnsembleSommet<Integer> Pe=new EnsembleSommet<Integer>();
+		InterfaceEnsembleSommet<Integer> Pe=Factory.ensembleSommet();
 		Pe.ajouteSommet(s1);
 		assertEquals("Test de pointsEntree",Pe,G.pointsEntree());
 	}
@@ -186,10 +189,10 @@ public class GrapheTest
 	@Test
 	public void testPointsSortie()
 	{
-		Sommet<Integer> s5 = new Sommet<Integer>(5);
+		InterfaceSommet<Integer> s5 = Factory.sommet(5);
 		G.ajouteSommet(s5);
 		G.ajouteArc(s4, s5);
-		EnsembleSommet<Integer> Ps=new EnsembleSommet<Integer>();
+		InterfaceEnsembleSommet<Integer> Ps=Factory.ensembleSommet();
 		Ps.ajouteSommet(s5);
 		assertEquals("Test de pointsSortie",Ps,G.pointsSortie());
 	}
@@ -197,13 +200,13 @@ public class GrapheTest
 	@Test
 	public void testUnion()
 	{
-		Sommet<Integer> s5 = new Sommet<Integer>(5);
-		Arc<Integer> a15 = new Arc<Integer>(s1,s5);
-		GrapheNonValue<Integer> Gajout=new GrapheNonValue<Integer>();
+		InterfaceSommet<Integer> s5 = Factory.sommet(5);
+		InterfaceArc<Integer> a15 = Factory.arcNonValue(s1,s5);
+		InterfaceGrapheNonValue<Integer> Gajout=Factory.grapheNonValue();
 		Gajout.ajouteSommet(s1); Gajout.ajouteSommet(s5);
 		Gajout.ajouteArc(a15);
 		Gajout =(GrapheNonValue<Integer>) GrapheNonValue.union(Gajout, G);
-		GrapheNonValue<Integer> Gunion=new GrapheNonValue<Integer>(G);
+		InterfaceGrapheNonValue<Integer> Gunion=Factory.grapheNonValue(G);
 		Gunion.ajouteSommet(s5);
 		Gunion.ajouteArc(a15);
 		assertEquals("Test de l'union",Gunion,Gajout);
@@ -218,17 +221,17 @@ public class GrapheTest
 		assertNotEquals("On modifie le X ayant initialisé G", X, G.getX());
 		Gamma.supprArc(a32);
 		assertNotEquals("On modifie le Gamma ayant initialisé G",Gamma,G.getGamma());
-		EnsembleSommet<Integer> Xg =G.getX();
+		InterfaceEnsembleSommet<Integer> Xg =G.getX();
 		Xg.supprSommet(s3);
 		assertNotEquals("On modifie l'ensemble donné par getX",Xg,G.getX());
-		EnsembleArcNonValue<Integer> Gammag = G.getGamma();
+		InterfaceEnsembleArcNonValue<Integer> Gammag = G.getGamma();
 		Gammag.supprArc(a32);
 		assertNotEquals("On modifie l'ensemble donné par getGamma",Gammag,G.getGamma());
-		s4=new Sommet<Integer>(6);
+		s4=Factory.sommet(6);
 		assertFalse("On modifie un des sommets par l'exterieur",G.existeSommet(s4));
 		s3.setId(9);
 		assertFalse("On modifie un des sommets par l'exterieur",G.existeSommet(s3));
-		GrapheNonValue<Integer>G2=new GrapheNonValue<Integer>(G);
+		InterfaceGrapheNonValue<Integer>G2=Factory.grapheNonValue(G);
 		G2.supprArc(a12);
 		assertNotEquals("On modifie le graphe créé à partir de G",G,G2);
 		a32.setDepart(s4);
@@ -255,7 +258,7 @@ public class GrapheTest
 	{
 		assertFalse(G.equals(null));
 		assertFalse(G.equals("gjqhru"));
-		GrapheNonValue<Integer> graphe=new GrapheNonValue<Integer>(G);
+		InterfaceGrapheNonValue<Integer> graphe=Factory.grapheNonValue(G);
 		graphe.supprSommet(s3);
 		assertFalse(G.equals(graphe));
 	}

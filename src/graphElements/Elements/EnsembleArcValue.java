@@ -2,16 +2,19 @@ package graphElements.Elements;
 
 import java.util.HashSet;
 
+import factory.Factory;
 import graphElements.Abstract.AbstractEnsembleArc;
 import graphElements.Interfaces.InterfaceArcValue;
+import graphElements.Interfaces.InterfaceCout;
 import graphElements.Interfaces.InterfaceEnsembleArcValue;
+import graphElements.Interfaces.InterfaceSommet;
 
 public class EnsembleArcValue<S> extends AbstractEnsembleArc<S,InterfaceArcValue<S>> implements InterfaceEnsembleArcValue<S> 
 {
 	//Constructeur
-	public EnsembleArcValue(EnsembleArcValue<S> Ensemble)
+	public EnsembleArcValue(InterfaceEnsembleArcValue<S> Ensemble)
 	{
-		for (InterfaceArcValue<S> arc : Ensemble.ensemble)
+		for (InterfaceArcValue<S> arc : Ensemble.getEnsemble())
 		{
 			ajouteArc(arc);
 		}
@@ -22,14 +25,14 @@ public class EnsembleArcValue<S> extends AbstractEnsembleArc<S,InterfaceArcValue
 	}
 	//getter
 	@Override
-	public Cout getCout(Sommet<S> depart, Sommet<S> arrivee)
+	public InterfaceCout getCout(InterfaceSommet<S> depart, InterfaceSommet<S> arrivee)
 	{
-		Cout cout=null;
+		InterfaceCout cout=null;
 		for(InterfaceArcValue<S> arcV : ensemble)
 		{
 			if (arcV.getDepart().equals(depart) && arcV.getArrivee().equals(arrivee))
 			{
-				cout=((ArcValue<S>) arcV).getCout();
+				cout=((InterfaceArcValue<S>) arcV).getCout();
 				break;
 			}
 		}
@@ -37,10 +40,10 @@ public class EnsembleArcValue<S> extends AbstractEnsembleArc<S,InterfaceArcValue
 	}
 	//setter
 	@Override
-	public boolean setValeur(Sommet<S> depart, Sommet<S> arrivee,Cout cout)
+	public boolean setValeur(InterfaceSommet<S> depart, InterfaceSommet<S> arrivee,InterfaceCout cout)
 	{
 		boolean succes=false;
-		ArcValue<S> arcS=new ArcValue<S>(depart,arrivee,cout);
+		InterfaceArcValue<S> arcS=Factory.arcValue(depart, arrivee, cout);
 		for(InterfaceArcValue<S> arcV : ensemble)
 		{
 			if (arcV.memeArc(arcS))
@@ -56,20 +59,20 @@ public class EnsembleArcValue<S> extends AbstractEnsembleArc<S,InterfaceArcValue
 	@Override
 	public void ajouteArc(InterfaceArcValue<S> arc)
 	{
-		super.ajouteArc(new ArcValue<S>((ArcValue<S>) arc));//Le new permet de créer une nouvelle instance
+		super.ajouteArc(Factory.arcValue(arc));
 	}
 	@Override
-	public void ajouteArc(Sommet<S> depart,Sommet<S>arrivee,Cout value)
+	public void ajouteArc(InterfaceSommet<S> depart,InterfaceSommet<S>arrivee,InterfaceCout cout)
 	{
-		ajouteArc(new ArcValue<S>(depart,arrivee,value));
+		ajouteArc(Factory.arcValue(depart,arrivee,cout));
 	}
 	@Override
-	public void supprArc(Sommet<S>depart,Sommet<S>arrivee)
+	public void supprArc(InterfaceSommet<S>depart,InterfaceSommet<S>arrivee)
 	{
-		Cout cout=getCout(depart,arrivee);
+		InterfaceCout cout=getCout(depart,arrivee);
 		if(cout!=null)
 		{
-			supprArc(new ArcValue<S>(depart,arrivee,cout));
+			supprArc(Factory.arcValue(depart,arrivee,cout));
 		}
 	}
 	@Override
@@ -79,9 +82,9 @@ public class EnsembleArcValue<S> extends AbstractEnsembleArc<S,InterfaceArcValue
 	}
 	
 	
-	public static <S> EnsembleArcValue<S> union(EnsembleArcValue<S> Ensemble1,EnsembleArcValue<S> Ensemble2)
+	public static <S> InterfaceEnsembleArcValue<S> union(InterfaceEnsembleArcValue<S> Ensemble1,InterfaceEnsembleArcValue<S> Ensemble2)
 	{
-		EnsembleArcValue<S> union = new EnsembleArcValue<S>(Ensemble1);
+		InterfaceEnsembleArcValue<S> union = Factory.ensembleArcValue(Ensemble1);
 		for(InterfaceArcValue<S> arc : Ensemble2.getEnsemble())
 		{
 			union.ajouteArc(arc);
@@ -89,9 +92,9 @@ public class EnsembleArcValue<S> extends AbstractEnsembleArc<S,InterfaceArcValue
 		return union;
 	}
 	
-	public static <S,A extends InterfaceArcValue<S>> EnsembleArcValue<S> intersection (EnsembleArcValue<S> Ensemble1,EnsembleArcValue<S> Ensemble2)
+	public static <S,A extends InterfaceArcValue<S>> InterfaceEnsembleArcValue<S> intersection (InterfaceEnsembleArcValue<S> Ensemble1,InterfaceEnsembleArcValue<S> Ensemble2)
 	{
-		EnsembleArcValue<S> intersection = new EnsembleArcValue<S>(Ensemble1);
+		InterfaceEnsembleArcValue<S> intersection = Factory.ensembleArcValue(Ensemble1);
 		for(InterfaceArcValue<S> arc : Ensemble1.getEnsemble())
 		{
 			if(!Ensemble2.existeArc(arc))

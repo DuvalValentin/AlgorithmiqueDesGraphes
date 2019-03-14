@@ -2,47 +2,39 @@ package testing;
 
 import static org.junit.Assert.*;
 import algorithme.AntiTransitif;
-import graphElements.Elements.*;
+import factory.Factory;
+import graphElements.Interfaces.*;
 
 import org.junit.Before;
 import org.junit.Test;
 
 public class AntiTransitifTest
 {
-	private Sommet<Integer> s1;
-	private Sommet<Integer> s2;
-	private Sommet<Integer> s3;
-	private Sommet<Integer> s4;
+	private InterfaceSommet<Integer> s1,s2,s3,s4;
 	
-	private Arc<Integer> a12;
-	private Arc<Integer> a13;
-	private Arc<Integer> a14;
-	private Arc<Integer> a23;
-	private Arc<Integer> a24;
-	private Arc<Integer> a34;
+	private InterfaceArc<Integer> a12,a13,a14,a23,a24,a34;
 	
-	private GrapheNonValue<Integer> Gini;
-	private GrapheNonValue<Integer> Gres;
+	private InterfaceGrapheNonValue<Integer> Gini,Gres;
 
 	@Before
 	public void setUp()
 	{
-		s1=new Sommet<Integer>(1);
-		s2=new Sommet<Integer>(2);
-		s3=new Sommet<Integer>(3);
-		s4=new Sommet<Integer>(4);
+		s1=Factory.sommet(1);
+		s2=Factory.sommet(2);
+		s3=Factory.sommet(3);
+		s4=Factory.sommet(4);
 		
-		a12=new Arc<Integer>(s1,s2);
-		a13=new Arc<Integer>(s1,s3);
-		a14=new Arc<Integer>(s1,s4);
-		a23=new Arc<Integer>(s2,s3);
-		a24=new Arc<Integer>(s2,s4);
-		a34=new Arc<Integer>(s3,s4);
+		a12=Factory.arcNonValue(s1,s2);
+		a13=Factory.arcNonValue(s1,s3);
+		a14=Factory.arcNonValue(s1,s4);
+		a23=Factory.arcNonValue(s2,s3);
+		a24=Factory.arcNonValue(s2,s4);
+		a34=Factory.arcNonValue(s3,s4);
 		
-		Gres=new GrapheNonValue<Integer>();
+		Gres=Factory.grapheNonValue();
 		Gres.ajouteSommet(s1);Gres.ajouteSommet(s2);Gres.ajouteSommet(s3);Gres.ajouteSommet(s4);
 		Gres.ajouteArc(a12);Gres.ajouteArc(a23);Gres.ajouteArc(a34);
-		Gini=new GrapheNonValue<Integer>(Gres);
+		Gini=Factory.grapheNonValue(Gres);
 		Gini.ajouteArc(a13);Gini.ajouteArc(a14);Gini.ajouteArc(a24);
 	}
 

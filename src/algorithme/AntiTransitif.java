@@ -1,22 +1,23 @@
 package algorithme;
 
-import graphElements.Elements.*;
+import factory.Factory;
+import graphElements.Interfaces.*;
 
 public class AntiTransitif
 {
-	public static <S> GrapheNonValue<S> TauMinalite(GrapheNonValue<S> G)
+	public static <S> InterfaceGrapheNonValue<S> TauMinalite(InterfaceGrapheNonValue<S> G)
 	{
-		EnsembleSommet<S>X=G.getX();
-		GrapheNonValue<S> RW=new GrapheNonValue<S>(G);
-		GrapheNonValue<S> TauMin=new GrapheNonValue<S>(G);//Graphe tauMinimal
+		InterfaceEnsembleSommet<S>X=G.getX();
+		InterfaceGrapheNonValue<S> RW=Factory.grapheNonValue(G);
+		InterfaceGrapheNonValue<S> TauMin=Factory.grapheNonValue(G);//Graphe tauMinimal
 		
-		for(Sommet<S> z : X.getEnsemble()) 
+		for(InterfaceSommet<S> z : X.getEnsemble()) 
 		{
-			for(Sommet<S> x : X.getEnsemble())
+			for(InterfaceSommet<S> x : X.getEnsemble())
 			{
 				if(RW.existeArc(x,z))
 				{
-					for(Sommet<S> y : X.getEnsemble())
+					for(InterfaceSommet<S> y : X.getEnsemble())
 					{
 						if(RW.existeArc(z,y))
 						{

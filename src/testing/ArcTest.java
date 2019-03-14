@@ -1,33 +1,35 @@
 package testing;
-import graphElements.Elements.Arc;
-import graphElements.Elements.Sommet;
+import graphElements.Interfaces.InterfaceArc;
+import graphElements.Interfaces.InterfaceSommet;
 
 import org.junit.Before;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import factory.Factory;
+
 public class ArcTest
 {
-	private Arc<Integer> arcTest;
-	private Sommet<Integer> depart;
-	private Sommet<Integer> arrivee;
+	private InterfaceArc<Integer> arcTest;
+	private InterfaceSommet<Integer> depart;
+	private InterfaceSommet<Integer> arrivee;
 	
 	@Before
 	public void setup()
 	{
-		depart=new Sommet<Integer>(5);
-		arrivee=new Sommet<Integer>(8);
-		arcTest=new Arc<Integer>(depart,arrivee);
+		depart=Factory.sommet(5);
+		arrivee=Factory.sommet(8);
+		arcTest=Factory.arcNonValue(depart, arrivee);
 	}
 	
 	@Test
 	public void testConstructeurClone()
 	{
-		Arc<Integer> arcClone = new Arc<Integer>(arcTest);
+		InterfaceArc<Integer> arcClone = Factory.arcNonValue(arcTest);
 		assertEquals("Le constructeur clone",arcTest,arcClone);
 		assertNotSame("Le constructeur clone créé un objet identique",arcTest,arcClone);
-		arcClone.setArrivee(new Sommet<Integer>(9));
+		arcClone.setArrivee(Factory.sommet(9));
 		assertNotEquals("Modifier le clone modifie l'original",arcTest,arcClone);
 	}
 	
@@ -46,7 +48,7 @@ public class ArcTest
 	@Test
 	public void testSetDepart()
 	{
-		Sommet<Integer> changerDepart = new Sommet<Integer>(3);
+		InterfaceSommet<Integer> changerDepart = Factory.sommet(3);
 		arcTest.setDepart(changerDepart);
 		assertEquals("Le setDepart de Arc n'est pas fonctionnel",arcTest.getDepart(),changerDepart);
 	}
@@ -54,7 +56,7 @@ public class ArcTest
 	@Test
 	public void testSetArrivee()
 	{
-		Sommet<Integer> changerArrivee = new Sommet<Integer>(10);
+		InterfaceSommet<Integer> changerArrivee = Factory.sommet(10);
 		arcTest.setDepart(changerArrivee);
 		assertEquals("Le setArrivee de Arc n'est pas fonctionnel",arcTest.getDepart(),changerArrivee);
 	}
@@ -63,10 +65,10 @@ public class ArcTest
 		@Test
 	public void testEqualsMemeArc()
 	{
-		Arc<Integer> arcEq = new Arc<Integer>(depart,arrivee);
-		Arc<Integer> arcNDepEq = new Arc<Integer>(new Sommet<Integer>(6),arrivee);
-		Arc<Integer> arcNArrEq = new Arc<Integer>(depart,new Sommet<Integer>(7));
-		Arc<Integer> arcNEq = new Arc<Integer>(new Sommet<Integer>(6),new Sommet<Integer>(7));
+		InterfaceArc<Integer> arcEq = Factory.arcNonValue(depart, arrivee);
+		InterfaceArc<Integer> arcNDepEq = Factory.arcNonValue(Factory.sommet(6),arrivee);
+		InterfaceArc<Integer> arcNArrEq = Factory.arcNonValue(depart,Factory.sommet(7));
+		InterfaceArc<Integer> arcNEq = Factory.arcNonValue(Factory.sommet(6),Factory.sommet(7));
 		assertEquals("Le equals de Arc rends faux pour deux arcs sensé être equals",arcTest,arcEq);
 		assertNotEquals("Le equals de Arc rends vrai pour deux arcs avec un depart différent",arcTest,arcNDepEq);
 		assertNotEquals("Le equals de Arc rends vrai pour deux arcs avec une arrivee différente",arcTest,arcNArrEq);

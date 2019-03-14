@@ -11,7 +11,7 @@ public class Sommet<S> implements InterfaceSommet<S>
 	{
 		setId(s);
 	}
-	public Sommet(Sommet<S> sommet)
+	public Sommet(InterfaceSommet<S> sommet)
 	{
 		setId(sommet.getId());
 	}

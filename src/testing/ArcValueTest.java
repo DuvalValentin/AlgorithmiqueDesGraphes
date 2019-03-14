@@ -1,33 +1,35 @@
 package testing;
 
-import graphElements.Elements.ArcValue;
-import graphElements.Elements.Cout;
-import graphElements.Elements.Sommet;
+import graphElements.Interfaces.InterfaceArcValue;
+import graphElements.Interfaces.InterfaceCout;
+import graphElements.Interfaces.InterfaceSommet;
 
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import factory.Factory;
+
 public class ArcValueTest
 {
-	private ArcValue<Integer> arcValueTest;
-	private Sommet<Integer> depart;
-	private Sommet<Integer> arrivee;
-	private Cout cout;
+	private InterfaceArcValue<Integer> arcValueTest;
+	private InterfaceSommet<Integer> depart;
+	private InterfaceSommet<Integer> arrivee;
+	private InterfaceCout cout;
 
 	@Before
 	public void setUp() 
 	{
-		depart=new Sommet<Integer>(3);
-		arrivee=new Sommet<Integer>(9);
-		cout=new Cout (5);
-		arcValueTest=new ArcValue<Integer>(depart,arrivee,cout);
+		depart=Factory.sommet(3);
+		arrivee=Factory.sommet(9);
+		cout=Factory.cout(5);
+		arcValueTest=Factory.arcValue(depart,arrivee,cout);
 	}
 
 	@Test
 	public void testConstructeurClone()
 	{
-		ArcValue<Integer> arcValueClone =new ArcValue<Integer>(arcValueTest);
+		InterfaceArcValue<Integer> arcValueClone =Factory.arcValue(arcValueTest);
 		assertEquals("Le constructeur clone",arcValueTest,arcValueClone);
 		assertNotSame("Le constructeur clone créé un objet identique",arcValueTest,arcValueClone);
 		arcValueClone.setValeur(0);
@@ -55,10 +57,10 @@ public class ArcValueTest
 	@Test
 	public void testMemeArc()
 	{
-		Sommet<Integer> wrongSommet= new Sommet<Integer>(6);
-		Cout wrongCout = new Cout(10);
-		ArcValue<Integer> memeArc = new ArcValue<Integer>(depart,arrivee,wrongCout);
-		ArcValue<Integer> wrongArc = new ArcValue<Integer>(depart,wrongSommet,cout);
+		InterfaceSommet<Integer> wrongSommet= Factory.sommet(6);
+		InterfaceCout wrongCout = Factory.cout(10);
+		InterfaceArcValue<Integer> memeArc = Factory.arcValue(depart,arrivee,wrongCout);
+		InterfaceArcValue<Integer> wrongArc = Factory.arcValue(depart,wrongSommet,cout);
 		assertTrue("MemeArc pour deux arcs avec seulement le cout différent",arcValueTest.memeArc(memeArc));
 		assertFalse("MemeArc pour deux arcs avec seulement l'arrivée differente",arcValueTest.memeArc(wrongArc));
 	}

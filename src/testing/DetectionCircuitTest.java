@@ -3,43 +3,37 @@ package testing;
 import static org.junit.Assert.*;
 
 import algorithme.DetectionCircuit;
-import graphElements.Elements.*;
+import factory.Factory;
+import graphElements.Interfaces.*;
 
 import org.junit.Before;
 import org.junit.Test;
 
 public class DetectionCircuitTest
 {
-	private Sommet<Integer> s1;
-	private Sommet<Integer> s2;
-	private Sommet<Integer> s3;
-	private Sommet<Integer> s4;
+	private InterfaceSommet<Integer> s1,s2,s3,s4;
 	
-	private Arc<Integer> a12;
-	private Arc<Integer> a23;
-	private Arc<Integer> a32;
-	private Arc<Integer> a34;
+	private InterfaceArc<Integer> a12,a23,a32,a34;
 	
-	private GrapheNonValue<Integer> Gcirc;
-	private GrapheNonValue<Integer> Gline;
+	private InterfaceGrapheNonValue<Integer> Gcirc, Gline;
 	
 	@Before
 	public void setUp()
 	{
-		s1=new Sommet<Integer>(1);
-		s2=new Sommet<Integer>(2);
-		s3=new Sommet<Integer>(3);
-		s4=new Sommet<Integer>(4);
+		s1=Factory.sommet(1);
+		s2=Factory.sommet(2);
+		s3=Factory.sommet(3);
+		s4=Factory.sommet(4);
 		
-		a12=new Arc<Integer>(s1,s2);
-		a23=new Arc<Integer>(s2,s3);
-		a32=new Arc<Integer>(s3,s2);
-		a34=new Arc<Integer>(s3,s4);
+		a12=Factory.arcNonValue(s1,s2);
+		a23=Factory.arcNonValue(s2,s3);
+		a32=Factory.arcNonValue(s3,s2);
+		a34=Factory.arcNonValue(s3,s4);
 		
-		Gline=new GrapheNonValue<Integer>();
+		Gline=Factory.grapheNonValue();
 		Gline.ajouteSommet(s1);Gline.ajouteSommet(s2);Gline.ajouteSommet(s3);Gline.ajouteSommet(s4);
 		Gline.ajouteArc(a12);Gline.ajouteArc(a23);Gline.ajouteArc(a34);
-		Gcirc=new GrapheNonValue<Integer>(Gline);
+		Gcirc=Factory.grapheNonValue(Gline);
 		Gcirc.ajouteArc(a32);
 	}
 

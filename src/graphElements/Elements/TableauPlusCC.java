@@ -2,68 +2,72 @@ package graphElements.Elements;
 
 import java.util.HashMap;
 
+import factory.Factory;
+import graphElements.Interfaces.InterfaceCout;
+import graphElements.Interfaces.InterfaceGrapheValue;
+import graphElements.Interfaces.InterfaceSommet;
 import graphElements.Interfaces.InterfaceTableauPlusCC;
 
 public class TableauPlusCC<S> implements InterfaceTableauPlusCC<S>
 {
 	//Eléments
-	private Sommet<S> principal;
-	private HashMap<Sommet<S>,Cout> d;
-	private HashMap<Sommet<S>,Sommet<S>> pred;
+	private InterfaceSommet<S> principal;
+	private HashMap<InterfaceSommet<S>,InterfaceCout> d;
+	private HashMap<InterfaceSommet<S>,InterfaceSommet<S>> pred;
 	//Constructeur
 	public TableauPlusCC(Sommet<S>prin)
 	{ 
-		d=new HashMap<Sommet<S>,Cout>();
-		pred= new HashMap<Sommet<S>,Sommet<S>>();
+		d=new HashMap<InterfaceSommet<S>,InterfaceCout>();
+		pred= new HashMap<InterfaceSommet<S>,InterfaceSommet<S>>();
 		principal=prin;
 		initSommet(principal);
-		modifDistance(principal,new Cout());
+		modifDistance(principal,Factory.cout());
 	}
-	public TableauPlusCC(Sommet<S>prin,GrapheValue<S>G)
+	public TableauPlusCC(InterfaceSommet<S>prin,InterfaceGrapheValue<S>G)
 	{
-		d=new HashMap<Sommet<S>,Cout>();
-		pred= new HashMap<Sommet<S>,Sommet<S>>();
+		d=new HashMap<InterfaceSommet<S>,InterfaceCout>();
+		pred= new HashMap<InterfaceSommet<S>,InterfaceSommet<S>>();
 		principal=prin;
-		for(Sommet<S> sommet : G.getX().getEnsemble())
+		for(InterfaceSommet<S> sommet : G.getX().getEnsemble())
 		{
 			initSommet(sommet);
 			modifDistance(sommet,G.getCout(principal, sommet));
 		}
-		modifDistance(principal,new Cout());
+		modifDistance(principal,Factory.cout());
 	}
 	//Getters
-	public HashMap<Sommet<S>,Cout> getD()
+	public HashMap<InterfaceSommet<S>,InterfaceCout> getD()
 	{
-		return new HashMap<Sommet<S>,Cout>(d);
+		return new HashMap<InterfaceSommet<S>,InterfaceCout>(d);
 	}
-	public HashMap<Sommet<S>,Sommet<S>> getPred()
+	public HashMap<InterfaceSommet<S>,InterfaceSommet<S>> getPred()
 	{
-		return new HashMap<Sommet<S>,Sommet<S>>(pred);
+		return new HashMap<InterfaceSommet<S>,InterfaceSommet<S>>(pred);
 	}
-	public Sommet<S> getPrincipal()
+	public InterfaceSommet<S> getPrincipal()
 	{
-		return new Sommet<S>(principal);
+		return Factory.sommet(principal);
 	}
-	public Cout getDistance(Sommet<S> sommet)
+	public InterfaceCout getDistance(InterfaceSommet<S> sommet)
 	{
 		return d.get(sommet);
 	}
 	
-	public Sommet<S> getPredecesseur(Sommet<S> sommet)
+	public InterfaceSommet<S> getPredecesseur(InterfaceSommet<S> sommet)
 	{
 		return pred.get(sommet);
 	}
 	//Modification d'éléments
-	public void initSommet(Sommet<S> sommet)
+	public void initSommet(InterfaceSommet<S> sommet)
 	{
 		d.put(sommet, null);
 		pred.put(sommet,principal);
 	}
-	public void modifDistance(Sommet<S> sommet, Cout cout)
+	public void modifDistance(InterfaceSommet<S> sommet, InterfaceCout cout)
 	{
 		d.replace(sommet,cout);
 	}
-	public void modifPredecesseur(Sommet<S> sommet,Sommet<S> predessesseur)
+	public void modifPredecesseur(InterfaceSommet<S> sommet,InterfaceSommet<S> predessesseur)
 	{
 		pred.replace(sommet, predessesseur);
 	}

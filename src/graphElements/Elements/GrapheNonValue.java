@@ -1,8 +1,12 @@
 package graphElements.Elements;
 
+import factory.Factory;
 import graphElements.Abstract.AbstractGraphe;
 import graphElements.Interfaces.InterfaceArc;
+import graphElements.Interfaces.InterfaceEnsembleArcNonValue;
+import graphElements.Interfaces.InterfaceEnsembleSommet;
 import graphElements.Interfaces.InterfaceGrapheNonValue;
+import graphElements.Interfaces.InterfaceSommet;
 
 public class GrapheNonValue<S> extends AbstractGraphe<S,InterfaceArc<S>> implements InterfaceGrapheNonValue<S>
 {
@@ -10,32 +14,27 @@ public class GrapheNonValue<S> extends AbstractGraphe<S,InterfaceArc<S>> impleme
 	public GrapheNonValue()
 	{
 		super();
-		setGamma(new EnsembleArcNonValue<S>());
+		setGamma(Factory.ensembleArcNonValue());
 	}
-	public GrapheNonValue(EnsembleSommet<S> x,EnsembleArcNonValue<S> gamma)
+	public GrapheNonValue(InterfaceEnsembleSommet<S> x,InterfaceEnsembleArcNonValue<S> gamma)
 	{
-		super(new EnsembleSommet<S>(x),new EnsembleArcNonValue<S>(gamma));
+		super(Factory.ensembleSommet(x),Factory.ensembleArcNonValue(gamma));
 	}
-	public GrapheNonValue(GrapheNonValue<S> G) 
+	public GrapheNonValue(InterfaceGrapheNonValue<S> G) 
 	{
 		super(G);
 	}
 	//Getter
 	@Override
-	public EnsembleArcNonValue<S> getGamma()
+	public InterfaceEnsembleArcNonValue<S> getGamma()
 	{
-		return new EnsembleArcNonValue<S>((EnsembleArcNonValue<S>)super.getGamma());
+		return Factory.ensembleArcNonValue((InterfaceEnsembleArcNonValue<S>)super.getGamma());
 	}
 	
 	//Ajout d'élément
 	@Override
-	public void ajouteArc(Sommet<S> depart, Sommet<S> arrivee)
+	public void ajouteArc(InterfaceSommet<S> depart, InterfaceSommet<S> arrivee)
 	{
-		ajouteArc(new Arc<S>(depart,arrivee));
-	}
-	@Override
-	public GrapheNonValue<S> clone()
-	{
-		return new GrapheNonValue<S>(this);
+		ajouteArc(Factory.arcNonValue(depart, arrivee));
 	}
 }

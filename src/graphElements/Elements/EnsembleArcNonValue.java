@@ -2,16 +2,18 @@ package graphElements.Elements;
 
 import java.util.HashSet;
 
+import factory.Factory;
 import graphElements.Abstract.AbstractEnsembleArc;
 import graphElements.Interfaces.InterfaceArc;
 import graphElements.Interfaces.InterfaceEnsembleArcNonValue;
+import graphElements.Interfaces.InterfaceSommet;
 
 public class EnsembleArcNonValue<S> extends AbstractEnsembleArc<S,InterfaceArc<S>> implements InterfaceEnsembleArcNonValue<S>
 {
 	//Constructeur
-	public EnsembleArcNonValue(EnsembleArcNonValue<S> Ensemble)
+	public EnsembleArcNonValue(InterfaceEnsembleArcNonValue<S> Ensemble)
 	{
-		for (InterfaceArc<S> arc : Ensemble.ensemble)
+		for (InterfaceArc<S> arc : Ensemble.getEnsemble())
 		{
 			ajouteArc(arc);
 		}
@@ -30,24 +32,24 @@ public class EnsembleArcNonValue<S> extends AbstractEnsembleArc<S,InterfaceArc<S
 	@Override
 	public void ajouteArc(InterfaceArc<S> arc)
 	{
-		super.ajouteArc(new Arc<S>((Arc<S>) arc)); //Le new permet de créer une nouvelle instance
+		super.ajouteArc(Factory.arcNonValue(arc));
 	}
 	
 	@Override
-	public void ajouteArc(Sommet<S> depart,Sommet<S>arrivee)
+	public void ajouteArc(InterfaceSommet<S> depart,InterfaceSommet<S>arrivee)
 	{
-		ajouteArc(new Arc<S>(depart,arrivee));
+		ajouteArc(Factory.arcNonValue(depart, arrivee));
 	}
 	@Override
-	public void supprArc(Sommet<S> depart, Sommet<S> arrivee)
+	public void supprArc(InterfaceSommet<S> depart, InterfaceSommet<S> arrivee)
 	{
-		supprArc(new Arc<S>(depart,arrivee));
+		supprArc(Factory.arcNonValue(depart, arrivee));
 	}
 	
 	
-	public static <S> EnsembleArcNonValue<S> union(EnsembleArcNonValue<S> Ensemble1,EnsembleArcNonValue<S> Ensemble2)
+	public static <S> InterfaceEnsembleArcNonValue<S> union(InterfaceEnsembleArcNonValue<S> Ensemble1,InterfaceEnsembleArcNonValue<S> Ensemble2)
 	{
-		EnsembleArcNonValue<S> union = new EnsembleArcNonValue<S>(Ensemble1);
+		InterfaceEnsembleArcNonValue<S> union = Factory.ensembleArcNonValue(Ensemble1);
 		for(InterfaceArc<S> arc : Ensemble2.getEnsemble())
 		{
 			union.ajouteArc(arc);
@@ -55,9 +57,9 @@ public class EnsembleArcNonValue<S> extends AbstractEnsembleArc<S,InterfaceArc<S
 		return union;
 	}
 	
-	public static <S> EnsembleArcNonValue<S> intersection (EnsembleArcNonValue<S> Ensemble1,EnsembleArcNonValue<S> Ensemble2)
+	public static <S> InterfaceEnsembleArcNonValue<S> intersection (InterfaceEnsembleArcNonValue<S> Ensemble1,InterfaceEnsembleArcNonValue<S> Ensemble2)
 	{
-		EnsembleArcNonValue<S> intersection = new EnsembleArcNonValue<S>(Ensemble1);
+		InterfaceEnsembleArcNonValue<S> intersection = Factory.ensembleArcNonValue(Ensemble1);
 		for(InterfaceArc<S> arc : Ensemble1.getEnsemble())
 		{
 			if(!Ensemble2.existeArc(arc))

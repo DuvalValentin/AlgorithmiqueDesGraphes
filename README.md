@@ -1,5 +1,5 @@
 # AlgorithmiqueDesGraphes
-Version 0.9
+Version 0.11
 Le but de ces packages est de disposer d'un ensemble d'outils facile à utiliser permettant de manipuler des Graphes.
 L'objectif final étant de pouvoir effectuer un maximum  d'algorithmes sur les graphes.
 
@@ -91,6 +91,13 @@ V 0.10.1
 Union et intesection sont désormais statiques mais pas encore comme je le souhaiterais, l'alogorithme de Ford a été implémenté.
 Découverte du coverage, les tests couvrents désormais 100% les packages abstract et elements (il reste encore les algorithmes à couvrir correctement).
 
-Urgent : Mettre en place un pattern factory pour pallier à différents problèmes dans le code.
+V 0.11
+Une classe Factory a été créée, le code a pû donc être modifié afin de respecter l'invertion de dépendances (il reste encore les méthodes d'union à gérer),
+L'union et l'intersection sont correctes mais ne me satisais pas encore.
 
-Prochaine étape :Créer une fonction pour savoir si un Ensemble est un sous ensemble d'un autre Ensemble (utiliser Union en statique). Les algorithmes CFC doivent rendre un graphe d'ensemble de graphe. Commencer les algorithmes d'ordonnancement.
+Encore à faire :
+Revoir les TODO présents dans le code.
+Créer une fonction pour savoir si un Ensemble est un sous ensemble d'un autre Ensemble (utiliser Union en statique).
+Les algorithmes CFC doivent rendre un graphe d'ensemble de graphe.
+Créer un fichier gitignore correct
+Commencer les algorithmes d'ordonnancement.

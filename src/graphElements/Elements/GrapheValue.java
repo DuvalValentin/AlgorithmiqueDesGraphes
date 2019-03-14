@@ -1,5 +1,6 @@
 package graphElements.Elements;
 
+import factory.Factory;
 import graphElements.Abstract.AbstractGraphe;
 import graphElements.Interfaces.*;
 
@@ -9,44 +10,37 @@ public class GrapheValue<S> extends AbstractGraphe<S,InterfaceArcValue<S>> imple
 	public GrapheValue()
 	{
 		super();
-		setGamma(new EnsembleArcValue<S>());
+		setGamma(Factory.ensembleArcValue());
 	}
-	public GrapheValue(EnsembleSommet<S> x,EnsembleArcValue<S> gamma)
+	public GrapheValue(InterfaceEnsembleSommet<S> x,InterfaceEnsembleArcValue<S> gamma)
 	{
 		super(x,gamma);
 	}
-	public GrapheValue(GrapheValue<S> G)
+	public GrapheValue(InterfaceGrapheValue<S> G)
 	{
 		super(G);
 	}
 	//Getters
 	@Override
-	public EnsembleArcValue<S> getGamma()
+	public InterfaceEnsembleArcValue<S> getGamma()
 	{
-		return new EnsembleArcValue<S>((EnsembleArcValue<S>)super.getGamma());
+		return Factory.ensembleArcValue((InterfaceEnsembleArcValue<S>)super.getGamma());
 	}
 	@Override
-	public Cout getCout(Sommet<S> depart, Sommet<S> arrivee)
+	public InterfaceCout getCout(InterfaceSommet<S> depart, InterfaceSommet<S> arrivee)
 	{
-		return ((EnsembleArcValue<S>)Gamma).getCout(depart,arrivee);
+		return ((InterfaceEnsembleArcValue<S>)Gamma).getCout(depart,arrivee);
 	}
 	//Setter
 	@Override
-	public boolean setValeur(Sommet<S> depart, Sommet<S> arrivee, Cout cout)
+	public boolean setValeur(InterfaceSommet<S> depart, InterfaceSommet<S> arrivee, InterfaceCout cout)
 	{
-		return ((EnsembleArcValue<S>)Gamma).setValeur(depart,arrivee,cout);
+		return ((InterfaceEnsembleArcValue<S>)Gamma).setValeur(depart,arrivee,cout);
 	}
 	//Ajout d'éléments
 	@Override
-	public void ajouteArc(Sommet<S> depart, Sommet<S> arrivee,Cout cout)
+	public void ajouteArc(InterfaceSommet<S> depart, InterfaceSommet<S> arrivee,InterfaceCout cout)
 	{
-		ajouteArc(new ArcValue<S>(depart,arrivee,cout));
-	}
-	
-
-	@Override
-	public GrapheValue<S> clone()
-	{
-		return new GrapheValue<S>(this);
+		ajouteArc(Factory.arcValue(depart, arrivee, cout));
 	}
 }

@@ -1,12 +1,12 @@
 package algorithme;
 
-import graphElements.Elements.*;
-
+import factory.Factory;
+import graphElements.Interfaces.*;
 public class DetectionCircuit
 {
-	public static <S> boolean Roy_Warshall(GrapheNonValue<S> G)
+	public static <S> boolean Roy_Warshall(InterfaceGrapheNonValue<S> G)
 	{
-		GrapheNonValue<S> RW=FermetureTransitive.Roy_Warshall(G);
+		InterfaceGrapheNonValue<S> RW=FermetureTransitive.Roy_Warshall(G);
 		boolean result;
 		if(RW.existeBoucle())
 		{
@@ -19,13 +19,13 @@ public class DetectionCircuit
 		return result;
 	}
 	//TODO DFS et WFS
-	public static <S> boolean MarimontEntree(GrapheNonValue<S> G)
+	public static <S> boolean MarimontEntree(InterfaceGrapheNonValue<S> G)
 	{
-		GrapheNonValue<S>SG=new GrapheNonValue<S>(G);//sous graphe
-		EnsembleSommet<S> Ent=SG.pointsEntree();
+		InterfaceGrapheNonValue<S>SG=Factory.grapheNonValue(G);//sous graphe
+		InterfaceEnsembleSommet<S> Ent=SG.pointsEntree();
 		while(!Ent.isEmpty())
 		{
-			for(Sommet<S> S : Ent.getEnsemble())
+			for(InterfaceSommet<S> S : Ent.getEnsemble())
 			{
 				SG.supprSommet(S);
 			}
@@ -34,13 +34,13 @@ public class DetectionCircuit
 		return !SG.isEmpty();
 	}
 	
-	public static <S> boolean MarimontSortie(GrapheNonValue<S> G)
+	public static <S> boolean MarimontSortie(InterfaceGrapheNonValue<S> G)
 	{
-		GrapheNonValue<S>SG=new GrapheNonValue<S>(G);//sous graphe
-		EnsembleSommet<S> Sor=SG.pointsSortie();
+		InterfaceGrapheNonValue<S>SG=Factory.grapheNonValue(G);//sous graphe
+		InterfaceEnsembleSommet<S> Sor=SG.pointsSortie();
 		while(!Sor.isEmpty())
 		{
-			for(Sommet<S> S : Sor.getEnsemble())
+			for(InterfaceSommet<S> S : Sor.getEnsemble())
 			{
 				SG.supprSommet(S);
 			}
