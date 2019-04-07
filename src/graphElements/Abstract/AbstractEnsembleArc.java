@@ -15,7 +15,7 @@ public abstract class AbstractEnsembleArc<S,A extends InterfaceArc<S>> extends A
 	}
 	//Test d'existence d'éléments
 	@Override
-	public boolean existeArc(A arc)
+	public boolean existeArc(InterfaceArc<S> arc)
 	{
 		return existeArc(arc.getDepart(),arc.getArrivee());
 	}
@@ -80,10 +80,25 @@ public abstract class AbstractEnsembleArc<S,A extends InterfaceArc<S>> extends A
 		return XPred;
 	}
 	//Ajouts et suppressions d'éléments ----------------------------------------
+	@Deprecated
+	@Override
+	public void supprElement(A arc)
+	{
+		supprArc(arc);
+	}
+	
+	@Deprecated
+	@Override
+	public void ajoutElement(A arc)
+	{
+		ajouteArc(arc);
+	}
+	
+	
 	@Override
 	public void ajouteArc(A arc)//Redéfinie pour chaque enfant (entre autre afin de faire des new)
 	{
-		if(!this.existeArc(arc))
+		if(!existeArc(arc))
 		{
 			ensemble.add(arc);
 		}
@@ -100,37 +115,4 @@ public abstract class AbstractEnsembleArc<S,A extends InterfaceArc<S>> extends A
 			}
 		}
 	}
-	/*
-	@Override
-	public AbstractEnsemble<A> union(AbstractEnsemble<A> Ensemble)
-	{
-		AbstractEnsemble<A> union= new EnsembleArcNonValue<A>(this);
-		for(A arc : Ensemble.ensemble)
-		{
-			ajouteArc(arc);
-		}
-	}*/
-	
-	/*public static <S,A extends InterfaceArc<S>> AbstractEnsembleArc<S,A> union(AbstractEnsembleArc<S,A> Ensemble1,AbstractEnsembleArc<S,A> Ensemble2) throws CloneNotSupportedException
-	{
-		@SuppressWarnings("unchecked")
-		AbstractEnsembleArc<S,A> union=(AbstractEnsembleArc<S,A>) Ensemble1.clone();
-		for(A arc : Ensemble2.getEnsemble())
-		{
-			union.ajouteArc(arc);
-		}
-		return union;
-	}*/
-	/*@Override
-	public void intersection(AbstractEnsemble<A> Ensemble)
-	{
-		//faire un new arc pour régler le problème puis mettre ça dans la factory
-		for(A arc : ensemble)
-		{
-			if(!Ensemble.getEnsemble().contains(arc))//TODO on veut faire un existeArc ici, Intersection marchera mal pour arc valué
-			{
-				supprArc(arc);//TODO on ne peut pas faire ça
-			}
-		}
-	}*/
 }

@@ -1,7 +1,6 @@
 package graphElements.Abstract;
 
 import java.util.HashSet;
-
 import graphElements.Interfaces.InterfaceEnsemble;
 public abstract class AbstractEnsemble<E> implements InterfaceEnsemble<E>
 {
@@ -22,19 +21,23 @@ public abstract class AbstractEnsemble<E> implements InterfaceEnsemble<E>
 	{
 		ensemble.clear();
 	}
-	/*
-	public void intersection(AbstractEnsemble<E> Ensemble)
+	
+	
+	//TODO redéfinir supprElement et ajoutElement
+	@Override 
+	public void supprElement(E element)
 	{
-		//TODO problème ici on ne peut pas changer un ensemble sur lequel on applique un for
-		//FIXME 
-		for(E element : ensemble)
-		{
-			if(!Ensemble.ensemble.contains(element))
-			{
-				ensemble.remove(element);
-			}
-		}
-	}*/
+		ensemble.remove(element);
+	}
+	
+	@Override
+	public void ajoutElement(E element)
+	{
+		ensemble.add(element);
+	}
+	
+	
+	
 	@Override
 	public String toString()
 	{

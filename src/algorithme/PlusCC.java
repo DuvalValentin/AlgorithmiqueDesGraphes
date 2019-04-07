@@ -43,7 +43,7 @@ public class PlusCC
 					{
 						if(M.existeSommet(y))
 						{
-							InterfaceCout cout= G.getCout(m, y);
+							InterfaceCout cout= G.getCout(m, y).get();
 							v=Dijkstra.getDistance(m).getValeur()+cout.getValeur();
 							if(v<Dijkstra.getDistance(y).getValeur())
 							{
@@ -74,14 +74,14 @@ public class PlusCC
 		E=H.pointsEntree();
 		while(!H.isEmpty()&&!E.isEmpty())
 		{
-			y=E.firstSommet();
+			y=E.pickSommet();
 			P=G.listPred(y);
 			InterfaceCout coutm=null;
 			m=null;
 			InterfaceCout coutp;
 			for(InterfaceSommet<S> sommet : P.getEnsemble())
 			{
-				coutp=InterfaceCout.somme(OrdinalRacine.getDistance(sommet),G.getCout(sommet, y));
+				coutp=InterfaceCout.somme(OrdinalRacine.getDistance(sommet),G.getCout(sommet, y).get());
 				if(coutm==null)
 				{
 					m=sommet;
@@ -96,7 +96,7 @@ public class PlusCC
 					}
 				}
 			}
-			OrdinalRacine.modifDistance(y, InterfaceCout.somme(OrdinalRacine.getDistance(m), G.getCout(m, y)));
+			OrdinalRacine.modifDistance(y, InterfaceCout.somme(OrdinalRacine.getDistance(m), G.getCout(m, y).get()));
 			OrdinalRacine.modifPredecesseur(y, m);
 			H.supprSommet(y);
 			E=H.pointsEntree();
@@ -118,7 +118,7 @@ public class PlusCC
 		{
 			for(InterfaceSommet<S> y : G.listSucc(x).getEnsemble())
 			{
-				cout=InterfaceCout.somme(BellmanFord.getDistance(x), G.getCout(x, y));
+				cout=InterfaceCout.somme(BellmanFord.getDistance(x), G.getCout(x, y).get());
 				if(BellmanFord.getDistance(y)==null)
 				{
 					BellmanFord.modifPredecesseur(y, x);
@@ -139,7 +139,7 @@ public class PlusCC
 		{
 			for(InterfaceSommet<S> y : G.listSucc(x).getEnsemble())
 			{
-				if(BellmanFord.getDistance(y).getValeur()>InterfaceCout.somme(BellmanFord.getDistance(x), G.getCout(x, y)).getValeur())
+				if(BellmanFord.getDistance(y).getValeur()>InterfaceCout.somme(BellmanFord.getDistance(x), G.getCout(x, y).get()).getValeur())
 				{
 					System.err.println("Il y a un circuit absorbant dans le graphe, la table obtenue par BellmanFord n'est pas exploitable");
 				}
@@ -166,12 +166,12 @@ public class PlusCC
 			Y=Gavisiter.listSucc(y);
 			if (!Y.isEmpty())
 			{
-				z=Y.firstSommet();
+				z=Y.pickSommet();
 				Gavisiter.supprArc(y, z);//Supprimer l'arc ici empêche l'arc de pouvoir être revisité
 				if (D.existeSommet(z))
 				{
 					D.supprSommet(z);
-					Ford.modifDistance(z, InterfaceCout.somme(Ford.getDistance(y), G.getCout(y,z)));
+					Ford.modifDistance(z, InterfaceCout.somme(Ford.getDistance(y), G.getCout(y,z).get()));
 					Ford.modifPredecesseur(z, y);
 					A.push(z);
 				}
@@ -179,21 +179,21 @@ public class PlusCC
 				{
 					if(T.existeSommet(z))
 					{
-						if(Ford.getDistance(z).getValeur()>InterfaceCout.somme(Ford.getDistance(y), G.getCout(y,z)).getValeur())
+						if(Ford.getDistance(z).getValeur()>InterfaceCout.somme(Ford.getDistance(y), G.getCout(y,z).get()).getValeur())
 						{
 							T.supprSommet(z);
 							for (InterfaceSommet<S> sommet : G.listSucc(z).getEnsemble())
 							{
-								Gavisiter.ajouteArc(z, sommet, G.getCout(z, sommet));
+								Gavisiter.ajouteArc(z, sommet, G.getCout(z, sommet).get());
 							}
-							Ford.modifDistance(z, InterfaceCout.somme(Ford.getDistance(y), G.getCout(y,z)));
+							Ford.modifDistance(z, InterfaceCout.somme(Ford.getDistance(y), G.getCout(y,z).get()));
 							Ford.modifPredecesseur(z, y);
 							A.push(z);
 						}
 					}
 					else
 					{
-						if(Ford.getDistance(z).getValeur()>InterfaceCout.somme(Ford.getDistance(y), G.getCout(y,z)).getValeur())
+						if(Ford.getDistance(z).getValeur()>InterfaceCout.somme(Ford.getDistance(y), G.getCout(y,z).get()).getValeur())
 						{
 							absorbant=true;
 						}

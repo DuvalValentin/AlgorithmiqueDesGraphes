@@ -3,7 +3,7 @@ package graphElements.Elements;
 import java.util.HashSet;
 
 import factory.Factory;
-import graphElements.Abstract.AbstractEnsembleArc;
+import graphElements.Abstract.AbstractEnsembleArc;//Héritage
 import graphElements.Interfaces.InterfaceArc;
 import graphElements.Interfaces.InterfaceEnsembleArcNonValue;
 import graphElements.Interfaces.InterfaceSommet;
@@ -45,30 +45,4 @@ public class EnsembleArcNonValue<S> extends AbstractEnsembleArc<S,InterfaceArc<S
 	{
 		supprArc(Factory.arcNonValue(depart, arrivee));
 	}
-	
-	
-	public static <S> InterfaceEnsembleArcNonValue<S> union(InterfaceEnsembleArcNonValue<S> Ensemble1,InterfaceEnsembleArcNonValue<S> Ensemble2)
-	{
-		InterfaceEnsembleArcNonValue<S> union = Factory.ensembleArcNonValue(Ensemble1);
-		for(InterfaceArc<S> arc : Ensemble2.getEnsemble())
-		{
-			union.ajouteArc(arc);
-		}
-		return union;
-	}
-	
-	public static <S> InterfaceEnsembleArcNonValue<S> intersection (InterfaceEnsembleArcNonValue<S> Ensemble1,InterfaceEnsembleArcNonValue<S> Ensemble2)
-	{
-		InterfaceEnsembleArcNonValue<S> intersection = Factory.ensembleArcNonValue(Ensemble1);
-		for(InterfaceArc<S> arc : Ensemble1.getEnsemble())
-		{
-			if(!Ensemble2.existeArc(arc))
-			{
-				intersection.supprArc(arc);
-			}
-		}
-		return intersection;
-	}
-	
-	
 }

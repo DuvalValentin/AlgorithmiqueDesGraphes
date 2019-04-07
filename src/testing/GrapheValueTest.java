@@ -77,7 +77,7 @@ public class GrapheValueTest
 	public void testGetCout()
 	{
 		
-		InterfaceCout cout=GV.getCout(s3, s4);
+		InterfaceCout cout=GV.getCout(s3, s4).get();
 		assertEquals("GetCout",c3,cout);
 		assertNotSame("GetCout renvoie bien un cout différent",c3,cout);
 	}
@@ -89,7 +89,7 @@ public class GrapheValueTest
 		InterfaceArcValue<Integer>av=Factory.arcValue(s2,s1,c5);
 		assertFalse("L'ajout ne s'est pas fait",GV.ajoutableArc(av));
 		assertNotEquals("L'ajout a aussi été fait dans un autre graphe",GV,GV2);
-		assertEquals("L'arc ajouté n'a pas la bonne valeur",c5,GV.getCout(s2, s1));
+		assertEquals("L'arc ajouté n'a pas la bonne valeur",c5,GV.getCout(s2, s1).get());
 		GV.supprArc(s2, s1);
 		assertTrue("La suppression c'est effectuée",GV.ajoutableArc(av));
 	}
@@ -98,7 +98,20 @@ public class GrapheValueTest
 	public void testSetValeur()
 	{
 		GV.setValeur(s1, s2, c9);
-		assertEquals("Le cout n'a pas été modifié",c9,GV.getCout(s1,s2));
+		assertEquals("Le cout n'a pas été modifié",c9,GV.getCout(s1,s2).get());
+	}
+	
+	@Test
+	public void testUnion()
+	{
+		InterfaceSommet<Integer> s5 = Factory.sommet(5);
+		InterfaceGrapheValue<Integer> GVbis = Factory.grapheValue();
+		GVbis.ajouteSommet(s2);GVbis.ajouteSommet(s3);GVbis.ajouteSommet(s4);GVbis.ajouteSommet(s5);
+		GVbis.ajouteArc(s2,s3,c5);GVbis.ajouteArc(s3,s4,c1);GVbis.ajouteArc(s4, s5, c9);GVbis.ajouteArc(s3, s2, c5);
+		InterfaceGrapheValue<Integer> Gunion = Factory.grapheValue(GV);
+		Gunion.ajouteSommet(s5);
+		Gunion.ajouteArc(s3, s4, c1);Gunion.ajouteArc(s4, s5, c9);Gunion.ajouteArc(s3, s2, c5);
+		assertEquals(Gunion,InterfaceGrapheValue.union(GV, GVbis));
 	}
 	
 	@Test

@@ -22,7 +22,7 @@ public class EnsembleSommet<S> extends AbstractEnsemble<InterfaceSommet<S>> impl
 	}
 	
 	@Override
-	public InterfaceSommet<S> firstSommet()
+	public InterfaceSommet<S> pickSommet()
 	{
 		//TODO améliorer la méthode fisrtSommet() de Sommet
 		@SuppressWarnings("unchecked")
@@ -50,28 +50,5 @@ public class EnsembleSommet<S> extends AbstractEnsemble<InterfaceSommet<S>> impl
 	public HashSet<InterfaceSommet<S>> getEnsemble()
 	{
 		return new HashSet<InterfaceSommet<S>>(ensemble);
-	}
-	
-	public static <S> InterfaceEnsembleSommet<S> union(InterfaceEnsembleSommet<S> Ensemble1,InterfaceEnsembleSommet<S> Ensemble2)
-	{
-		InterfaceEnsembleSommet<S> union = Factory.ensembleSommet(Ensemble1);
-		for(InterfaceSommet<S> sommet : Ensemble2.getEnsemble())
-		{
-			union.ajouteSommet(sommet);
-		}
-		return union;
-	}
-	
-	public static <S > InterfaceEnsembleSommet<S> intersection(InterfaceEnsembleSommet<S> Ensemble1,InterfaceEnsembleSommet<S> Ensemble2)
-	{
-		InterfaceEnsembleSommet<S> intersection = Factory.ensembleSommet(Ensemble1);
-		for(InterfaceSommet<S> sommet : Ensemble1.getEnsemble())
-		{
-			if(!Ensemble2.existeSommet(sommet))
-			{
-				intersection.supprSommet(sommet);
-			}
-		}
-		return intersection;
 	}
 }

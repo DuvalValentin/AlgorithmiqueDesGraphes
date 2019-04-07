@@ -1,5 +1,7 @@
 package graphElements.Interfaces;
 
+import factory.Factory;
+
 public interface InterfaceGraphe<S,A extends InterfaceArc<S>> extends InterfaceOperationsElementairesEnsembleSommet<S>,InterfaceOperationsElementairesEnsembleArc<S,A>
 {
 	//Un graphe possède un attribut InterfaceEnsembleSommet<S> nommé X et un attribut InterfaceAbstractEnsembleArc nommé Gamma
@@ -15,4 +17,17 @@ public interface InterfaceGraphe<S,A extends InterfaceArc<S>> extends InterfaceO
 	//Liste des entrées sorties
 	InterfaceEnsembleSommet<S> pointsEntree();//Rend la liste des points d'entrée
 	InterfaceEnsembleSommet<S> pointsSortie();//Rend une liste des points de sortie
+	static <S,A extends InterfaceArc<S>> InterfaceGraphe<S,A> union(InterfaceGraphe<S,A> Graphe1,InterfaceGraphe<S,A> Graphe2)
+	{
+		InterfaceGraphe<S,A> union = Factory.graphe(Graphe1);
+		for(InterfaceSommet<S> sommet : Graphe2.getX().getEnsemble())
+		{
+			union.ajouteSommet(sommet);
+		}
+		for(A arc : Graphe2.getGamma().getEnsemble())
+		{
+			union.ajouteArc(arc);
+		}
+		return union;
+	}
 }

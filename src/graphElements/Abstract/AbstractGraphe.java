@@ -56,7 +56,7 @@ public abstract class AbstractGraphe<S,A extends InterfaceArc<S>> implements Int
 		return X.existeSommet(sommet);
 	}
 	@Override
-	public boolean existeArc (A arc)
+	public boolean existeArc (InterfaceArc<S> arc)
 	{
 		return Gamma.existeArc(arc);
 	}
@@ -119,9 +119,9 @@ public abstract class AbstractGraphe<S,A extends InterfaceArc<S>> implements Int
 	//Selections d'éléments -----------------------------------------------
 	//Selction d'un élément
 	@Override
-	public InterfaceSommet<S> firstSommet()
+	public InterfaceSommet<S> pickSommet()
 	{
-		return X.firstSommet();
+		return X.pickSommet();
 	}
 	//Liste des prédecesseurs et successeurs
 	@Override
@@ -207,22 +207,6 @@ public abstract class AbstractGraphe<S,A extends InterfaceArc<S>> implements Int
 	public void supprArc(InterfaceSommet<S> depart, InterfaceSommet<S> arrivee)
 	{
 		Gamma.supprArc(depart, arrivee);
-	}
-	//Union
-	public static <S,A extends InterfaceArc<S>> InterfaceGraphe<S,A> union(InterfaceGraphe<S,A> Graphe1,InterfaceGraphe<S,A> Graphe2)
-	{
-		InterfaceGraphe<S,A> union = Factory.graphe(Graphe1);
-		
-		for(InterfaceSommet<S> sommet : Graphe2.getX().getEnsemble())
-		{
-			union.ajouteSommet(sommet);
-		}
-		
-		for(A arc : Graphe2.getGamma().getEnsemble())
-		{
-			union.ajouteArc(arc);
-		}
-		return union;
 	}
 	//toString equals et hashCode ------------------------------------------------------------
 	@Override

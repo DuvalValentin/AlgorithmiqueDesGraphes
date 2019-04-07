@@ -5,7 +5,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import factory.Factory;
-import graphElements.Elements.GrapheNonValue;
 import graphElements.Interfaces.InterfaceArc;
 import graphElements.Interfaces.InterfaceEnsembleArcNonValue;
 import graphElements.Interfaces.InterfaceEnsembleSommet;
@@ -105,7 +104,7 @@ public class GrapheTest
 	@Test
 	public void testFirstSommet()
 	{
-		assertEquals(s1,G.firstSommet());
+		assertEquals(s1,G.pickSommet());
 	}
 	
 	@Test
@@ -205,7 +204,7 @@ public class GrapheTest
 		InterfaceGrapheNonValue<Integer> Gajout=Factory.grapheNonValue();
 		Gajout.ajouteSommet(s1); Gajout.ajouteSommet(s5);
 		Gajout.ajouteArc(a15);
-		Gajout =(GrapheNonValue<Integer>) GrapheNonValue.union(Gajout, G);
+		Gajout =InterfaceGrapheNonValue.union(Gajout, G);
 		InterfaceGrapheNonValue<Integer> Gunion=Factory.grapheNonValue(G);
 		Gunion.ajouteSommet(s5);
 		Gunion.ajouteArc(a15);

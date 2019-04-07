@@ -26,15 +26,15 @@ public class Parcours
 
 		while(!D.isEmpty())
 		{
-			A.push(Gavisiter.firstSommet());
-			D.supprSommet(Gavisiter.firstSommet());
+			A.push(Gavisiter.pickSommet());
+			D.supprSommet(Gavisiter.pickSommet());
 			while(!A.isEmpty())
 			{
 				y=A.peek();
 				Y=Gavisiter.listSucc(y);
 				if(!Y.isEmpty())
 				{
-					z=Y.firstSommet();
+					z=Y.pickSommet();
 					A arc = (A) Factory.arc(G.getClass().getSimpleName(), y, z,Factory.cout());
 					Gavisiter.supprArc( arc);
 					V.ajouteArc(arc);

@@ -1,5 +1,7 @@
 package graphElements.Elements;
 
+import java.util.Optional;
+
 import factory.Factory;
 import graphElements.Abstract.AbstractGraphe;
 import graphElements.Interfaces.*;
@@ -27,7 +29,7 @@ public class GrapheValue<S> extends AbstractGraphe<S,InterfaceArcValue<S>> imple
 		return Factory.ensembleArcValue((InterfaceEnsembleArcValue<S>)super.getGamma());
 	}
 	@Override
-	public InterfaceCout getCout(InterfaceSommet<S> depart, InterfaceSommet<S> arrivee)
+	public Optional<InterfaceCout> getCout(InterfaceSommet<S> depart, InterfaceSommet<S> arrivee)
 	{
 		return ((InterfaceEnsembleArcValue<S>)Gamma).getCout(depart,arrivee);
 	}

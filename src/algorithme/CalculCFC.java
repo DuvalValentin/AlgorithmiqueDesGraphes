@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Stack;
 
 import factory.Factory;
-import graphElements.Elements.EnsembleSommet;
 import graphElements.Interfaces.*;
 
 public class CalculCFC
@@ -28,7 +27,7 @@ public class CalculCFC
 					{
 						if(G.existeArc(x, y)&&G.existeArc(y, x))
 						{
-						cfc.replace(x, EnsembleSommet.union(cfc.get(x), cfc.get(y)));
+						cfc.replace(x, (InterfaceEnsembleSommet<S>) InterfaceEnsemble.union(cfc.get(x), cfc.get(y)));
 						}
 					}
 				}
@@ -37,13 +36,13 @@ public class CalculCFC
 					PasPris.supprSommet(x);
 					cfc.replace(y, cfc.get(x));
 				}
-				Pris =EnsembleSommet.union(Pris, cfc.get(x));
+				Pris =(InterfaceEnsembleSommet<S>) InterfaceEnsemble.union(Pris, cfc.get(x));
 			}
 		}
 		return cfc;
 	}
 	
-	public static <S,A extends InterfaceArc<S>> InterfaceCFC<S> TarjanDFS (InterfaceGrapheNonValue<S> G)
+	public static <S,A extends InterfaceArc<S>> InterfaceCFC<S> TarjanDFS (InterfaceGraphe<S,A> G)
 	{
 		InterfaceEnsembleSommet<S> D;//Ensemble des sommets non visités
 		InterfaceEnsembleSommet<S> Y;
@@ -61,20 +60,20 @@ public class CalculCFC
 			pospile.put(sommet, 0);
 		}
 		D=Factory.ensembleSommet(G.getX());
-		InterfaceGrapheNonValue<S> Gavisiter=Factory.grapheNonValue(G); //TODO à changer pour que TarjanDFS puisse prendre un AbstractGraph en entrée
+		InterfaceGraphe<S,A> Gavisiter=Factory.graphe(G);
 
 		while(!D.isEmpty())
 		{
-			A.push(Gavisiter.firstSommet());
-			pospile.replace(Gavisiter.firstSommet(), A.size());
-			D.supprSommet(Gavisiter.firstSommet());
+			A.push(Gavisiter.pickSommet());
+			pospile.replace(Gavisiter.pickSommet(), A.size());
+			D.supprSommet(Gavisiter.pickSommet());
 			while(!A.isEmpty())
 			{
 				y=A.peek();
 				Y=Gavisiter.listSucc(y);
 				if(!Y.isEmpty())
 				{
-					z=Y.firstSommet();
+					z=Y.pickSommet();
 					Gavisiter.supprArc(y, z);
 					if (D.existeSommet(z))
 					{

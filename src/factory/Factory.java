@@ -17,7 +17,7 @@ public class Factory
 	}
 	
 	//Arc
-	//TODO améliorer cette méthode
+	//TODO améliorer méthodes de créations dynamiques de factory
 	public static <S> InterfaceArc<S> arc(String className,InterfaceSommet<S> depart, InterfaceSommet<S> arrivee, InterfaceCout cout)
 	{
 		InterfaceArc<S> arc;
@@ -126,21 +126,21 @@ public class Factory
 	}
 	
 	//Graphe
-	public static <S,A extends InterfaceArc<S>>  InterfaceGraphe<S,A> graphe(String classGraph) throws Exception
+	public static <S,A extends InterfaceArc<S>>  InterfaceGraphe<S,A> graphe(String classGraph) //throws Exception
 	{
 		InterfaceGraphe<S,A> retour;
 		if (classGraph.equals( "GrapheNonValue"))
 		{
 			retour = (InterfaceGraphe<S,A>) Factory.grapheNonValue();
 		}
-		else if(classGraph.equals("GrapheValue"))
+		else //if(classGraph.equals("GrapheValue"))
 		{
 			retour = (InterfaceGraphe<S,A>) Factory.grapheValue();
 		}
-		else
+		/*else
 		{
 			throw new Exception("pas maché");
-		}
+		}*/
 		return retour;
 	}
 	
@@ -160,6 +160,21 @@ public class Factory
 		{
 			throw new Exception("pas maché");
 		}*/
+		return retour;
+	}
+	
+	public static <S,A extends InterfaceArc<S>> InterfaceGraphe<S,A> graphe(InterfaceEnsembleSommet<S>X,InterfaceEnsembleArc<S,A> Gamma)
+	{
+		InterfaceGraphe<S,A> retour;
+		String classGamma = Gamma.getClass().getSimpleName();
+		if(classGamma.equals("EnsembleArcNonValue"))
+		{
+			retour=(InterfaceGraphe<S, A>) Factory.grapheNonValue(X, (EnsembleArcNonValue<S>)Gamma);
+		}
+		else
+		{
+			retour=(InterfaceGraphe<S, A>) Factory.grapheValue(X, (EnsembleArcValue<S>)Gamma);
+		}
 		return retour;
 	}
 	
@@ -213,10 +228,32 @@ public class Factory
 		return new TableauPlusCC<S>(principal,G);
 	}
 	
+	public static <S> InterfaceTableauPlusCC<S> tableauPlusCC(InterfaceSommet<S>principal)
+	{
+		return new TableauPlusCC<S>(principal);
+	}
+	
 	public static <S> InterfaceCFC<S> CFC (InterfaceEnsembleSommet<S> X)
 	{
 		return new CFC<S>(X);
 	}
-
-//TODO CFC
+	
+	public static <E,S> InterfaceEnsemble<E> ensemble(InterfaceEnsemble<E> ensemble)
+	{
+		InterfaceEnsemble<E> ensembleRetour;
+		String className = ensemble.getClass().getSimpleName();
+		if(className.equals("EnsembleArcNonValue"))
+		{
+			ensembleRetour = (InterfaceEnsemble<E>) Factory.ensembleArcNonValue((InterfaceEnsembleArcNonValue<S>) ensemble);
+		}
+		else if (className.equals("EnsembleArcValue"))
+		{
+			ensembleRetour = (InterfaceEnsemble<E>) Factory.ensembleArcValue((InterfaceEnsembleArcValue<S>) ensemble);
+		}
+		else //if(className.equals("EnsembleSommet"))
+		{
+			ensembleRetour = (InterfaceEnsemble<E>) Factory.ensembleSommet((InterfaceEnsembleSommet<S>) ensemble);
+		}
+		return ensembleRetour;
+	}
 }

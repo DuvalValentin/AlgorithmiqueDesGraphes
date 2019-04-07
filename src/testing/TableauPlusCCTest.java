@@ -7,31 +7,32 @@ import java.util.HashMap;
 import org.junit.Before;
 import org.junit.Test;
 
-import graphElements.Elements.Cout;
-import graphElements.Elements.Sommet;
-import graphElements.Elements.TableauPlusCC;
+import factory.Factory;
+import graphElements.Interfaces.InterfaceCout;
+import graphElements.Interfaces.InterfaceSommet;
+import graphElements.Interfaces.InterfaceTableauPlusCC;
 
 public class TableauPlusCCTest
 {
-	private TableauPlusCC<Integer> tableau;
-	private Sommet<Integer> s1,s2;
-	private Cout c1;
-	private HashMap<Sommet<Integer>,Cout> d;
-	private HashMap<Sommet<Integer>,Sommet<Integer>> pred;
+	private InterfaceTableauPlusCC<Integer> tableau;
+	private InterfaceSommet<Integer> s1,s2;
+	private InterfaceCout c1;
+	private HashMap<InterfaceSommet<Integer>,InterfaceCout> d;
+	private HashMap<InterfaceSommet<Integer>,InterfaceSommet<Integer>> pred;
 
 	@Before
 	public void setUp()
 	{
-		s1=new Sommet<Integer>(1);
-		s2=new Sommet<Integer>(2);
-		c1=new Cout(1);
-		tableau=new TableauPlusCC<Integer>(s1);
+		s1=Factory.sommet(1);
+		s2=Factory.sommet(2);
+		c1=Factory.cout(1);
+		tableau=Factory.tableauPlusCC(s1);
 		tableau.initSommet(s2);
 		tableau.modifDistance(s2, c1);
-		d=new HashMap<Sommet<Integer>,Cout>();
-		d.put(s1, new Cout());
+		d=new HashMap<InterfaceSommet<Integer>,InterfaceCout>();
+		d.put(s1, Factory.cout());
 		d.put(s2, c1);
-		pred=new HashMap<Sommet<Integer>,Sommet<Integer>>();
+		pred=new HashMap<InterfaceSommet<Integer>,InterfaceSommet<Integer>>();
 		pred.put(s1, s1);
 		pred.put(s2, s1);
 	}
@@ -57,14 +58,14 @@ public class TableauPlusCCTest
 	@Test
 	public void testInitSommet()
 	{
-		Sommet<Integer>s3=new Sommet<Integer>(3);
+		InterfaceSommet<Integer>s3=Factory.sommet(3);
 		tableau.initSommet(s3);
 	}
 
 	@Test
 	public void testModifDistance()
 	{
-		Cout c5 = new Cout(5);
+		InterfaceCout c5 = Factory.cout(5);
 		tableau.modifDistance(s1, c5);
 		assertEquals("modifCout",c5,tableau.getDistance(s1));
 	}

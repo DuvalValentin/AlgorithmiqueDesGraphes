@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import factory.Factory;
 import graphElements.Interfaces.InterfaceCFC;
+import graphElements.Interfaces.InterfaceEnsemble;
 import graphElements.Interfaces.InterfaceEnsembleSommet;
 import graphElements.Interfaces.InterfaceSommet;
 
@@ -27,7 +28,7 @@ public class CFC<S> extends HashMap<InterfaceSommet<S>,InterfaceEnsembleSommet<S
 	{
 		InterfaceEnsembleSommet<S> X = get(x);
 		InterfaceEnsembleSommet<S> Y = get(y);
-		X=EnsembleSommet.union(X, Y);
+		X=(InterfaceEnsembleSommet<S>) InterfaceEnsemble.union(X, Y);
 		replace(x, X);
 		replace(y, X);
 	}

@@ -1,6 +1,5 @@
 package testing;
 
-import graphElements.Elements.EnsembleSommet;
 import graphElements.Interfaces.InterfaceEnsembleSommet;
 import graphElements.Interfaces.InterfaceSommet;
 
@@ -43,7 +42,7 @@ public class EnsembleSommetTest
 	public void testFirstSommet()
 	{
 		ensembleSommetTest.ajouteSommet(s5);
-		assertEquals("La méthode FirstSommet ne marche pas ou ne renvoie pas l'objet de plus faible Hashcode",ensembleSommetTest.firstSommet(),s3);
+		assertEquals("La méthode FirstSommet ne marche pas ou ne renvoie pas l'objet de plus faible Hashcode",ensembleSommetTest.pickSommet(),s3);
 	}
 	
 	@Test
@@ -82,10 +81,10 @@ public class EnsembleSommetTest
 		ajout.ajouteSommet(s3);ajout.ajouteSommet(s5);
 		InterfaceEnsembleSommet<Integer> union = Factory.ensembleSommet();
 		union.ajouteSommet(s3); union.ajouteSommet(s4); union.ajouteSommet(s5);
-		InterfaceEnsembleSommet<Integer> resultatUnion = EnsembleSommet.union(ajout, ensembleSommetTest);
+		InterfaceEnsembleSommet<Integer> resultatUnion = InterfaceEnsembleSommet.union(ajout, ensembleSommetTest);
 		assertEquals(union,resultatUnion);
 		InterfaceEnsembleSommet<Integer> vide = Factory.ensembleSommet();
-		InterfaceEnsembleSommet<Integer> resultatVide = EnsembleSommet.union(vide, ensembleSommetTest);
+		InterfaceEnsembleSommet<Integer> resultatVide = InterfaceEnsembleSommet.union(vide, ensembleSommetTest);
 		assertEquals(ensembleSommetTest,resultatVide);
 	}
 	
@@ -96,10 +95,10 @@ public class EnsembleSommetTest
 		ajout.ajouteSommet(s3);ajout.ajouteSommet(s5);
 		InterfaceEnsembleSommet<Integer> intersection = Factory.ensembleSommet();
 		intersection.ajouteSommet(s3);
-		InterfaceEnsembleSommet<Integer> resultatIntersection = EnsembleSommet.intersection(ajout, ensembleSommetTest);
+		InterfaceEnsembleSommet<Integer> resultatIntersection = InterfaceEnsembleSommet.intersection(ajout, ensembleSommetTest);
 		assertEquals(intersection,resultatIntersection);
 		InterfaceEnsembleSommet<Integer> vide = Factory.ensembleSommet();
-		InterfaceEnsembleSommet<Integer> resultatVide = EnsembleSommet.intersection(vide, ensembleSommetTest);
+		InterfaceEnsembleSommet<Integer> resultatVide = InterfaceEnsembleSommet.intersection(vide, ensembleSommetTest);
 		assertEquals(vide,resultatVide);
 	}
 }

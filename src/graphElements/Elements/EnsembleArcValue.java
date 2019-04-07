@@ -1,6 +1,7 @@
 package graphElements.Elements;
 
 import java.util.HashSet;
+import java.util.Optional;
 
 import factory.Factory;
 import graphElements.Abstract.AbstractEnsembleArc;
@@ -25,7 +26,7 @@ public class EnsembleArcValue<S> extends AbstractEnsembleArc<S,InterfaceArcValue
 	}
 	//getter
 	@Override
-	public InterfaceCout getCout(InterfaceSommet<S> depart, InterfaceSommet<S> arrivee)
+	public Optional<InterfaceCout> getCout(InterfaceSommet<S> depart, InterfaceSommet<S> arrivee)
 	{
 		InterfaceCout cout=null;
 		for(InterfaceArcValue<S> arcV : ensemble)
@@ -36,7 +37,17 @@ public class EnsembleArcValue<S> extends AbstractEnsembleArc<S,InterfaceArcValue
 				break;
 			}
 		}
-		return cout;
+		Optional<InterfaceCout> oCout;
+		if(cout!=null)
+		{
+			oCout=Optional.of(cout);
+		}
+		else
+		{
+			oCout=Optional.empty();
+		}
+		
+		return oCout;
 	}
 	//setter
 	@Override
@@ -57,9 +68,24 @@ public class EnsembleArcValue<S> extends AbstractEnsembleArc<S,InterfaceArcValue
 	}
 	//ajout et suppression d'élément
 	@Override
-	public void ajouteArc(InterfaceArcValue<S> arc)
+	public void ajouteArc(InterfaceArcValue<S> arc)//Si le coût est inferieur l'arc est remplacé
 	{
-		super.ajouteArc(Factory.arcValue(arc));
+		if(existeArc(arc))
+		{
+			for(InterfaceArcValue<S> a : ensemble)
+			{
+				if(arc.getDepart().equals(a.getDepart())&&arc.getArrivee().equals(arc.getArrivee())&&arc.getCout().getValeur()<a.getCout().getValeur())
+				{
+					ensemble.remove(a);
+					ensemble.add(Factory.arcValue(arc));
+					break;
+				}
+			}
+		}
+		else
+		{
+			ensemble.add(Factory.arcValue(arc));
+		}
 	}
 	@Override
 	public void ajouteArc(InterfaceSommet<S> depart,InterfaceSommet<S>arrivee,InterfaceCout cout)
@@ -69,10 +95,10 @@ public class EnsembleArcValue<S> extends AbstractEnsembleArc<S,InterfaceArcValue
 	@Override
 	public void supprArc(InterfaceSommet<S>depart,InterfaceSommet<S>arrivee)
 	{
-		InterfaceCout cout=getCout(depart,arrivee);
-		if(cout!=null)
+		Optional<InterfaceCout> oCout=getCout(depart,arrivee);
+		if(oCout.isPresent())
 		{
-			supprArc(Factory.arcValue(depart,arrivee,cout));
+			supprArc(Factory.arcValue(depart,arrivee,oCout.get()));
 		}
 	}
 	@Override
@@ -80,29 +106,4 @@ public class EnsembleArcValue<S> extends AbstractEnsembleArc<S,InterfaceArcValue
 	{
 		return new HashSet<InterfaceArcValue<S>>(ensemble);
 	}
-	
-	
-	public static <S> InterfaceEnsembleArcValue<S> union(InterfaceEnsembleArcValue<S> Ensemble1,InterfaceEnsembleArcValue<S> Ensemble2)
-	{
-		InterfaceEnsembleArcValue<S> union = Factory.ensembleArcValue(Ensemble1);
-		for(InterfaceArcValue<S> arc : Ensemble2.getEnsemble())
-		{
-			union.ajouteArc(arc);
-		}
-		return union;
-	}
-	
-	public static <S,A extends InterfaceArcValue<S>> InterfaceEnsembleArcValue<S> intersection (InterfaceEnsembleArcValue<S> Ensemble1,InterfaceEnsembleArcValue<S> Ensemble2)
-	{
-		InterfaceEnsembleArcValue<S> intersection = Factory.ensembleArcValue(Ensemble1);
-		for(InterfaceArcValue<S> arc : Ensemble1.getEnsemble())
-		{
-			if(!Ensemble2.existeArc(arc))
-			{
-				intersection.supprArc(arc);
-			}
-		}
-		return intersection;
-	}
-	
 }

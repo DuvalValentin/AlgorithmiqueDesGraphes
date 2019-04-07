@@ -1,6 +1,7 @@
 package graphElements.Elements;
 
 import java.util.HashMap;
+import java.util.Optional;
 
 import factory.Factory;
 import graphElements.Interfaces.InterfaceCout;
@@ -15,7 +16,7 @@ public class TableauPlusCC<S> implements InterfaceTableauPlusCC<S>
 	private HashMap<InterfaceSommet<S>,InterfaceCout> d;
 	private HashMap<InterfaceSommet<S>,InterfaceSommet<S>> pred;
 	//Constructeur
-	public TableauPlusCC(Sommet<S>prin)
+	public TableauPlusCC(InterfaceSommet<S>prin)
 	{ 
 		d=new HashMap<InterfaceSommet<S>,InterfaceCout>();
 		pred= new HashMap<InterfaceSommet<S>,InterfaceSommet<S>>();
@@ -31,7 +32,11 @@ public class TableauPlusCC<S> implements InterfaceTableauPlusCC<S>
 		for(InterfaceSommet<S> sommet : G.getX().getEnsemble())
 		{
 			initSommet(sommet);
-			modifDistance(sommet,G.getCout(principal, sommet));
+			Optional<InterfaceCout> oCout=G.getCout(principal, sommet);
+			if(oCout.isPresent())
+			{
+				modifDistance(sommet,oCout.get());
+			}
 		}
 		modifDistance(principal,Factory.cout());
 	}

@@ -6,7 +6,7 @@ public class DetectionCircuit
 {
 	public static <S> boolean Roy_Warshall(InterfaceGrapheNonValue<S> G)
 	{
-		InterfaceGrapheNonValue<S> RW=FermetureTransitive.Roy_Warshall(G);
+		InterfaceGrapheNonValue<S> RW=(InterfaceGrapheNonValue<S>) FermetureTransitive.Roy_Warshall(G);
 		boolean result;
 		if(RW.existeBoucle())
 		{

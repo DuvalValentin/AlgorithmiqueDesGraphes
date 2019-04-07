@@ -8,7 +8,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import factory.Factory;
-import graphElements.Elements.EnsembleArcNonValue;//Utile pour les méthodes statiques (union et intersection)
 import graphElements.Interfaces.InterfaceArc;
 import graphElements.Interfaces.InterfaceEnsembleArcNonValue;
 import graphElements.Interfaces.InterfaceEnsembleSommet;
@@ -105,10 +104,10 @@ public class EnsembleArcTest
 		InterfaceEnsembleArcNonValue<Integer> ajout = Factory.ensembleArcNonValue(ensembleArcTest);
 		ajout.ajouteArc(s3, s2);ajout.ajouteArc(s3, s1);
 		InterfaceEnsembleArcNonValue<Integer> copie = Factory.ensembleArcNonValue(ensembleArcTest);
-		InterfaceEnsembleArcNonValue<Integer> unionVide = EnsembleArcNonValue.union(ensembleArcTest, ensembleEmpty);
+		InterfaceEnsembleArcNonValue<Integer> unionVide = InterfaceEnsembleArcNonValue.union(ensembleArcTest, ensembleEmpty);
 		assertEquals(copie,unionVide);
 		copie.ajouteArc(s3,s2);copie.ajouteArc(s3,s1);
-		InterfaceEnsembleArcNonValue<Integer> union = EnsembleArcNonValue.union(ensembleArcTest, ajout);
+		InterfaceEnsembleArcNonValue<Integer> union = InterfaceEnsembleArcNonValue.union(ensembleArcTest, ajout);
 		assertEquals(copie,union);
 	}
 	
@@ -117,10 +116,10 @@ public class EnsembleArcTest
 	{
 		InterfaceEnsembleArcNonValue<Integer> copie = Factory.ensembleArcNonValue(ensembleArcTest);
 		copie.supprArc(a22);copie.supprArc(a11);copie.ajouteArc(s3, s3);
-		InterfaceEnsembleArcNonValue<Integer> intersection  = EnsembleArcNonValue.intersection(ensembleArcTest,copie);
+		InterfaceEnsembleArcNonValue<Integer> intersection  = InterfaceEnsembleArcNonValue.intersection(ensembleArcTest,copie);
 		copie.supprArc(s3,s3);
 		assertEquals(copie,intersection);
-		InterfaceEnsembleArcNonValue<Integer> intersectionVide =  EnsembleArcNonValue.intersection(ensembleArcTest, ensembleEmpty);
+		InterfaceEnsembleArcNonValue<Integer> intersectionVide =InterfaceEnsembleArcNonValue.intersection(ensembleArcTest, ensembleEmpty);
 		assertEquals(ensembleEmpty,intersectionVide);
 	}
 	

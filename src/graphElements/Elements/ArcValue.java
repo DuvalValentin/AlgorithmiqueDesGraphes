@@ -13,7 +13,7 @@ public class ArcValue<S> extends Arc<S> implements InterfaceArcValue<S>
 	public ArcValue (InterfaceSommet<S> depart, InterfaceSommet<S> arrivee, InterfaceCout cout)
 	{
 		super(depart,arrivee);
-		this.cout=Factory.cout(cout);
+		this.cout=cout;
 	}
 	public ArcValue(InterfaceArcValue<S> arcValue)
 	{
@@ -26,6 +26,12 @@ public class ArcValue<S> extends Arc<S> implements InterfaceArcValue<S>
 	{
 		return Factory.cout(cout);
 	}
+	
+	/*@Override
+	public void setCout(InterfaceCout cout)
+	{
+		this.cout=cout;
+	}*/
 	@Override
 	public float getValeur()
 	{
@@ -41,7 +47,7 @@ public class ArcValue<S> extends Arc<S> implements InterfaceArcValue<S>
 	@Override
 	public String toString()
 	{
-		return super.toString()+"=>["+getValeur()+"]";
+		return super.toString()+"=>["+getCout()+"]";
 	}
 	@SuppressWarnings("unchecked")
 	@Override

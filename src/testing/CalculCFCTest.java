@@ -65,6 +65,7 @@ public class CalculCFCTest
 	{
 		assertEquals("Calcul des CFC grâce à l'algorithme de Foulkes",CFCres1,CalculCFC.Foulkes(FermetureTransitive.Roy_Warshall(G1)));
 		assertEquals("Calcul des CFC grâce à l'algorithme de Foulkes",CFCres2,CalculCFC.Foulkes(FermetureTransitive.Roy_Warshall(G2)));
+		//System.err.println(CalculCFC.TarjanDFS(G1));
 	}
 	@Test
 	public void testTarjan()
