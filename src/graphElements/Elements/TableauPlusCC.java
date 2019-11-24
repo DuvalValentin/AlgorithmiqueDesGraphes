@@ -4,12 +4,13 @@ import java.util.HashMap;
 import java.util.Optional;
 
 import factory.Factory;
+import graphElements.Interfaces.InterfaceArcValue;
 import graphElements.Interfaces.InterfaceCout;
 import graphElements.Interfaces.InterfaceGrapheValue;
 import graphElements.Interfaces.InterfaceSommet;
 import graphElements.Interfaces.InterfaceTableauPlusCC;
 
-public class TableauPlusCC<S> implements InterfaceTableauPlusCC<S>
+public class TableauPlusCC<S,AV extends InterfaceArcValue<S>> implements InterfaceTableauPlusCC<S>
 {
 	//Eléments
 	private InterfaceSommet<S> principal;
@@ -24,7 +25,7 @@ public class TableauPlusCC<S> implements InterfaceTableauPlusCC<S>
 		initSommet(principal);
 		modifDistance(principal,Factory.cout());
 	}
-	public TableauPlusCC(InterfaceSommet<S>prin,InterfaceGrapheValue<S>G)
+	public TableauPlusCC(InterfaceSommet<S>prin,InterfaceGrapheValue<S,AV>G)
 	{
 		d=new HashMap<InterfaceSommet<S>,InterfaceCout>();
 		pred= new HashMap<InterfaceSommet<S>,InterfaceSommet<S>>();
@@ -91,7 +92,7 @@ public class TableauPlusCC<S> implements InterfaceTableauPlusCC<S>
 		{
 			if(obj.getClass()==getClass())
 			{
-				if(((TableauPlusCC<S>)obj).getPrincipal().equals(getPrincipal())&&((TableauPlusCC<S>)obj).getD().equals(getD())&&((TableauPlusCC<S>)obj).getPred().equals(getPred()))
+				if(((TableauPlusCC<S,AV>)obj).getPrincipal().equals(getPrincipal())&&((TableauPlusCC<S,AV>)obj).getD().equals(getD())&&((TableauPlusCC<S,AV>)obj).getPred().equals(getPred()))
 				{
 					result=true;
 				}

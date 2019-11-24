@@ -8,10 +8,11 @@ import graphElements.Interfaces.*;
 
 public class FermetureTransitive
 {
+	private FermetureTransitive(){}
+	
 	@SuppressWarnings("unchecked")
 	private static <S,A extends InterfaceArc<S>> InterfaceGraphe<S,A> Composition (InterfaceGraphe<S,A> G1,InterfaceGraphe<S,A> G2) 
 	{
-		assert G1.getX().equals(G2.getX()) : "La composition ne marche que pour deux Graphe se reposant sur le même ensemble de Sommet";
 		InterfaceEnsembleSommet<S>X=G1.getX();//L'ensemble de sommet
 		InterfaceEnsembleArc<S,A>Gamma1=G1.getGamma();//L'ensemble d'arc du graphe1
 		InterfaceEnsembleArc<S,A>Gamma2=G2.getGamma();//L'ensemble d'arc du graphe2
@@ -26,14 +27,16 @@ public class FermetureTransitive
 					InterfaceArc<S> arc2=Factory.arcNonValue(z,y);
 					if(Gamma1.existeArc(arc1)&&Gamma2.existeArc(arc2))
 					{
-						if(G3.getClass().getSimpleName().equals("GrapheNonValue"))
+						if(G3 instanceof InterfaceGrapheNonValue)
 						{
-							InterfaceArc<S> arc3=Factory.arcNonValue(x,y);
-							((InterfaceGrapheNonValue<S>)G3).ajouteArc(arc3);
+							((InterfaceGrapheNonValue<S>)G3).ajouteArc(x,y);
 						}
-						else
+						else //if (G3 instanceof InterfaceGrapheValue)
 						{
-							//TODO mettre une méthode pour les graphes valués
+							InterfaceCout cout1=(InterfaceCout)((InterfaceGrapheValue<S,InterfaceArcValue<S>>)G1).getCout(x, z).get();
+							InterfaceCout cout2=(InterfaceCout)((InterfaceGrapheValue<S,InterfaceArcValue<S>>)G2).getCout(z, y).get();
+							InterfaceCout cout=Factory.cout(cout1.getValeur()+cout2.getValeur());
+							((InterfaceGrapheValue<S,InterfaceArcValue<S>>)G3).ajouteArc(x,y,cout);
 						}
 						
 						break;
@@ -75,11 +78,14 @@ public class FermetureTransitive
 						{
 							if(G.getClass().getSimpleName().equals("GrapheNonValue"))
 							{
-								((InterfaceGrapheNonValue<S>)RW).ajouteArc(x, y);
+								((InterfaceGrapheNonValue<S>)RW).ajouteArc(x,y);
 							}
-							else
+							else //if (G.getClass().getSimpleName().equals("GrapheValue"))
 							{
-								//TODO mettre une méthode pour les graphes valués
+								Optional<InterfaceCout> oCxz=((InterfaceGrapheValue<S,InterfaceArcValue<S>>)RW).getCout(x, z);
+								Optional<InterfaceCout> oCzy=((InterfaceGrapheValue<S,InterfaceArcValue<S>>)RW).getCout(z, y);
+								InterfaceCout cout=InterfaceCout.somme(oCxz.get(), oCzy.get());
+								((InterfaceGrapheValue<S,InterfaceArcValue<S>>)RW).ajouteArc(x,y,cout);
 							}
 						}
 					}
@@ -90,7 +96,7 @@ public class FermetureTransitive
 	}
 	
 	//Valué
-	public static <S> InterfaceGrapheValue<S> Roy_Warshall(InterfaceGrapheValue<S> G)
+	/*public static <S> InterfaceGrapheValue<S> Roy_Warshall(InterfaceGrapheValue<S> G)
 	{
 		InterfaceEnsembleSommet<S>X=G.getX();
 		InterfaceGrapheValue<S> RW=Factory.grapheValue(G);
@@ -116,7 +122,7 @@ public class FermetureTransitive
 			}
 		}
 		return RW;
-	}
+	}*/
 	
 	//TODO Roy-Warshall avec routage
 }

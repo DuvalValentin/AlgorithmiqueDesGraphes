@@ -42,8 +42,8 @@ public class EnsembleArcTest
 		a22 = Factory.arcNonValue(s2, s2);
 		a23 = Factory.arcNonValue(s2, s3);
 		
-		ensembleArcTest.ajouteArc(a11);ensembleArcTest.ajouteArc(a12);ensembleArcTest.ajouteArc(a21);
-		ensembleArcTest.ajouteArc(a22);ensembleArcTest.ajouteArc(a23);
+		ensembleArcTest.ajouteElement(a11);ensembleArcTest.ajouteElement(a12);ensembleArcTest.ajouteElement(a21);
+		ensembleArcTest.ajouteElement(a22);ensembleArcTest.ajouteElement(a23);
 		
 		ensembleEmpty = Factory.ensembleArcNonValue();
 	}
@@ -54,7 +54,7 @@ public class EnsembleArcTest
 		InterfaceEnsembleArcNonValue<Integer> ensembleArcClone=Factory.ensembleArcNonValue(ensembleArcTest);
 		assertEquals("Le constructeur clone",ensembleArcTest,ensembleArcClone);
 		assertNotSame("Le constructeur clone créé un objet identique",ensembleArcTest,ensembleArcClone);
-		ensembleArcClone.supprArc(a22);
+		ensembleArcClone.supprElement(a22);
 		assertNotEquals("Modifier le clone modifie l'original",ensembleArcTest,ensembleArcClone);
 	}
 	
@@ -70,9 +70,9 @@ public class EnsembleArcTest
 	public void testListSuccPred()
 	{
 		InterfaceEnsembleSommet<Integer> succ1 = Factory.ensembleSommet();
-		succ1.ajouteSommet(s2);succ1.ajouteSommet(s1);
+		succ1.ajouteElement(s2);succ1.ajouteElement(s1);
 		InterfaceEnsembleSommet<Integer> pred3 = Factory.ensembleSommet();
-		pred3.ajouteSommet(s2);
+		pred3.ajouteElement(s2);
 		assertEquals("listSucc",succ1,ensembleArcTest.listSucc(s1));
 		assertEquals("listPred",pred3,ensembleArcTest.listPred(s3));	
 	}
@@ -85,16 +85,16 @@ public class EnsembleArcTest
 		assertTrue("Test de présence de boucle lorsqu'elle existe",ensembleArcTest.existeBoucle());
 		assertTrue("Test de présence de boucle avec un sommet en paramètre lorsqu'elle existe",ensembleArcTest.existeBoucle(s2));
 		assertFalse("Test de présence de boucle avec un sommet en paramètre lorsqu'elle n'existe pas",ensembleArcTest.existeBoucle(s3));
-		sommetAjout.ajouteArc(s1,s1);sommetAjout.ajouteArc(s1,s2);sommetAjout.ajouteArc(s2,s1);sommetAjout.ajouteArc(s2,s2);sommetAjout.ajouteArc(s2,s3);
-		sommetAjout.ajouteArc(s1,s1);//ajouter un arc déja existant ne pose pas de problème
+		sommetAjout.ajouteElement(s1,s1);sommetAjout.ajouteElement(1,2);sommetAjout.ajouteElement(s2,s1);sommetAjout.ajouteElement(2,2);sommetAjout.ajouteElement(s2,s3);
+		sommetAjout.ajouteElement(1,1);//ajouter un arc déja existant ne pose pas de problème
 		assertTrue("Les arcs s'ajoutent bien",sommetAjout.existeArc(a12));
 		assertTrue("Les arcs s'ajoutent bien",sommetAjout.existeArc(a22));
 		assertTrue("Les arcs s'ajoutent bien",sommetAjout.existeArc(a23));
-		assertEquals("Les deux ajouteArc ont un effet différent",sommetAjout,ensembleArcTest);
-		ensembleArcTest.supprArc(a11);ensembleArcTest.supprArc(s2, s2);
+		assertEquals("Les deux ajouteElement ont un effet différent",sommetAjout,ensembleArcTest);
+		ensembleArcTest.supprElement(a11);ensembleArcTest.supprElement(s2, s2);
 		assertFalse("Arc supposé être enlevé",ensembleArcTest.existeArc(a22));
 		assertFalse("Arc supposé être enlevé",ensembleArcTest.existeArc(s1,s1));
-		ensembleArcTest.supprArc(a11);//enlever un arc déjà enlever ne pose pas d'erreur
+		ensembleArcTest.supprElement(a11);//enlever un arc déjà enlever ne pose pas d'erreur
 		assertFalse("Test de présence de boucle lorsqu'elle n'existe pas",ensembleArcTest.existeBoucle());
 	}
 	
@@ -102,11 +102,11 @@ public class EnsembleArcTest
 	public void testUnion()
 	{
 		InterfaceEnsembleArcNonValue<Integer> ajout = Factory.ensembleArcNonValue(ensembleArcTest);
-		ajout.ajouteArc(s3, s2);ajout.ajouteArc(s3, s1);
+		ajout.ajouteElement(s3, s2);ajout.ajouteElement(s3, s1);
 		InterfaceEnsembleArcNonValue<Integer> copie = Factory.ensembleArcNonValue(ensembleArcTest);
 		InterfaceEnsembleArcNonValue<Integer> unionVide = InterfaceEnsembleArcNonValue.union(ensembleArcTest, ensembleEmpty);
 		assertEquals(copie,unionVide);
-		copie.ajouteArc(s3,s2);copie.ajouteArc(s3,s1);
+		copie.ajouteElement(s3,s2);copie.ajouteElement(s3,s1);
 		InterfaceEnsembleArcNonValue<Integer> union = InterfaceEnsembleArcNonValue.union(ensembleArcTest, ajout);
 		assertEquals(copie,union);
 	}
@@ -115,9 +115,9 @@ public class EnsembleArcTest
 	public void testIntersection()
 	{
 		InterfaceEnsembleArcNonValue<Integer> copie = Factory.ensembleArcNonValue(ensembleArcTest);
-		copie.supprArc(a22);copie.supprArc(a11);copie.ajouteArc(s3, s3);
+		copie.supprElement(a22);copie.supprElement(a11);copie.ajouteElement(s3, s3);
 		InterfaceEnsembleArcNonValue<Integer> intersection  = InterfaceEnsembleArcNonValue.intersection(ensembleArcTest,copie);
-		copie.supprArc(s3,s3);
+		copie.supprElement(s3,s3);
 		assertEquals(copie,intersection);
 		InterfaceEnsembleArcNonValue<Integer> intersectionVide =InterfaceEnsembleArcNonValue.intersection(ensembleArcTest, ensembleEmpty);
 		assertEquals(ensembleEmpty,intersectionVide);

@@ -9,5 +9,5 @@ public interface InterfaceOperationsElementairesEnsembleArcValue<S> extends Inte
 	//setter
 	boolean setValeur(InterfaceSommet<S> depart, InterfaceSommet<S> arrivee, InterfaceCout cout);//Modifie la valeur du cout d'un arc
 	//ajout d'élément
-	void ajouteArc(InterfaceSommet<S> depart, InterfaceSommet<S> arrivee, InterfaceCout cout);//Ajout l'arc
+	//Ajout l'arc
 }

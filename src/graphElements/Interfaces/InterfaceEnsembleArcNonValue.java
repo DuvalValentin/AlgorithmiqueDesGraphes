@@ -13,4 +13,7 @@ public interface InterfaceEnsembleArcNonValue<S> extends InterfaceEnsembleArc<S,
 		return (InterfaceEnsembleArcNonValue<S>)InterfaceEnsembleArc.intersection(ensemble1, ensemble2);
 	}
 	
+	void ajouteElement(InterfaceSommet<S>depart,InterfaceSommet<S>arrivee);//Ajoute l'arc
+	void ajouteElement(S idDepart,S isArrivee);
+	
 }

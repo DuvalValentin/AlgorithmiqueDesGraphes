@@ -8,8 +8,10 @@ import graphElements.Interfaces.*;
 
 public class Parcours
 {
+	private Parcours(){}
+	
 	@SuppressWarnings("unchecked")
-	public static <S,A extends InterfaceArc<S>> void DFS (InterfaceGraphe<S,A> G) throws Exception
+	public static <S,A extends InterfaceArc<S>> void DFS (InterfaceGraphe<S,A> G)
 	{
 		InterfaceEnsembleArc<S,A> V; //Ensemble des arcs visités
 		InterfaceEnsembleSommet<S> D;//Ensemble des sommets non visités
@@ -22,12 +24,13 @@ public class Parcours
 		//Init
 		D=Factory.ensembleSommet(G.getX());//Ensemble de sommets non visité
 		V=Factory.ensembleArc(G.getGamma().getClass().getSimpleName());
+		
 		InterfaceGraphe<S,A> Gavisiter = Factory.graphe(G);
 
 		while(!D.isEmpty())
 		{
 			A.push(Gavisiter.pickSommet());
-			D.supprSommet(Gavisiter.pickSommet());
+			D.supprElement(Gavisiter.pickSommet());
 			while(!A.isEmpty())
 			{
 				y=A.peek();
@@ -37,10 +40,10 @@ public class Parcours
 					z=Y.pickSommet();
 					A arc = (A) Factory.arc(G.getClass().getSimpleName(), y, z,Factory.cout());
 					Gavisiter.supprArc( arc);
-					V.ajouteArc(arc);
+					V.ajouteElement(arc);
 					if (D.existeSommet(z))
 					{
-						D.supprSommet(z);
+						D.supprElement(z);
 						Z=Gavisiter.listSucc(z);
 						if (!Z.isEmpty())
 						{
@@ -48,14 +51,14 @@ public class Parcours
 						}
 						else
 						{
-							T.ajouteSommet(z);
+							T.ajouteElement(z);
 						}
 					}
 				}
 				else
 				{
 					Gavisiter.supprSommet(y);
-					T.ajouteSommet(y);
+					T.ajouteElement(y);
 					A.pop();
 				}
 			}
@@ -73,22 +76,22 @@ public class Parcours
 		InterfaceSommet<S>y;
 		//Init
 		D=Factory.ensembleSommet(G.getX());
-		D.supprSommet(x);
+		D.supprElement(x);
 		A.add(x);
 		T=Factory.ensembleSommet();
 		V=Factory.ensembleArc(G.getGamma().getClass().getSimpleName());
 		while(!A.isEmpty())
 		{
 			y=A.poll();
-			T.ajouteSommet(y);
+			T.ajouteElement(y);
 			S=G.listSucc(y);
 			for (InterfaceSommet<S> z : S.getEnsemble())
 			{
 				A arc = (A) Factory.arc(G.getClass().getSimpleName(), y, z, Factory.cout());
-				V.ajouteArc(arc);
+				V.ajouteElement(arc);
 				if (D.existeSommet(z))
 				{
-					D.supprSommet(z);
+					D.supprElement(z);
 					A.add(z);
 				}
 			}

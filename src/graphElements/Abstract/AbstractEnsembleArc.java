@@ -61,7 +61,7 @@ public abstract class AbstractEnsembleArc<S,A extends InterfaceArc<S>> extends A
 		{
 			if (arc.getDepart().equals(sommet))
 			{
-				XSucc.ajouteSommet(arc.getArrivee());
+				XSucc.ajouteElement(arc.getArrivee());
 			}
 		}
 		return XSucc;
@@ -74,45 +74,30 @@ public abstract class AbstractEnsembleArc<S,A extends InterfaceArc<S>> extends A
 		{
 			if (arc.getArrivee().equals(sommet))
 			{
-				XPred.ajouteSommet(arc.getDepart());
+				XPred.ajouteElement(arc.getDepart());
 			}
 		}
 		return XPred;
 	}
 	//Ajouts et suppressions d'éléments ----------------------------------------
-	@Deprecated
 	@Override
 	public void supprElement(A arc)
 	{
-		supprArc(arc);
-	}
-	
-	@Deprecated
-	@Override
-	public void ajoutElement(A arc)
-	{
-		ajouteArc(arc);
-	}
-	
-	
-	@Override
-	public void ajouteArc(A arc)//Redéfinie pour chaque enfant (entre autre afin de faire des new)
-	{
-		if(!existeArc(arc))
-		{
-			ensemble.add(arc);
-		}
-	}
-	@Override
-	public void supprArc(A arcS)
-	{
 		for(A arcE : ensemble)
 		{
-			if(arcE.memeArc(arcS))
+			if(arcE.memeArc(arc))
 			{
 				ensemble.remove(arcE);
 				break;
 			}
+		}
+	}
+	@Override
+	public void ajouteElement(A arc)
+	{
+		if(!existeArc(arc))
+		{
+			ensemble.add(arc);
 		}
 	}
 }

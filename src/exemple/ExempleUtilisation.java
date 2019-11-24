@@ -6,7 +6,9 @@ import graphElements.Interfaces.*;
 
 public class ExempleUtilisation
 {
-	public static void main(String[] args) throws Exception
+	
+	private ExempleUtilisation() {}
+	public static void main(String[] args)
 	{
 		
 		//Opérations de créations : 
@@ -26,11 +28,11 @@ public class ExempleUtilisation
 		
 		InterfaceEnsembleSommet<Integer> X;
 		X=Factory.ensembleSommet();
-		X.ajouteSommet(s1);X.ajouteSommet(s2);X.ajouteSommet(s3);X.ajouteSommet(s4);
+		X.ajouteElement(s1);X.ajouteElement(s2);X.ajouteElement(s3);X.ajouteElement(s4);
 		System.out.println("Un ensemble de sommets : "+X);
 		
 		InterfaceEnsembleArcNonValue<Integer>Gamma= Factory.ensembleArcNonValue();
-		Gamma.ajouteArc(a12);Gamma.ajouteArc(a23);Gamma.ajouteArc(a32);Gamma.ajouteArc(a34);
+		Gamma.ajouteElement(a12);Gamma.ajouteElement(a23);Gamma.ajouteElement(a32);Gamma.ajouteElement(a34);
 		System.out.println("Un ensemble d'arcs : "+Gamma);
 		
 		InterfaceGrapheNonValue<Integer> G = Factory.grapheNonValue(X,Gamma); 

@@ -110,10 +110,10 @@ V 0.11
 * Une classe Factory a été créée, le code a pû donc être modifié afin de respecter l'inversion de dépendances (il reste encore les méthodes d'union à gérer),
 * L'union et l'intersection sont correctes mais je ne suis pas encore satisfait.
 
-V O.11.1
+V 0.11.1
 ======
-*Les méthodes statiques (union et intersection) ont été déplacées dans les Interfaces => il y a donc des méthodes implémentées dans les Interfaces mais désormais le code respecte entièrement le principe d'inversion de dépendances
-*La méthode getCout de EnsembleArcValue rend maintenant un objet de type Optional<InterfaceCout>
+* Les méthodes statiques (union et intersection) ont été déplacées dans les Interfaces => il y a donc des méthodes implémentées dans les Interfaces mais désormais le code respecte entièrement le principe d'inversion de dépendances
+* La méthode getCout de EnsembleArcValue rend maintenant un objet de type Optional<InterfaceCout>
 
 Encore à faire :
 ----------------

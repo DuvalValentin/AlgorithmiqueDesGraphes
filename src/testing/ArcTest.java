@@ -24,13 +24,15 @@ public class ArcTest
 	}
 	
 	@Test
-	public void testConstructeurClone()
+	public void testConstructeurAndClone()
 	{
 		InterfaceArc<Integer> arcClone = Factory.arcNonValue(arcTest);
 		assertEquals("Le constructeur clone",arcTest,arcClone);
 		assertNotSame("Le constructeur clone créé un objet identique",arcTest,arcClone);
 		arcClone.setArrivee(Factory.sommet(9));
 		assertNotEquals("Modifier le clone modifie l'original",arcTest,arcClone);
+		InterfaceArc<Integer> arcId = Factory.arcNonValue(5,8);
+		assertEquals("Constructeur juste avec les id des sommets ne marchent pas",arcTest,arcId);
 	}
 	
 	@Test

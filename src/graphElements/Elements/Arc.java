@@ -15,6 +15,11 @@ public class Arc<S> implements InterfaceArc<S>
 		setDepart(Factory.sommet(dep));
 		setArrivee(Factory.sommet(arr));
 	}
+	public Arc(S idDep, S idArr)
+	{
+		setDepart(Factory.sommet(idDep));
+		setArrivee(Factory.sommet(idArr));
+	}
 	public Arc(InterfaceArc<S> arc)
 	{
 		setDepart(arc.getDepart());

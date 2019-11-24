@@ -145,7 +145,7 @@ public abstract class AbstractGraphe<S,A extends InterfaceArc<S>> implements Int
 			{
 				if(Arc.getArrivee().equals(S))
 				{
-					Ent.supprSommet(S);
+					Ent.supprElement(S);
 					break;
 				}
 			}
@@ -162,7 +162,7 @@ public abstract class AbstractGraphe<S,A extends InterfaceArc<S>> implements Int
 			{
 				if(Arc.getDepart().equals(S))
 				{
-					Sor.supprSommet(S);
+					Sor.supprElement(S);
 					break;
 				}
 			}
@@ -174,7 +174,12 @@ public abstract class AbstractGraphe<S,A extends InterfaceArc<S>> implements Int
 	@Override
 	public void ajouteSommet(InterfaceSommet<S> sommet)
 	{
-		X.ajouteSommet(sommet);
+		X.ajouteElement(sommet);
+	}
+	@Override
+	public void ajouteSommet(S id)
+	{
+		X.ajouteSommet(id);
 	}
 	@Override
 	public void supprSommet(InterfaceSommet<S> sommet)
@@ -187,7 +192,7 @@ public abstract class AbstractGraphe<S,A extends InterfaceArc<S>> implements Int
 				supprArc(arc);
 			}
 		}
-		X.supprSommet(sommet);
+		X.supprElement(sommet);
 	}
 	//Arc
 	@Override
@@ -195,18 +200,18 @@ public abstract class AbstractGraphe<S,A extends InterfaceArc<S>> implements Int
 	{
 		if (ajoutableArc(arc))
 		{
-			Gamma.ajouteArc(arc);
+			Gamma.ajouteElement(arc);
 		}
 	}
 	@Override
 	public void supprArc(A arc)
 	{
-		Gamma.supprArc(arc);
+		Gamma.supprElement(arc);
 	}
 	@Override
 	public void supprArc(InterfaceSommet<S> depart, InterfaceSommet<S> arrivee)
 	{
-		Gamma.supprArc(depart, arrivee);
+		Gamma.supprElement(depart, arrivee);
 	}
 	//toString equals et hashCode ------------------------------------------------------------
 	@Override

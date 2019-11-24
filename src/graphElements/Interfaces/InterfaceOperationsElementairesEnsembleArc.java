@@ -13,8 +13,7 @@ public interface InterfaceOperationsElementairesEnsembleArc<S,A extends Interfac
 	boolean existeBoucle(InterfaceSommet<S> sommet);//Rend vrai si il existe un arc (sommet,sommet)
 	//Ajout et suppression d'arcs
 	//L'arc peut être ajouté seulement si il n'existe pas déja, l'arc est supprimé seulement si il existe
-	void ajouteArc(A arc);//Ajoute l'arc 
-	void supprArc(A arc);//Supprime l'arc
-	void supprArc(InterfaceSommet<S>depart, InterfaceSommet<S>arrivee);//Pareil mais avec deux sommets en entrée	
-	//TODO créer une fonction pour savoir si un ensemble est un sous-ensemble de this 
+	//void ajouteElement(A arc);//Ajoute l'arc 
+	//void supprArc(A arc);//Supprime l'arc
+	//Pareil mais avec deux sommets en entrée*/
 }

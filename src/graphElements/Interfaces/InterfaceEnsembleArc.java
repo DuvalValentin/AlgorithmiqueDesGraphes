@@ -14,5 +14,6 @@ public interface InterfaceEnsembleArc<S,A extends InterfaceArc<S>> extends Inter
 		return (InterfaceEnsembleArc<S,A>)InterfaceEnsemble.intersection(ensemble1, ensemble2);
 	}
 	
+	void supprElement(InterfaceSommet<S>depart, InterfaceSommet<S>arrivee);
 	
 }

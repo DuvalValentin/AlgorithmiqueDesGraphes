@@ -19,9 +19,9 @@ public class GrapheValueTest
 	private InterfaceEnsembleSommet<Integer>X;
 	
 	private InterfaceArcValue<Integer>a121,a135,a149,a232,a246,a343;
-	private InterfaceEnsembleArcValue<Integer>Gamma;
+	private InterfaceEnsembleArcValue<Integer,InterfaceArcValue<Integer>>Gamma;
 	private InterfaceCout c1,c2,c3,c5,c6,c9;
-	private InterfaceGrapheValue<Integer>GV,GV1,GV2;
+	private InterfaceGrapheValue<Integer,InterfaceArcValue<Integer>>GV,GV1,GV2;
 
 	@Before
 	public void setUp()
@@ -31,7 +31,7 @@ public class GrapheValueTest
 		s3=Factory.sommet(3);
 		s4=Factory.sommet(4);
 		X=Factory.ensembleSommet();
-		X.ajouteSommet(s1);X.ajouteSommet(s2);X.ajouteSommet(s3);X.ajouteSommet(s4);
+		X.ajouteElement(s1);X.ajouteElement(s2);X.ajouteElement(s3);X.ajouteElement(s4);
 		
 		c1=Factory.cout(1);
 		c2=Factory.cout(2);
@@ -47,7 +47,7 @@ public class GrapheValueTest
 		a246=Factory.arcValue(s2,s4,c6);
 		a343=Factory.arcValue(s3,s4,c3);
 		Gamma=Factory.ensembleArcValue();
-		Gamma.ajouteArc(a121);Gamma.ajouteArc(a135);Gamma.ajouteArc(a149);Gamma.ajouteArc(a232);Gamma.ajouteArc(a246);Gamma.ajouteArc(a343);
+		Gamma.ajouteElement(a121);Gamma.ajouteElement(a135);Gamma.ajouteElement(a149);Gamma.ajouteElement(a232);Gamma.ajouteElement(a246);Gamma.ajouteElement(a343);
 		
 		GV=Factory.grapheValue();
 		GV1=Factory.grapheValue(X, Gamma);
@@ -105,10 +105,10 @@ public class GrapheValueTest
 	public void testUnion()
 	{
 		InterfaceSommet<Integer> s5 = Factory.sommet(5);
-		InterfaceGrapheValue<Integer> GVbis = Factory.grapheValue();
+		InterfaceGrapheValue<Integer,InterfaceArcValue<Integer>> GVbis = Factory.grapheValue();
 		GVbis.ajouteSommet(s2);GVbis.ajouteSommet(s3);GVbis.ajouteSommet(s4);GVbis.ajouteSommet(s5);
 		GVbis.ajouteArc(s2,s3,c5);GVbis.ajouteArc(s3,s4,c1);GVbis.ajouteArc(s4, s5, c9);GVbis.ajouteArc(s3, s2, c5);
-		InterfaceGrapheValue<Integer> Gunion = Factory.grapheValue(GV);
+		InterfaceGrapheValue<Integer,InterfaceArcValue<Integer>> Gunion = Factory.grapheValue(GV);
 		Gunion.ajouteSommet(s5);
 		Gunion.ajouteArc(s3, s4, c1);Gunion.ajouteArc(s4, s5, c9);Gunion.ajouteArc(s3, s2, c5);
 		assertEquals(Gunion,InterfaceGrapheValue.union(GV, GVbis));
@@ -117,7 +117,7 @@ public class GrapheValueTest
 	@Test
 	public void testClone()
 	{
-		InterfaceGrapheValue<Integer> clone = Factory.grapheValue(GV);
+		InterfaceGrapheValue<Integer,InterfaceArcValue<Integer>> clone = Factory.grapheValue(GV);
 		assertEquals(GV,clone);
 		assertNotSame(GV,clone);
 	}

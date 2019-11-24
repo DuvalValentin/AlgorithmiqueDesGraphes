@@ -15,7 +15,7 @@ public class EnsembleArcNonValue<S> extends AbstractEnsembleArc<S,InterfaceArc<S
 	{
 		for (InterfaceArc<S> arc : Ensemble.getEnsemble())
 		{
-			ajouteArc(arc);
+			ajouteElement(arc);
 		}
 	}
 	public EnsembleArcNonValue()
@@ -30,19 +30,23 @@ public class EnsembleArcNonValue<S> extends AbstractEnsembleArc<S,InterfaceArc<S
 	}
 	//Ajout et suppression d'éléments
 	@Override
-	public void ajouteArc(InterfaceArc<S> arc)
+	public void ajouteElement(InterfaceArc<S> arc)
 	{
-		super.ajouteArc(Factory.arcNonValue(arc));
-	}
-	
-	@Override
-	public void ajouteArc(InterfaceSommet<S> depart,InterfaceSommet<S>arrivee)
-	{
-		ajouteArc(Factory.arcNonValue(depart, arrivee));
+		super.ajouteElement(Factory.arcNonValue(arc));
 	}
 	@Override
-	public void supprArc(InterfaceSommet<S> depart, InterfaceSommet<S> arrivee)
+	public void ajouteElement(InterfaceSommet<S> depart,InterfaceSommet<S>arrivee)
 	{
-		supprArc(Factory.arcNonValue(depart, arrivee));
+		ajouteElement(Factory.arcNonValue(depart, arrivee));
+	}
+	@Override
+	public void ajouteElement(S idDepart, S idArrivee)
+	{
+		ajouteElement(Factory.arcNonValue(idDepart, idArrivee));
+	}
+	@Override
+	public void supprElement(InterfaceSommet<S> depart, InterfaceSommet<S> arrivee)
+	{
+		supprElement(Factory.arcNonValue(depart, arrivee));
 	}
 }

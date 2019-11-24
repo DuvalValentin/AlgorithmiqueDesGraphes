@@ -30,4 +30,9 @@ public interface InterfaceGraphe<S,A extends InterfaceArc<S>> extends InterfaceO
 		}
 		return union;
 	}
+	void ajouteSommet(InterfaceSommet<S> sommet);
+	void supprSommet(InterfaceSommet<S> sommet);
+	void ajouteArc(A arc);//Ajoute l'arc 
+	void supprArc(A arc);//Supprime l'arc
+	void supprArc(InterfaceSommet<S>depart, InterfaceSommet<S>arrivee);//Pareil mais avec deux sommets en entrée
 }

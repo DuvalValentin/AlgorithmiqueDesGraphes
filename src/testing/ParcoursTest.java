@@ -16,14 +16,14 @@ public class ParcoursTest
 	private InterfaceArc<Integer> a12,a23,a32,a34,a33;
 
 	@Before
-	public void setUp() throws Exception
+	public void setUp()
 	{
 		s1=Factory.sommet(1);
 		s2=Factory.sommet(2);
 		s3=Factory.sommet(3);
 		s4=Factory.sommet(4);
 		X=Factory.ensembleSommet();
-		X.ajouteSommet(s1);X.ajouteSommet(s2);X.ajouteSommet(s3);X.ajouteSommet(s4);
+		X.ajouteElement(s1);X.ajouteElement(s2);X.ajouteElement(s3);X.ajouteElement(s4);
 		
 		a12 = Factory.arcNonValue(s1,s2);
 		a23 = Factory.arcNonValue(s2,s3);
@@ -31,12 +31,12 @@ public class ParcoursTest
 		a34 = Factory.arcNonValue(s3,s4);
 		a33 = Factory.arcNonValue(s3,s3);
 		Gamma=Factory.ensembleArcNonValue();
-		Gamma.ajouteArc(a12);Gamma.ajouteArc(a23);Gamma.ajouteArc(a32);Gamma.ajouteArc(a34);Gamma.ajouteArc(a33);
+		Gamma.ajouteElement(a12);Gamma.ajouteElement(a23);Gamma.ajouteElement(a32);Gamma.ajouteElement(a34);Gamma.ajouteElement(a33);
 		
 		G=Factory.grapheNonValue(X,Gamma);
 	}
 	@Test
-	public void testDFS() throws Exception
+	public void testDFS()
 	{
 		Parcours.DFS(G);
 	}

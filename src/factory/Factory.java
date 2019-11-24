@@ -5,6 +5,7 @@ import graphElements.Interfaces.*;
 @SuppressWarnings("unchecked")
 public class Factory
 {
+	private Factory() {}
 	//Sommets
 	public static <S> InterfaceSommet<S> sommet(InterfaceSommet<S> sommet)
 	{
@@ -44,6 +45,10 @@ public class Factory
 	public static <S> InterfaceArc<S> arcNonValue(InterfaceArc<S> arc)
 	{
 		return new Arc<S>(arc);
+	}
+	public static <S> InterfaceArc<S> arcNonValue(S idDepart, S idArrivee)
+	{
+		return new Arc<S>(idDepart,idArrivee);
 	}
 	
 	public static <S> InterfaceArcValue<S> arcValue(InterfaceSommet<S> depart, InterfaceSommet<S> arrivee,InterfaceCout cout)
@@ -96,9 +101,9 @@ public class Factory
 		return new EnsembleArcNonValue<S>(ensembleArcNonValue);
 	}
 	
-	public static <S, A extends InterfaceArc<S>> InterfaceEnsembleArc<S, A> ensembleArc(InterfaceEnsembleArc<S, A> gamma) //throws Exception
+	public static <S,A extends InterfaceArc<S>> InterfaceEnsembleArc<S,A> ensembleArc(InterfaceEnsembleArc<S,A> gamma) //throws Exception
 	{
-		InterfaceEnsembleArc<S, A> ensembleArc;
+		InterfaceEnsembleArc<S,A> ensembleArc;
 		String className = gamma.getClass().getSimpleName();
 		if(className.equals("EnsembleArcNonValue"))
 		{
@@ -106,7 +111,7 @@ public class Factory
 		}
 		else //if (className.equals("EnsembleArcValue"))
 		{
-			ensembleArc = (InterfaceEnsembleArc<S,A>) Factory.ensembleArcValue((InterfaceEnsembleArcValue<S>) gamma);
+			ensembleArc = (InterfaceEnsembleArc<S,A>) Factory.ensembleArcValue((InterfaceEnsembleArcValue<S,InterfaceArcValue<S>>) gamma);
 		}
 		/*else
 		{
@@ -115,14 +120,14 @@ public class Factory
 		return ensembleArc;
 	}
 	
-	public static <S> InterfaceEnsembleArcValue<S> ensembleArcValue(InterfaceEnsembleArcValue<S> ensembleArcValue)
+	public static <S,AV extends InterfaceArcValue<S>> InterfaceEnsembleArcValue<S,AV> ensembleArcValue(InterfaceEnsembleArcValue<S,AV> ensembleArcValue)
 	{
-		return new EnsembleArcValue<S>(ensembleArcValue);
+		return new EnsembleArcValue<S,AV>(ensembleArcValue);
 	}
 	
-	public static <S> InterfaceEnsembleArcValue<S> ensembleArcValue()
+	public static <S,AV extends InterfaceArcValue<S>> InterfaceEnsembleArcValue<S,AV> ensembleArcValue()
 	{
-		return new EnsembleArcValue<S>();
+		return new EnsembleArcValue<S,AV>();
 	}
 	
 	//Graphe
@@ -154,7 +159,7 @@ public class Factory
 		}
 		else //if (classGraph.equals("GrapheValue"))
 		{
-			retour =(InterfaceGraphe<S,A>) Factory.grapheValue((GrapheValue<S>)graphe);
+			retour =(InterfaceGraphe<S,A>) Factory.grapheValue((GrapheValue<S,InterfaceArcValue<S>>)graphe);
 		}
 		/*else
 		{
@@ -169,11 +174,11 @@ public class Factory
 		String classGamma = Gamma.getClass().getSimpleName();
 		if(classGamma.equals("EnsembleArcNonValue"))
 		{
-			retour=(InterfaceGraphe<S, A>) Factory.grapheNonValue(X, (EnsembleArcNonValue<S>)Gamma);
+			retour=(InterfaceGraphe<S,A>) Factory.grapheNonValue(X, (InterfaceEnsembleArcNonValue<S>)Gamma);
 		}
 		else
 		{
-			retour=(InterfaceGraphe<S, A>) Factory.grapheValue(X, (EnsembleArcValue<S>)Gamma);
+			retour=(InterfaceGraphe<S,A>) Factory.grapheValue(X, (InterfaceEnsembleArcValue<S,InterfaceArcValue<S>>)Gamma);
 		}
 		return retour;
 	}
@@ -193,18 +198,18 @@ public class Factory
 		return new GrapheNonValue<S>();
 	}
 	
-	public static <S> InterfaceGrapheValue<S> grapheValue(InterfaceGrapheValue<S> g)
+	public static <S,AV extends InterfaceArcValue<S>> InterfaceGrapheValue<S,AV> grapheValue(InterfaceGrapheValue<S,AV> g)
 	{
-		return new GrapheValue<S>(g);
+		return new GrapheValue<S,AV>(g);
 	}
 	
-	public static <S> InterfaceGrapheValue<S> grapheValue()
+	public static <S,AV extends InterfaceArcValue<S>> InterfaceGrapheValue<S,AV> grapheValue()
 	{
-		return new GrapheValue<S>();
+		return new GrapheValue<S,AV>();
 	}
-	public static <S> InterfaceGrapheValue<S> grapheValue(InterfaceEnsembleSommet<S> X, InterfaceEnsembleArcValue<S> Gamma)
+	public static <S,AV extends InterfaceArcValue<S>> InterfaceGrapheValue<S,AV> grapheValue(InterfaceEnsembleSommet<S> X, InterfaceEnsembleArcValue<S,AV> Gamma)
 	{
-		return new GrapheValue<S>(X,Gamma);
+		return new GrapheValue<S,AV>(X,Gamma);
 	}
 	//Cout
 	
@@ -223,14 +228,14 @@ public class Factory
 		return new Cout();
 	}
 	//Autres
-	public static <S> InterfaceTableauPlusCC<S> tableauPlusCC(InterfaceSommet<S>principal,InterfaceGrapheValue<S>G)
+	public static <S,AV extends InterfaceArcValue<S>> InterfaceTableauPlusCC<S> tableauPlusCC(InterfaceSommet<S>principal,InterfaceGrapheValue<S,AV>G)
 	{
-		return new TableauPlusCC<S>(principal,G);
+		return new TableauPlusCC<S,AV>(principal,G);
 	}
 	
-	public static <S> InterfaceTableauPlusCC<S> tableauPlusCC(InterfaceSommet<S>principal)
+	public static <S,AV extends InterfaceArcValue<S>> InterfaceTableauPlusCC<S> tableauPlusCC(InterfaceSommet<S>principal)
 	{
-		return new TableauPlusCC<S>(principal);
+		return new TableauPlusCC<S,AV>(principal);
 	}
 	
 	public static <S> InterfaceCFC<S> CFC (InterfaceEnsembleSommet<S> X)
@@ -238,7 +243,7 @@ public class Factory
 		return new CFC<S>(X);
 	}
 	
-	public static <E,S> InterfaceEnsemble<E> ensemble(InterfaceEnsemble<E> ensemble)
+	public static <E,S,AV extends InterfaceArcValue<S>> InterfaceEnsemble<E> ensemble(InterfaceEnsemble<E> ensemble)
 	{
 		InterfaceEnsemble<E> ensembleRetour;
 		String className = ensemble.getClass().getSimpleName();
@@ -248,7 +253,7 @@ public class Factory
 		}
 		else if (className.equals("EnsembleArcValue"))
 		{
-			ensembleRetour = (InterfaceEnsemble<E>) Factory.ensembleArcValue((InterfaceEnsembleArcValue<S>) ensemble);
+			ensembleRetour = (InterfaceEnsemble<E>) Factory.ensembleArcValue((InterfaceEnsembleArcValue<S,AV>) ensemble);
 		}
 		else //if(className.equals("EnsembleSommet"))
 		{

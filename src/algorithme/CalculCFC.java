@@ -8,6 +8,8 @@ import graphElements.Interfaces.*;
 
 public class CalculCFC
 {
+	private CalculCFC(){}
+	
 	public static <S,A extends InterfaceArc<S>> InterfaceCFC<S> Foulkes(InterfaceGraphe<S,A> G) 
 	{
 		//FermetureTransitive.Roy_Warshall(G);
@@ -20,7 +22,7 @@ public class CalculCFC
 		{
 			if(!Pris.existeSommet(x))
 			{
-				PasPris.supprSommet(x);
+				PasPris.supprElement(x);
 				if(G.existeBoucle(x))
 				{
 					for (InterfaceSommet<S> y : PasPris.getEnsemble())
@@ -33,7 +35,7 @@ public class CalculCFC
 				}
 				for(InterfaceSommet<S> y : cfc.get(x).getEnsemble())
 				{
-					PasPris.supprSommet(x);
+					PasPris.supprElement(x);
 					cfc.replace(y, cfc.get(x));
 				}
 				Pris =(InterfaceEnsembleSommet<S>) InterfaceEnsemble.union(Pris, cfc.get(x));
@@ -66,7 +68,7 @@ public class CalculCFC
 		{
 			A.push(Gavisiter.pickSommet());
 			pospile.replace(Gavisiter.pickSommet(), A.size());
-			D.supprSommet(Gavisiter.pickSommet());
+			D.supprElement(Gavisiter.pickSommet());
 			while(!A.isEmpty())
 			{
 				y=A.peek();
@@ -77,7 +79,7 @@ public class CalculCFC
 					Gavisiter.supprArc(y, z);
 					if (D.existeSommet(z))
 					{
-						D.supprSommet(z);
+						D.supprElement(z);
 						Z=Gavisiter.listSucc(z);
 						if (!Z.isEmpty())
 						{
@@ -90,7 +92,7 @@ public class CalculCFC
 						//Pour le moment la répétition permet au tout de marcher
 						for(int i = pospile.get(z);i<A.size();i++)//pospile.get(z) correspond à la position du sommet au dessus de z sur la pile
 						{
-							CFC.get(z).ajouteSommet(A.get(i));
+							CFC.get(z).ajouteElement(A.get(i));
 						}
 						for(int i = pospile.get(z);i<A.size();i++)//pospile.get(z) correspond à la position du sommet au dessus de z sur la pile
 						{

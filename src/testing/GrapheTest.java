@@ -34,7 +34,7 @@ public class GrapheTest
 		s3=Factory.sommet(3);
 		s4=Factory.sommet(4);
 		X=Factory.ensembleSommet();
-		X.ajouteSommet(s1);X.ajouteSommet(s2);X.ajouteSommet(s3);X.ajouteSommet(s4);
+		X.ajouteElement(s1);X.ajouteElement(s2);X.ajouteElement(s3);X.ajouteElement(s4);
 		
 		a12 = Factory.arcNonValue(s1,s2);
 		a23 = Factory.arcNonValue(s2,s3);
@@ -42,7 +42,7 @@ public class GrapheTest
 		a34 = Factory.arcNonValue(s3,s4);
 		a44 = Factory.arcNonValue(s4,s4);
 		Gamma=Factory.ensembleArcNonValue();
-		Gamma.ajouteArc(a12);Gamma.ajouteArc(a23);Gamma.ajouteArc(a32);Gamma.ajouteArc(a34);Gamma.ajouteArc(a44);
+		Gamma.ajouteElement(a12);Gamma.ajouteElement(a23);Gamma.ajouteElement(a32);Gamma.ajouteElement(a34);Gamma.ajouteElement(a44);
 		
 		G=Factory.grapheNonValue(X, Gamma);
 	}
@@ -111,8 +111,11 @@ public class GrapheTest
 	public void testAjouteSommet()
 	{
 		InterfaceSommet<Integer> s5 = Factory.sommet(5);
+		InterfaceSommet<Integer> s6 = Factory.sommet(5);
 		G.ajouteSommet(s5);
+		G.ajouteSommet(6);
 		assertTrue("Test du ajouteSommet sur un graphe",G.existeSommet(s5));
+		assertTrue("Test du ajouteSommet sur un graphe",G.existeSommet(s6));
 	}
 	
 	@Test 
@@ -130,7 +133,7 @@ public class GrapheTest
 		InterfaceArc<Integer> a51 = Factory.arcNonValue(s5, s1);
 		InterfaceArc<Integer> a41 = Factory.arcNonValue(s4, s1);
 		G.ajouteArc(a51);
-		G.ajouteArc(a41);
+		G.ajouteArc(4,1);
 		G.ajouteArc(s3, s1);
 		G.ajouteArc(a32);
 		assertTrue("Test de l'ajout d'un arc ajoutable",G.existeArc(a41));
@@ -161,9 +164,9 @@ public class GrapheTest
 	{
 		InterfaceGrapheNonValue<Integer> graphe;
 		InterfaceEnsembleSommet<Integer> x = Factory.ensembleSommet();
-		x.ajouteSommet(s1);x.ajouteSommet(s2);
+		x.ajouteElement(s1);x.ajouteElement(s2);
 		InterfaceEnsembleArcNonValue<Integer> gamma = Factory.ensembleArcNonValue();
-		gamma.ajouteArc(a12);gamma.ajouteArc(a23);
+		gamma.ajouteElement(a12);gamma.ajouteElement(a23);
 		graphe=Factory.grapheNonValue(x, gamma);
 		boolean erreur=false;
 		try
@@ -181,7 +184,7 @@ public class GrapheTest
 	public void testPointsEntree()
 	{
 		InterfaceEnsembleSommet<Integer> Pe=Factory.ensembleSommet();
-		Pe.ajouteSommet(s1);
+		Pe.ajouteElement(s1);
 		assertEquals("Test de pointsEntree",Pe,G.pointsEntree());
 	}
 	
@@ -192,7 +195,7 @@ public class GrapheTest
 		G.ajouteSommet(s5);
 		G.ajouteArc(s4, s5);
 		InterfaceEnsembleSommet<Integer> Ps=Factory.ensembleSommet();
-		Ps.ajouteSommet(s5);
+		Ps.ajouteElement(s5);
 		assertEquals("Test de pointsSortie",Ps,G.pointsSortie());
 	}
 	
@@ -216,15 +219,15 @@ public class GrapheTest
 	public void encapsulation()
 	{
 		//Graphe<Integer> Gbis=new Graphe<Integer>(G);
-		X.supprSommet(s3);
+		X.supprElement(s3);
 		assertNotEquals("On modifie le X ayant initialisé G", X, G.getX());
-		Gamma.supprArc(a32);
+		Gamma.supprElement(a32);
 		assertNotEquals("On modifie le Gamma ayant initialisé G",Gamma,G.getGamma());
 		InterfaceEnsembleSommet<Integer> Xg =G.getX();
-		Xg.supprSommet(s3);
+		Xg.supprElement(s3);
 		assertNotEquals("On modifie l'ensemble donné par getX",Xg,G.getX());
 		InterfaceEnsembleArcNonValue<Integer> Gammag = G.getGamma();
-		Gammag.supprArc(a32);
+		Gammag.supprElement(a32);
 		assertNotEquals("On modifie l'ensemble donné par getGamma",Gammag,G.getGamma());
 		s4=Factory.sommet(6);
 		assertFalse("On modifie un des sommets par l'exterieur",G.existeSommet(s4));

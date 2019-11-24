@@ -4,6 +4,8 @@ import factory.Factory;
 import graphElements.Interfaces.*;
 public class DetectionCircuit
 {
+	private DetectionCircuit(){}
+	
 	public static <S> boolean Roy_Warshall(InterfaceGrapheNonValue<S> G)
 	{
 		InterfaceGrapheNonValue<S> RW=(InterfaceGrapheNonValue<S>) FermetureTransitive.Roy_Warshall(G);

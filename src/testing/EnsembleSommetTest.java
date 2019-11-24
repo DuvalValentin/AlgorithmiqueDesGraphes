@@ -24,8 +24,8 @@ public class EnsembleSommetTest
 		s3=Factory.sommet(3);
 		s4=Factory.sommet(4);
 		s5=Factory.sommet(5);
-		ensembleSommetTest.ajouteSommet(s4);
-		ensembleSommetTest.ajouteSommet(s3);
+		ensembleSommetTest.ajouteElement(s4);
+		ensembleSommetTest.ajouteElement(s3);
 	}
 
 	@Test
@@ -34,14 +34,14 @@ public class EnsembleSommetTest
 		InterfaceEnsembleSommet<Integer> ensembleSommetClone=Factory.ensembleSommet(ensembleSommetTest);
 		assertEquals("Le constructeur clone",ensembleSommetTest,ensembleSommetClone);
 		assertNotSame("Le constructeur clone créé un objet identique",ensembleSommetTest,ensembleSommetClone);
-		ensembleSommetClone.ajouteSommet(s5);
+		ensembleSommetClone.ajouteElement(s5);
 		assertNotEquals("Les ensembles sont liés",ensembleSommetTest,ensembleSommetClone);
 	}
 	
 	@Test 
 	public void testFirstSommet()
 	{
-		ensembleSommetTest.ajouteSommet(s5);
+		ensembleSommetTest.ajouteElement(s5);
 		assertEquals("La méthode FirstSommet ne marche pas ou ne renvoie pas l'objet de plus faible Hashcode",ensembleSommetTest.pickSommet(),s3);
 	}
 	
@@ -53,9 +53,17 @@ public class EnsembleSommetTest
 	}
 	
 	@Test
+	public void testAjouteSommet()
+	{
+		ensembleSommetTest.ajouteSommet(2);
+		InterfaceSommet<Integer> s2 = Factory.sommet(2);
+		assertTrue("Le sommet a bien été rajouté",ensembleSommetTest.existeSommet(s2));
+	}
+	
+	@Test
 	public void testSupprSommet()
 	{
-		ensembleSommetTest.supprSommet(s4);
+		ensembleSommetTest.supprElement(s4);
 		assertFalse("Le sommet n'a pas été supprimé",ensembleSommetTest.existeSommet(s4));
 	}
 	
@@ -78,9 +86,9 @@ public class EnsembleSommetTest
 	public void testUnion()
 	{
 		InterfaceEnsembleSommet<Integer> ajout = Factory.ensembleSommet();
-		ajout.ajouteSommet(s3);ajout.ajouteSommet(s5);
+		ajout.ajouteElement(s3);ajout.ajouteElement(s5);
 		InterfaceEnsembleSommet<Integer> union = Factory.ensembleSommet();
-		union.ajouteSommet(s3); union.ajouteSommet(s4); union.ajouteSommet(s5);
+		union.ajouteElement(s3); union.ajouteElement(s4); union.ajouteElement(s5);
 		InterfaceEnsembleSommet<Integer> resultatUnion = InterfaceEnsembleSommet.union(ajout, ensembleSommetTest);
 		assertEquals(union,resultatUnion);
 		InterfaceEnsembleSommet<Integer> vide = Factory.ensembleSommet();
@@ -92,13 +100,25 @@ public class EnsembleSommetTest
 	public void testIntersection()
 	{
 		InterfaceEnsembleSommet<Integer> ajout = Factory.ensembleSommet();
-		ajout.ajouteSommet(s3);ajout.ajouteSommet(s5);
+		ajout.ajouteElement(s3);ajout.ajouteElement(s5);
 		InterfaceEnsembleSommet<Integer> intersection = Factory.ensembleSommet();
-		intersection.ajouteSommet(s3);
+		intersection.ajouteElement(s3);
 		InterfaceEnsembleSommet<Integer> resultatIntersection = InterfaceEnsembleSommet.intersection(ajout, ensembleSommetTest);
 		assertEquals(intersection,resultatIntersection);
 		InterfaceEnsembleSommet<Integer> vide = Factory.ensembleSommet();
 		InterfaceEnsembleSommet<Integer> resultatVide = InterfaceEnsembleSommet.intersection(vide, ensembleSommetTest);
 		assertEquals(vide,resultatVide);
+	}
+	
+	@Test
+	public void testContient()
+	{
+		InterfaceEnsembleSommet<Integer> inclut = Factory.ensembleSommet();
+		InterfaceEnsembleSommet<Integer> nonInclut = Factory.ensembleSommet();
+		inclut.ajouteElement(s4);
+		nonInclut.ajouteElement(s5);
+		nonInclut.ajouteElement(s3);
+		assertTrue(ensembleSommetTest.contient(inclut));
+		assertFalse(ensembleSommetTest.contient(nonInclut));
 	}
 }

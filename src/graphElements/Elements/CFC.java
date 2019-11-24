@@ -18,7 +18,7 @@ public class CFC<S> extends HashMap<InterfaceSommet<S>,InterfaceEnsembleSommet<S
 		for(InterfaceSommet<S> sommet : X.getEnsemble())
 		{
 			InterfaceEnsembleSommet<S> composante=Factory.ensembleSommet();
-			composante.ajouteSommet(sommet);
+			composante.ajouteElement(sommet);
 			this.put(sommet,composante);
 		}
 	}

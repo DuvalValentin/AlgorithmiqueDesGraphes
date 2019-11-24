@@ -10,14 +10,14 @@ import graphElements.Interfaces.InterfaceCout;
 import graphElements.Interfaces.InterfaceEnsembleArcValue;
 import graphElements.Interfaces.InterfaceSommet;
 
-public class EnsembleArcValue<S> extends AbstractEnsembleArc<S,InterfaceArcValue<S>> implements InterfaceEnsembleArcValue<S> 
+public class EnsembleArcValue<S,AV extends InterfaceArcValue<S>> extends AbstractEnsembleArc<S,InterfaceArcValue<S>> implements InterfaceEnsembleArcValue<S,AV> 
 {
 	//Constructeur
-	public EnsembleArcValue(InterfaceEnsembleArcValue<S> Ensemble)
+	public EnsembleArcValue(InterfaceEnsembleArcValue<S,AV> Ensemble)
 	{
 		for (InterfaceArcValue<S> arc : Ensemble.getEnsemble())
 		{
-			ajouteArc(arc);
+			ajouteElement(arc);
 		}
 	}
 	public EnsembleArcValue()
@@ -68,7 +68,7 @@ public class EnsembleArcValue<S> extends AbstractEnsembleArc<S,InterfaceArcValue
 	}
 	//ajout et suppression d'élément
 	@Override
-	public void ajouteArc(InterfaceArcValue<S> arc)//Si le coût est inferieur l'arc est remplacé
+	public void ajouteElement(InterfaceArcValue<S> arc)//Si le coût est inferieur l'arc est remplacé
 	{
 		if(existeArc(arc))
 		{
@@ -88,17 +88,17 @@ public class EnsembleArcValue<S> extends AbstractEnsembleArc<S,InterfaceArcValue
 		}
 	}
 	@Override
-	public void ajouteArc(InterfaceSommet<S> depart,InterfaceSommet<S>arrivee,InterfaceCout cout)
+	public void ajouteElement(InterfaceSommet<S> depart,InterfaceSommet<S>arrivee,InterfaceCout cout)
 	{
-		ajouteArc(Factory.arcValue(depart,arrivee,cout));
+		ajouteElement(Factory.arcValue(depart,arrivee,cout));
 	}
 	@Override
-	public void supprArc(InterfaceSommet<S>depart,InterfaceSommet<S>arrivee)
+	public void supprElement(InterfaceSommet<S>depart,InterfaceSommet<S>arrivee)
 	{
 		Optional<InterfaceCout> oCout=getCout(depart,arrivee);
 		if(oCout.isPresent())
 		{
-			supprArc(Factory.arcValue(depart,arrivee,oCout.get()));
+			supprElement(Factory.arcValue(depart,arrivee,oCout.get()));
 		}
 	}
 	@Override

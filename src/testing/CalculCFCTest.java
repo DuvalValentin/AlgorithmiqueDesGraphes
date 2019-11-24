@@ -44,7 +44,7 @@ public class CalculCFCTest
 		
 		CFCres1=Factory.CFC(G1.getX());
 		ES23=Factory.ensembleSommet();
-		ES23.ajouteSommet(s2);ES23.ajouteSommet(s3);
+		ES23.ajouteElement(s2);ES23.ajouteElement(s3);
 		CFCres1.replace(s2, ES23);CFCres1.replace(s3, ES23);
 		
 		G2=Factory.grapheNonValue();
@@ -55,7 +55,7 @@ public class CalculCFCTest
 		
 		CFCres2=Factory.CFC(G2.getX());
 		ES1234=Factory.ensembleSommet();
-		ES1234.ajouteSommet(s1);ES1234.ajouteSommet(s2);ES1234.ajouteSommet(s3);ES1234.ajouteSommet(s4);
+		ES1234.ajouteElement(s1);ES1234.ajouteElement(s2);ES1234.ajouteElement(s3);ES1234.ajouteElement(s4);
 		CFCres2.replace(s1, ES1234);CFCres2.replace(s2, ES1234);CFCres2.replace(s3, ES1234);CFCres2.replace(s4, ES1234);
 		
 	}

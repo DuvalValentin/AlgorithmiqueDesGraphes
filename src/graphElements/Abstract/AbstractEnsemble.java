@@ -22,21 +22,11 @@ public abstract class AbstractEnsemble<E> implements InterfaceEnsemble<E>
 		ensemble.clear();
 	}
 	
-	
-	//TODO redéfinir supprElement et ajoutElement
-	@Override 
-	public void supprElement(E element)
-	{
-		ensemble.remove(element);
-	}
-	
 	@Override
-	public void ajoutElement(E element)
+	public boolean contient(InterfaceEnsemble<E> ensemble)
 	{
-		ensemble.add(element);
+		return this.equals(InterfaceEnsemble.union(this, ensemble));
 	}
-	
-	
 	
 	@Override
 	public String toString()

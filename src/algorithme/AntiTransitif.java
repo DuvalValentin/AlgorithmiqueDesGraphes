@@ -5,6 +5,8 @@ import graphElements.Interfaces.*;
 
 public class AntiTransitif
 {
+	private AntiTransitif(){}
+	
 	public static <S> InterfaceGrapheNonValue<S> TauMinalite(InterfaceGrapheNonValue<S> G)
 	{
 		InterfaceEnsembleSommet<S>X=G.getX();

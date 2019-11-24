@@ -37,4 +37,9 @@ public class GrapheNonValue<S> extends AbstractGraphe<S,InterfaceArc<S>> impleme
 	{
 		ajouteArc(Factory.arcNonValue(depart, arrivee));
 	}
+	@Override
+	public void ajouteArc(S idDepart, S idArrivee)
+	{
+		ajouteArc(Factory.arcNonValue(idDepart, idArrivee));
+	}
 }

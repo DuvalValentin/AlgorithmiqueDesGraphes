@@ -8,6 +8,6 @@ public interface InterfaceOperationsElementairesEnsembleSommet<S>
 	//Un sommet A existe si il y a un sommet B dans l'ensemble tel que A equals B
 	boolean existeSommet(InterfaceSommet<S> sommet);//Rend true si le sommet existe
 	//Ajout et suppression de sommet
-	void ajouteSommet(InterfaceSommet<S> sommet);//Ajoute le sommet si il n'existe pas
-	void supprSommet(InterfaceSommet<S> sommet);//Supprime le sommet si il existe
+	//TODO transformer ajouteSommet en ajouteElement et le mettre dans iterfaceensemblesommet
+	void ajouteSommet(S id);
 }

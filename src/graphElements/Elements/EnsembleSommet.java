@@ -17,14 +17,14 @@ public class EnsembleSommet<S> extends AbstractEnsemble<InterfaceSommet<S>> impl
 	{
 		for (InterfaceSommet<S> sommet : Ensemble.getEnsemble())
 		{
-			ajouteSommet(Factory.sommet(sommet));
+			ajouteElement(Factory.sommet(sommet));
 		}
 	}
 	
 	@Override
 	public InterfaceSommet<S> pickSommet()
 	{
-		//TODO améliorer la méthode fisrtSommet() de Sommet
+		//TODO améliorer la méthode pickSommet() de Sommet
 		@SuppressWarnings("unchecked")
 		InterfaceSommet<S>[] tab=new Sommet[ensemble.size()];
 		return ensemble.toArray(tab)[0];
@@ -36,12 +36,17 @@ public class EnsembleSommet<S> extends AbstractEnsemble<InterfaceSommet<S>> impl
 		return ensemble.contains(sommet);
 	}
 	@Override
-	public void ajouteSommet(InterfaceSommet<S> sommet)
+	public void ajouteElement(InterfaceSommet<S> sommet)
 	{
 		ensemble.add(Factory.sommet(sommet));
 	}
 	@Override
-	public void supprSommet(InterfaceSommet<S> sommet)
+	public void ajouteSommet(S id)
+	{
+		ensemble.add(Factory.sommet(id));
+	}
+	@Override
+	public void supprElement(InterfaceSommet<S> sommet)
 	{
 		ensemble.remove(sommet);
 	}
