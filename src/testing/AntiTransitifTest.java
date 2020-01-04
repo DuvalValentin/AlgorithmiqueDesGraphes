@@ -1,23 +1,24 @@
 package testing;
 
-import static org.junit.Assert.*;
 import algorithme.AntiTransitif;
 import factory.Factory;
 import graphElements.Interfaces.*;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class AntiTransitifTest
 {
+	
 	private InterfaceSommet<Integer> s1,s2,s3,s4;
 	
 	private InterfaceArc<Integer> a12,a13,a14,a23,a24,a34;
 	
 	private InterfaceGrapheNonValue<Integer> Gini,Gres;
 
-	@Before
-	public void setUp()
+	@BeforeEach
+	void setUp() throws Exception
 	{
 		s1=Factory.sommet(1);
 		s2=Factory.sommet(2);
@@ -41,6 +42,7 @@ public class AntiTransitifTest
 	@Test
 	public void testTauMinalite()
 	{
-		assertEquals("test de la TauMinalite pour un graphe sans circuits",Gres,AntiTransitif.TauMinalite(Gini));
+		assertEquals(Gres,AntiTransitif.TauMinalite(Gini),"test de la TauMinalite pour un graphe sans circuits");
 	}
+
 }

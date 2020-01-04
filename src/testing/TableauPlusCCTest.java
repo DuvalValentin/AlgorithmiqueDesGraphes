@@ -1,11 +1,10 @@
 package testing;
 
-import static org.junit.Assert.*;
-
 import java.util.HashMap;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import factory.Factory;
 import graphElements.Interfaces.InterfaceCout;
@@ -20,7 +19,7 @@ public class TableauPlusCCTest
 	private HashMap<InterfaceSommet<Integer>,InterfaceCout> d;
 	private HashMap<InterfaceSommet<Integer>,InterfaceSommet<Integer>> pred;
 
-	@Before
+	@BeforeEach
 	public void setUp()
 	{
 		s1=Factory.sommet(1);
@@ -40,19 +39,19 @@ public class TableauPlusCCTest
 	@Test
 	public void testGetD()
 	{
-		assertEquals("getD",d,tableau.getD());
+		assertEquals(d,tableau.getD(),"getD");
 	}
 
 	@Test
 	public void testGetPred()
 	{
-		assertEquals("getPred",pred,tableau.getPred());
+		assertEquals(pred,tableau.getPred(),"getPred");
 	}
 
 	@Test
 	public void testGetPrincipal()
 	{
-		assertEquals("getPrincipal",s1,tableau.getPrincipal());
+		assertEquals(s1,tableau.getPrincipal(),"getPrincipal");
 	}
 
 	@Test
@@ -67,26 +66,26 @@ public class TableauPlusCCTest
 	{
 		InterfaceCout c5 = Factory.cout(5);
 		tableau.modifDistance(s1, c5);
-		assertEquals("modifCout",c5,tableau.getDistance(s1));
+		assertEquals(c5,tableau.getDistance(s1),"modifCout");
 	}
 
 	@Test
 	public void testModifSommet()
 	{
 		tableau.modifPredecesseur(s1, s2);
-		assertEquals("modifSommet",s2,tableau.getPredecesseur(s1));
+		assertEquals(s2,tableau.getPredecesseur(s1),"modifSommet");
 	}
 
 	@Test
 	public void testGetDistance()
 	{
-		assertEquals("getDistance",c1,tableau.getDistance(s2));
+		assertEquals(c1,tableau.getDistance(s2),"getDistance");
 	}
 
 	@Test
 	public void testGetPredecesseur()
 	{
-		assertEquals("getPredecesseur",s1,tableau.getPredecesseur(s2));
+		assertEquals(s1,tableau.getPredecesseur(s2),"getPredecesseur");
 	}
 	
 	@Test

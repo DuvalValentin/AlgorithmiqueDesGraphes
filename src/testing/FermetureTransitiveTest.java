@@ -1,8 +1,9 @@
 package testing;
 
-import static org.junit.Assert.*;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import algorithme.FermetureTransitive;
 import factory.Factory;
@@ -23,7 +24,7 @@ public class FermetureTransitiveTest
 	private InterfaceArcValue<Integer> a121,a232,a343;
 	private InterfaceArcValue<Integer> a133,a146,a245;
 
-	@Before
+	@BeforeEach
 	public void setUp() throws Exception
 	{
 		s1=Factory.sommet(1);
@@ -95,18 +96,18 @@ public class FermetureTransitiveTest
 	public void testPuissanceGraphe()
 	{
 		InterfaceGrapheNonValue<Integer> PG = (InterfaceGrapheNonValue<Integer>) FermetureTransitive.PuissanceDeGraphe(G);
-		assertEquals("La puissance de graphe ne marche pas",GT,PG);
+		assertEquals(GT,PG,"La puissance de graphe ne marche pas");
 		
 		InterfaceGrapheValue<Integer,InterfaceArcValue<Integer>> PGV = (InterfaceGrapheValue<Integer,InterfaceArcValue<Integer>>) FermetureTransitive.PuissanceDeGraphe(GV);
-		assertEquals("La puissance de graphe ne marche pas",GVT,PGV);
+		assertEquals(GVT,PGV,"La puissance de graphe ne marche pas");
 	}
 	@Test
 	public void testRoy_Warshall()
 	{
 		InterfaceGrapheNonValue<Integer>RW=(InterfaceGrapheNonValue<Integer>)FermetureTransitive.Roy_Warshall(G);
-		assertEquals("Roy_Warshall ne marche pas",GT,RW);
+		assertEquals(GT,RW,"Roy_Warshall ne marche pas");
 		
 		InterfaceGrapheValue<Integer,InterfaceArcValue<Integer>>RWV=(InterfaceGrapheValue<Integer,InterfaceArcValue<Integer>>) FermetureTransitive.Roy_Warshall(GV);
-		assertEquals("Roy_Warshall valué ne marche pas",GVT,RWV);
+		assertEquals(GVT,RWV,"Roy_Warshall valué ne marche pas");
 	}
 }

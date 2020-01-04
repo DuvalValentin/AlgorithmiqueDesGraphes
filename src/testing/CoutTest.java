@@ -1,9 +1,8 @@
 package testing;
 
-import static org.junit.Assert.*;
-
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import factory.Factory;
 import graphElements.Interfaces.InterfaceCout;
@@ -13,7 +12,7 @@ public class CoutTest
 	InterfaceCout coutTest;
 	float valeur=5;
 
-	@Before
+	@BeforeEach
 	public void setUp() 
 	{
 		
@@ -24,29 +23,29 @@ public class CoutTest
 	public void testConstructeurClone()
 	{
 		InterfaceCout coutClone = Factory.cout(coutTest);
-		assertEquals("Le constructeur clone",coutTest,coutClone);
-		assertNotSame("Le constructeur clone créé un objet identique",coutTest,coutClone);
+		assertEquals(coutTest,coutClone,"Le constructeur clone");
+		assertNotSame(coutTest,coutClone,"Le constructeur clone créé un objet identique");
 		coutClone.setValeur(9);
-		assertNotEquals("Modifier le clone modifie l'original",coutTest,coutClone);
+		assertNotEquals(coutTest,coutClone,"Modifier le clone modifie l'original");
 	}
 
 	@Test
 	public void testGetValeur()
 	{
-		assertTrue("GetValeur",valeur==coutTest.getValeur());
+		assertTrue(valeur==coutTest.getValeur(),"GetValeur");
 	}
 
 	@Test
 	public void testSetValeur()
 	{
 		coutTest.setValeur(8);
-		assertTrue("SetValeur",8==coutTest.getValeur());
+		assertTrue(8==coutTest.getValeur(),"SetValeur");
 	}
 
 	@Test
 	public void testSomme()
 	{
-		assertTrue("Somme",10==InterfaceCout.somme(coutTest, coutTest).getValeur());
+		assertTrue(10==InterfaceCout.somme(coutTest, coutTest).getValeur(),"Somme");
 	}
 	
 	@SuppressWarnings("unlikely-arg-type")

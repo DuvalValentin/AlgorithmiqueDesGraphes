@@ -1,7 +1,8 @@
 package testing;
-import org.junit.Before;
-import static org.junit.Assert.*;
-import org.junit.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import factory.Factory;
 import graphElements.Interfaces.InterfaceSommet;
@@ -10,7 +11,8 @@ public class SommetTest
 {
 	private InterfaceSommet<Integer> sommetTest;
 	private Integer value;
-	@Before
+	
+	@BeforeEach
 	public void setup()
 	{
 		value=5;
@@ -21,10 +23,10 @@ public class SommetTest
 	public void testConstructorClone()
 	{
 		InterfaceSommet<Integer> sommetClone=Factory.sommet(sommetTest);
-		assertEquals("Le constructeur clone",sommetTest,sommetClone);
-		assertNotSame("Le constructeur clone créé un objet identique",sommetTest,sommetClone);
+		assertEquals(sommetTest,sommetClone,"Le constructeur clone");
+		assertNotSame(sommetTest,sommetClone,"Le constructeur clone créé un objet identique");
 		sommetClone.setId(7);
-		assertNotEquals("Modifier le clone modifie l'original",sommetTest,sommetClone);
+		assertNotEquals(sommetTest,sommetClone,"Modifier le clone modifie l'original");
 	}
 	
 	@SuppressWarnings("unlikely-arg-type")
@@ -34,16 +36,16 @@ public class SommetTest
 		InterfaceSommet<Integer> sommetEq = Factory.sommet(5);
 		InterfaceSommet<Integer> sommetNEq = Factory.sommet(7);
 		String string= "okidoki";
-		assertTrue("Equals rend faux pour deux Sommets censés être equals",sommetTest.equals(sommetEq));
-		assertFalse("Equals rend vrai pour deux Sommets censés être not equals",sommetTest.equals(sommetNEq));
-		assertFalse("Equals rend vrai pour lorsque comparé à null",sommetTest.equals(null));
-		assertFalse("Equals rend vrai pour lorsque comparé à un objet n'étant pas un sommet",sommetTest.equals(string));
+		assertTrue(sommetTest.equals(sommetEq),"Equals rend faux pour deux Sommets censés être equals");
+		assertFalse(sommetTest.equals(sommetNEq),"Equals rend vrai pour deux Sommets censés être not equals");
+		assertFalse(sommetTest.equals(null),"Equals rend vrai pour lorsque comparé à null");
+		assertFalse(sommetTest.equals(string),"Equals rend vrai pour lorsque comparé à un objet n'étant pas un sommet");
 	}
 	
 	@Test
 	public void testGetId()
 	{
-		assertEquals("Le getId de Sommet n'est pas fonctionnel",sommetTest.getId(),value);
+		assertEquals(sommetTest.getId(),value,"Le getId de Sommet n'est pas fonctionnel");
 	}
 	
 	@Test
@@ -51,18 +53,18 @@ public class SommetTest
 	{
 		Integer value2=7;
 		sommetTest.setId(value2);
-		assertEquals("Le setId de Sommet n'est pas fonctionnel",sommetTest.getId(),value2);
+		assertEquals(sommetTest.getId(),value2,"Le setId de Sommet n'est pas fonctionnel");
 	}
 	
 	@Test 
 	public void testToString()
 	{
-		assertEquals("ToString ne marche pas bien",value.toString(),sommetTest.toString());
+		assertEquals(value.toString(),sommetTest.toString(),"ToString ne marche pas bien");
 	}
 	
 	@Test
 	public void testHashCode()
 	{
-		assertSame("HashCode",value.hashCode(),sommetTest.hashCode());
+		assertSame(value.hashCode(),sommetTest.hashCode(),"HashCode");
 	}
 }

@@ -1,8 +1,9 @@
 package testing;
 
-import static org.junit.Assert.*;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Test;
 
 import factory.Factory;
 import graphElements.Interfaces.InterfaceArc;
@@ -26,7 +27,7 @@ public class GrapheTest
 	private InterfaceArc<Integer> a34;
 	private InterfaceArc<Integer> a44;
 	
-	@Before
+	@BeforeEach
 	public void setUp()
 	{
 		s1=Factory.sommet(1);
@@ -50,55 +51,55 @@ public class GrapheTest
 	@Test
 	public void testGraphe()
 	{
-		assertEquals("Test du constructeur et des getteurs",X,G.getX());
-		assertEquals("Test du constructeur et des getteurs",Gamma,G.getGamma());
+		assertEquals(X,G.getX(),"Test du constructeur et des getteurs");
+		assertEquals(Gamma,G.getGamma(),"Test du constructeur et des getteurs");
 		InterfaceGrapheNonValue<Integer> G1=Factory.grapheNonValue(G);
-		assertEquals("Test du constructeur prenant un graphe en entrée",G,G1);
-		assertNotSame("On vérifie que les deux graphes n'ont pas la même réferrence",G,G1);
+		assertEquals(G,G1,"Test du constructeur prenant un graphe en entrée");
+		assertNotSame(G,G1,"On vérifie que les deux graphes n'ont pas la même réferrence");
 	}
 	
 	@Test
 	public void testGetters()
 	{
-		assertEquals("Test du getX",X,G.getX());
-		assertNotSame("Test de l'encapsulation de getX",X,G.getX());
-		assertEquals("Test du getGamma",Gamma,G.getGamma());
-		assertNotSame("Test de l'encapsulation de getGamma",Gamma,G.getGamma());
+		assertEquals(X,G.getX(),"Test du getX");
+		assertNotSame(X,G.getX(),"Test de l'encapsulation de getX");
+		assertEquals(Gamma,G.getGamma(),"Test du getGamma");
+		assertNotSame(Gamma,G.getGamma(),"Test de l'encapsulation de getGamma");
 	}
 	
 	@Test
 	public void testExistSommet()
 	{
 		InterfaceSommet<Integer> es=Factory.sommet(100);
-		assertTrue("Test de existSommet pour un sommet existant",G.existeSommet(s1));
-		assertFalse("Test de existSommet pour un sommet non existant",G.existeSommet(es));
+		assertTrue(G.existeSommet(s1),"Test de existSommet pour un sommet existant");
+		assertFalse(G.existeSommet(es),"Test de existSommet pour un sommet non existant");
 	}
 	
 	@Test
 	public void testExistArc()
 	{
 		InterfaceArc<Integer> ea = Factory.arcNonValue(s4,s1);
-		assertTrue("Test de existArc pour un arc existant",G.existeArc(a12));
-		assertTrue("Test de existArc avec 2 sommet en paramètres pour un arc existant",G.existeArc(s4,s4));
-		assertFalse("Test de existArc pour un arc non existant",G.existeArc(ea));
-		assertFalse("Test de existArc avec 2 sommet en paramètres pour un arc non existant",G.existeArc(s4,s1));
+		assertTrue(G.existeArc(a12),"Test de existArc pour un arc existant");
+		assertTrue(G.existeArc(s4,s4),"Test de existArc avec 2 sommet en paramètres pour un arc existant");
+		assertFalse(G.existeArc(ea),"Test de existArc pour un arc non existant");
+		assertFalse(G.existeArc(s4,s1),"Test de existArc avec 2 sommet en paramètres pour un arc non existant");
 	}
 	
 	@Test
 	public void testExisteBoucle()
 	{
-		assertTrue("Test de existeBoucle pour une boucle existante",G.existeBoucle());
-		assertTrue("Test de existeBoucle avec un sommet en paramètre pour une boucle existante",G.existeBoucle(s4));
-		assertFalse("Test de existeBoucle avec un sommet en paramètre pour une boucle non existante",G.existeBoucle(s1));
+		assertTrue(G.existeBoucle(),"Test de existeBoucle pour une boucle existante");
+		assertTrue(G.existeBoucle(s4),"Test de existeBoucle avec un sommet en paramètre pour une boucle existante");
+		assertFalse(G.existeBoucle(s1),"Test de existeBoucle avec un sommet en paramètre pour une boucle non existante");
 		G.supprArc(a44);
-		assertFalse("Test de existeBoucle pour une boucle non existante",G.existeBoucle());
+		assertFalse(G.existeBoucle(),"Test de existeBoucle pour une boucle non existante");
 	}
 	
 	@Test
 	public void testListSuccPred()
 	{
-		assertEquals("Test de listSucc sur un graphe",Gamma.listSucc(s1),G.listSucc(s1));
-		assertEquals("Test de listPred sur un graphe",Gamma.listPred(s4),G.listPred(s4));
+		assertEquals(Gamma.listSucc(s1),G.listSucc(s1),"Test de listSucc sur un graphe");
+		assertEquals(Gamma.listPred(s4),G.listPred(s4),"Test de listPred sur un graphe");
 	}
 	
 	@Test
@@ -114,16 +115,16 @@ public class GrapheTest
 		InterfaceSommet<Integer> s6 = Factory.sommet(5);
 		G.ajouteSommet(s5);
 		G.ajouteSommet(6);
-		assertTrue("Test du ajouteSommet sur un graphe",G.existeSommet(s5));
-		assertTrue("Test du ajouteSommet sur un graphe",G.existeSommet(s6));
+		assertTrue(G.existeSommet(s5),"Test du ajouteSommet sur un graphe");
+		assertTrue(G.existeSommet(s6),"Test du ajouteSommet sur un graphe");
 	}
 	
 	@Test 
 	public void testSupprSommet()
 	{
 		G.supprSommet(s2);
-		assertFalse("Test de la suppression de sommet de suprrSommet",G.existeSommet(s2));
-		assertFalse("Test de la suppression des arcs liés au sommet de suprrSommet",G.existeArc(a12)||G.existeArc(a23)||G.existeArc(a32));
+		assertFalse(G.existeSommet(s2),"Test de la suppression de sommet de suprrSommet");
+		assertFalse(G.existeArc(a12)||G.existeArc(a23)||G.existeArc(a32),"Test de la suppression des arcs liés au sommet de suprrSommet");
 	}
 	
 	@Test
@@ -136,25 +137,25 @@ public class GrapheTest
 		G.ajouteArc(4,1);
 		G.ajouteArc(s3, s1);
 		G.ajouteArc(a32);
-		assertTrue("Test de l'ajout d'un arc ajoutable",G.existeArc(a41));
-		assertFalse("Test de l'ajout d'un arc non ajoutable",G.existeArc(a51));
-		assertTrue("Test de l'ajout d'un arc avec 2 sommets en paramètres",G.existeArc(s3,s1));
+		assertTrue(G.existeArc(a41),"Test de l'ajout d'un arc ajoutable");
+		assertFalse(G.existeArc(a51),"Test de l'ajout d'un arc non ajoutable");
+		assertTrue(G.existeArc(s3,s1),"Test de l'ajout d'un arc avec 2 sommets en paramètres");
 	}
 	
 	@Test
 	public void testSupprArc()
 	{
 		G.supprArc(a34);
-		assertFalse("Test de la suppression d'un arc",G.existeArc(a34));
+		assertFalse(G.existeArc(a34),"Test de la suppression d'un arc");
 		G.supprArc(s3,s2);
-		assertFalse("Test de la suppression d'un arc avec deux sommets en paramètres",G.existeArc(s3,s2));
+		assertFalse(G.existeArc(s3,s2),"Test de la suppression d'un arc avec deux sommets en paramètres");
 	}
 	
 	@Test
 	public void testIsEmpty()
 	{
 		InterfaceGrapheNonValue<Integer> Ge = Factory.grapheNonValue();
-		assertTrue("Test de isEmpty et du constructeur sans paramètres",Ge.isEmpty());
+		assertTrue(Ge.isEmpty(),"Test de isEmpty et du constructeur sans paramètres");
 		Ge.ajouteSommet(s1);
 		assertFalse(Ge.isEmpty());
 	}
@@ -185,7 +186,7 @@ public class GrapheTest
 	{
 		InterfaceEnsembleSommet<Integer> Pe=Factory.ensembleSommet();
 		Pe.ajouteElement(s1);
-		assertEquals("Test de pointsEntree",Pe,G.pointsEntree());
+		assertEquals(Pe,G.pointsEntree(),"Test de pointsEntree");
 	}
 	
 	@Test
@@ -196,7 +197,7 @@ public class GrapheTest
 		G.ajouteArc(s4, s5);
 		InterfaceEnsembleSommet<Integer> Ps=Factory.ensembleSommet();
 		Ps.ajouteElement(s5);
-		assertEquals("Test de pointsSortie",Ps,G.pointsSortie());
+		assertEquals(Ps,G.pointsSortie(),"Test de pointsSortie");
 	}
 	
 	@Test
@@ -211,7 +212,7 @@ public class GrapheTest
 		InterfaceGrapheNonValue<Integer> Gunion=Factory.grapheNonValue(G);
 		Gunion.ajouteSommet(s5);
 		Gunion.ajouteArc(a15);
-		assertEquals("Test de l'union",Gunion,Gajout);
+		assertEquals(Gunion,Gajout,"Test de l'union");
 	}
 	
 	
@@ -220,24 +221,24 @@ public class GrapheTest
 	{
 		//Graphe<Integer> Gbis=new Graphe<Integer>(G);
 		X.supprElement(s3);
-		assertNotEquals("On modifie le X ayant initialisé G", X, G.getX());
+		assertNotEquals(X,G.getX(),"On modifie le X ayant initialisé G");
 		Gamma.supprElement(a32);
-		assertNotEquals("On modifie le Gamma ayant initialisé G",Gamma,G.getGamma());
+		assertNotEquals(Gamma,G.getGamma(),"On modifie le Gamma ayant initialisé G");
 		InterfaceEnsembleSommet<Integer> Xg =G.getX();
 		Xg.supprElement(s3);
-		assertNotEquals("On modifie l'ensemble donné par getX",Xg,G.getX());
+		assertNotEquals(Xg,G.getX(),"On modifie l'ensemble donné par getX");
 		InterfaceEnsembleArcNonValue<Integer> Gammag = G.getGamma();
 		Gammag.supprElement(a32);
-		assertNotEquals("On modifie l'ensemble donné par getGamma",Gammag,G.getGamma());
+		assertNotEquals(Gammag,G.getGamma(),"On modifie l'ensemble donné par getGamma");
 		s4=Factory.sommet(6);
-		assertFalse("On modifie un des sommets par l'exterieur",G.existeSommet(s4));
+		assertFalse(G.existeSommet(s4),"On modifie un des sommets par l'exterieur");
 		s3.setId(9);
-		assertFalse("On modifie un des sommets par l'exterieur",G.existeSommet(s3));
+		assertFalse(G.existeSommet(s3),"On modifie un des sommets par l'exterieur");
 		InterfaceGrapheNonValue<Integer>G2=Factory.grapheNonValue(G);
 		G2.supprArc(a12);
-		assertNotEquals("On modifie le graphe créé à partir de G",G,G2);
+		assertNotEquals(G,G2,"On modifie le graphe créé à partir de G");
 		a32.setDepart(s4);
-		assertFalse("On modifie un arc par l'exterieur",G.existeArc(a32));
+		assertFalse(G.existeArc(a32),"On modifie un arc par l'exterieur");
 	}
 	
 	@Test

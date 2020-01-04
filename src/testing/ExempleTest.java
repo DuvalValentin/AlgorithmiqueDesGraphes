@@ -1,6 +1,6 @@
 package testing;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import exemple.ExempleUtilisation;
 

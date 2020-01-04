@@ -1,13 +1,12 @@
 package testing;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import algorithme.DetectionCircuit;
 import factory.Factory;
 import graphElements.Interfaces.*;
-
-import org.junit.Before;
-import org.junit.Test;
 
 public class DetectionCircuitTest
 {
@@ -17,7 +16,7 @@ public class DetectionCircuitTest
 	
 	private InterfaceGrapheNonValue<Integer> Gcirc, Gline;
 	
-	@Before
+	@BeforeEach
 	public void setUp()
 	{
 		s1=Factory.sommet(1);
@@ -40,21 +39,21 @@ public class DetectionCircuitTest
 	@Test
 	public void testRoy_Warshall()
 	{
-		assertTrue("Roy-Warshall sur un graphe avec circuit",DetectionCircuit.Roy_Warshall(Gcirc));
-		assertFalse("Roy-Warshall sur un graphe sans circuit",DetectionCircuit.Roy_Warshall(Gline));
+		assertTrue(DetectionCircuit.Roy_Warshall(Gcirc),"Roy-Warshall sur un graphe avec circuit");
+		assertFalse(DetectionCircuit.Roy_Warshall(Gline),"Roy-Warshall sur un graphe sans circuit");
 	}
 
 	@Test
 	public void testMarimontEntree()
 	{
-		assertTrue("Marimont par point d'entree sur un graphe avec circuit",DetectionCircuit.MarimontEntree(Gcirc));
-		assertFalse("Marimont par point d'entree sur un graphe sans circuit",DetectionCircuit.MarimontEntree(Gline));
+		assertTrue(DetectionCircuit.MarimontEntree(Gcirc),"Marimont par point d'entree sur un graphe avec circuit");
+		assertFalse(DetectionCircuit.MarimontEntree(Gline),"Marimont par point d'entree sur un graphe sans circuit");
 	}
 	
 	@Test
 	public void testMarimontSortie()
 	{
-		assertTrue("Marimont par point de sortie sur un graphe avec circuit",DetectionCircuit.MarimontSortie(Gcirc));
-		assertFalse("Marimont par point de sortie sur un graphe sans circuit",DetectionCircuit.MarimontSortie(Gline));
+		assertTrue(DetectionCircuit.MarimontSortie(Gcirc),"Marimont par point de sortie sur un graphe avec circuit");
+		assertFalse(DetectionCircuit.MarimontSortie(Gline),"Marimont par point de sortie sur un graphe sans circuit");
 	}
 }

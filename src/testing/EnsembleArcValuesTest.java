@@ -1,11 +1,10 @@
 package testing;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
-
-import org.junit.Before;
-import org.junit.Test;
 
 import factory.Factory;
 import graphElements.Interfaces.InterfaceArcValue;
@@ -23,7 +22,7 @@ public class EnsembleArcValuesTest
 	
 	private InterfaceCout c1, c3, c5, c7;
 	
-	@Before
+	@BeforeEach
 	public void setUp()
 	{
 		ensembleArcValueTest = Factory.ensembleArcValue();
@@ -50,10 +49,10 @@ public class EnsembleArcValuesTest
 	public void testEnsembleArcValues()
 	{
 		InterfaceEnsembleArcValue<Integer,InterfaceArcValue<Integer>>ensembleArcValueClone=Factory.ensembleArcValue(ensembleArcValueTest);
-		assertEquals("Le constructeur clone",ensembleArcValueTest,ensembleArcValueClone);
-		assertNotSame("Le constructeur clone créé un objet identique",ensembleArcValueTest,ensembleArcValueClone);
+		assertEquals(ensembleArcValueTest,ensembleArcValueClone,"Le constructeur clone");
+		assertNotSame(ensembleArcValueTest,ensembleArcValueClone,"Le constructeur clone créé un objet identique");
 		ensembleArcValueClone.setValeur(s1, s1, c3);
-		assertNotEquals("Modifier le clone modifie l'original",ensembleArcValueTest,ensembleArcValueClone);
+		assertNotEquals(ensembleArcValueTest,ensembleArcValueClone,"Modifier le clone modifie l'original");
 	}
 	
 	@Test
@@ -68,9 +67,9 @@ public class EnsembleArcValuesTest
 	public void testajouteElement()
 	{
 		ensembleArcValueTest.ajouteElement(av113);
-		assertEquals("Coût de l'arc plus faible mais n'a pas remplacé le précédent",av113.getCout(),ensembleArcValueTest.getCout(s1, s1).get());
+		assertEquals(av113.getCout(),ensembleArcValueTest.getCout(s1, s1).get(),"Coût de l'arc plus faible mais n'a pas remplacé le précédent");
 		ensembleArcValueTest.ajouteElement(s1,s1,c5);
-		assertEquals("Cout de l'arc plus fort mais a quand même remplacé le précedent",c3,ensembleArcValueTest.getCout(s1, s1).get());
+		assertEquals(c3,ensembleArcValueTest.getCout(s1, s1).get(),"Cout de l'arc plus fort mais a quand même remplacé le précedent");
 	}
 	
 	@Test
@@ -85,7 +84,7 @@ public class EnsembleArcValuesTest
 	@Test
 	public void testGetCout()
 	{
-		assertEquals("getCout ne marche pas ",av121.getCout(),ensembleArcValueTest.getCout(s1, s2).get());
+		assertEquals(av121.getCout(),ensembleArcValueTest.getCout(s1, s2).get(),"getCout ne marche pas");
 		assertTrue(ensembleArcValueTest.getCout(s2, s2).isEmpty());
 	}
 	
@@ -93,7 +92,7 @@ public class EnsembleArcValuesTest
 	public void testSetValeur()
 	{
 		ensembleArcValueTest.setValeur(s1, s2, c7);
-		assertEquals("setValeur ne marche pas",c7,ensembleArcValueTest.getCout(s1,s2).get());
+		assertEquals(c7,ensembleArcValueTest.getCout(s1,s2).get(),"setValeur ne marche pas");
 		ensembleEmpty.setValeur(s1, s2, c7);//on vérifie que ça ne plante pas
 	}
 	
@@ -126,10 +125,10 @@ public class EnsembleArcValuesTest
 	public void encapsulation()
 	{
 		c1.setValeur(5);
-		assertTrue("Modification d'un cout exterieur",ensembleArcValueTest.existeArc(av121));
+		assertTrue(ensembleArcValueTest.existeArc(av121),"Modification d'un cout exterieur");
 		s2.setId(9);
-		assertTrue("Modification d'un sommet exterieur",ensembleArcValueTest.existeArc(av217));
+		assertTrue(ensembleArcValueTest.existeArc(av217),"Modification d'un sommet exterieur");
 		av115.setArrivee(s2);
-		assertFalse("Modification d'un arc exterieur",ensembleArcValueTest.existeArc(av115));
+		assertFalse(ensembleArcValueTest.existeArc(av115),"Modification d'un arc exterieur");
 	}
 }

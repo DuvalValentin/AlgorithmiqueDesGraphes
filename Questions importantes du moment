@@ -1,3 +1,4 @@
 Comment faire pour ne pas avoir à recopier tout le code d'une méthode pour l'écriture d'un algorithme ? (aller voir pattern du visiteur)
 Comment faire une itération sur mes Ensemble ? (créer un itérateur spécialisé pour les Ensembles)
 Comment faire pour que l'attribut de Cout soit générique (en gros que ce soit un nombre flottant entier ou autre) ?
+Chercher comment avoir une architecture Maven classique (src/main/java et src/test/java).

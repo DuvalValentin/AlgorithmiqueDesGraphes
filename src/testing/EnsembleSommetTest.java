@@ -3,12 +3,12 @@ package testing;
 import graphElements.Interfaces.InterfaceEnsembleSommet;
 import graphElements.Interfaces.InterfaceSommet;
 
-import org.junit.Before;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.HashSet;
 
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import factory.Factory;
 
@@ -17,7 +17,7 @@ public class EnsembleSommetTest
 	private InterfaceEnsembleSommet<Integer> ensembleSommetTest;
 	private InterfaceSommet<Integer> s3,s4,s5;
 	
-	@Before
+	@BeforeEach
 	public void setup()
 	{
 		ensembleSommetTest = Factory.ensembleSommet();
@@ -32,24 +32,24 @@ public class EnsembleSommetTest
 	public void testConstructeurClone()
 	{
 		InterfaceEnsembleSommet<Integer> ensembleSommetClone=Factory.ensembleSommet(ensembleSommetTest);
-		assertEquals("Le constructeur clone",ensembleSommetTest,ensembleSommetClone);
-		assertNotSame("Le constructeur clone créé un objet identique",ensembleSommetTest,ensembleSommetClone);
+		assertEquals(ensembleSommetTest,ensembleSommetClone,"Le constructeur clone");
+		assertNotSame(ensembleSommetTest,ensembleSommetClone,"Le constructeur clone créé un objet identique");
 		ensembleSommetClone.ajouteElement(s5);
-		assertNotEquals("Les ensembles sont liés",ensembleSommetTest,ensembleSommetClone);
+		assertNotEquals(ensembleSommetTest,ensembleSommetClone,"Les ensembles sont liés");
 	}
 	
 	@Test 
 	public void testFirstSommet()
 	{
 		ensembleSommetTest.ajouteElement(s5);
-		assertEquals("La méthode FirstSommet ne marche pas ou ne renvoie pas l'objet de plus faible Hashcode",ensembleSommetTest.pickSommet(),s3);
+		assertEquals(ensembleSommetTest.pickSommet(),s3,"La méthode FirstSommet ne marche pas ou ne renvoie pas l'objet de plus faible Hashcode");
 	}
 	
 	@Test
 	public void testExistSommet()
 	{
-		assertTrue("Test de l'existence d'un sommet present",ensembleSommetTest.existeSommet(s3));
-		assertFalse("Test de l'existence d'un sommet non present",ensembleSommetTest.existeSommet(s5));
+		assertTrue(ensembleSommetTest.existeSommet(s3),"Test de l'existence d'un sommet present");
+		assertFalse(ensembleSommetTest.existeSommet(s5),"Test de l'existence d'un sommet non present");
 	}
 	
 	@Test
@@ -57,21 +57,21 @@ public class EnsembleSommetTest
 	{
 		ensembleSommetTest.ajouteSommet(2);
 		InterfaceSommet<Integer> s2 = Factory.sommet(2);
-		assertTrue("Le sommet a bien été rajouté",ensembleSommetTest.existeSommet(s2));
+		assertTrue(ensembleSommetTest.existeSommet(s2),"Le sommet a bien été rajouté");
 	}
 	
 	@Test
 	public void testSupprSommet()
 	{
 		ensembleSommetTest.supprElement(s4);
-		assertFalse("Le sommet n'a pas été supprimé",ensembleSommetTest.existeSommet(s4));
+		assertFalse(ensembleSommetTest.existeSommet(s4),"Le sommet n'a pas été supprimé");
 	}
 	
 	@Test
 	public void testEncapsulation()
 	{
 		s3.setId(9);
-		assertFalse("Modification d'un sommet depuis l'exterieur",ensembleSommetTest.existeSommet(s3));
+		assertFalse(ensembleSommetTest.existeSommet(s3),"Modification d'un sommet depuis l'exterieur");
 	}
 	
 	@Test

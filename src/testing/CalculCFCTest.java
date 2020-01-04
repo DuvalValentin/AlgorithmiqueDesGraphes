@@ -1,8 +1,8 @@
 package testing;
 
-import static org.junit.Assert.*;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import algorithme.CalculCFC;
 import algorithme.FermetureTransitive;
@@ -24,7 +24,7 @@ public class CalculCFCTest
 	private InterfaceEnsembleSommet<Integer> ES1234;
 	
 	
-	@Before
+	@BeforeEach
 	public void setUp()
 	{
 		s1=Factory.sommet(1);
@@ -63,14 +63,14 @@ public class CalculCFCTest
 	@Test
 	public void testFoulkes()
 	{
-		assertEquals("Calcul des CFC grâce à l'algorithme de Foulkes",CFCres1,CalculCFC.Foulkes(FermetureTransitive.Roy_Warshall(G1)));
-		assertEquals("Calcul des CFC grâce à l'algorithme de Foulkes",CFCres2,CalculCFC.Foulkes(FermetureTransitive.Roy_Warshall(G2)));
+		assertEquals(CFCres1,CalculCFC.Foulkes(FermetureTransitive.Roy_Warshall(G1)),"Calcul des CFC grâce à l'algorithme de Foulkes");
+		assertEquals(CFCres2,CalculCFC.Foulkes(FermetureTransitive.Roy_Warshall(G2)),"Calcul des CFC grâce à l'algorithme de Foulkes");
 		//System.err.println(CalculCFC.TarjanDFS(G1));
 	}
 	@Test
 	public void testTarjan()
 	{
-		assertEquals("Calcul des CFC grâce à l'algorithme de Tarjan",CFCres1,CalculCFC.TarjanDFS(G1));
-		assertEquals("Calcul des CFC grâce à l'algorithme de Tarjan",CFCres2,CalculCFC.TarjanDFS(G2));
+		assertEquals(CFCres1,CalculCFC.TarjanDFS(G1),"Calcul des CFC grâce à l'algorithme de Tarjan");
+		assertEquals(CFCres2,CalculCFC.TarjanDFS(G2),"Calcul des CFC grâce à l'algorithme de Tarjan");
 	}
 }

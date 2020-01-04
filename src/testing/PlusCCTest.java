@@ -1,8 +1,9 @@
 package testing;
 
-import static org.junit.Assert.*;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import algorithme.PlusCC;
 import factory.Factory;
@@ -21,7 +22,7 @@ public class PlusCCTest
 	
 	
 
-	@Before
+	@BeforeEach
 	public void setUp()
 	{
 		s1=Factory.sommet(1);s2=Factory.sommet(2);s3=Factory.sommet(3);s4=Factory.sommet(4);
@@ -71,8 +72,8 @@ public class PlusCCTest
 	@Test
 	public void testOrdinalRacine()
 	{
-		assertEquals("OrdinalRacine /Positif",TableauGOP,PlusCC.OrdinalRacine(GOP, s1));
-		assertEquals("OrdinalRacine /Negatif",TableauGON,PlusCC.OrdinalRacine(GON, s1));
+		assertEquals(TableauGOP,PlusCC.OrdinalRacine(GOP, s1),"OrdinalRacine /Positif");
+		assertEquals(TableauGON,PlusCC.OrdinalRacine(GON, s1),"OrdinalRacine /Negatif");
 		PlusCC.OrdinalRacine(GA, s1);
 		PlusCC.OrdinalRacine(GRA, s1);
 	}
@@ -80,8 +81,8 @@ public class PlusCCTest
 	@Test
 	public void testBellmanFord()
 	{
-		assertEquals("BellmanFord /OrdinalPositif",TableauGOP,PlusCC.BellmanFord(GOP, s1));
-		assertEquals("BellmanFod /OrdinalNegatif",TableauGON,PlusCC.BellmanFord(GON, s1));
+		assertEquals(TableauGOP,PlusCC.BellmanFord(GOP, s1),"BellmanFord /OrdinalPositif");
+		assertEquals(TableauGON,PlusCC.BellmanFord(GON, s1),"BellmanFod /OrdinalNegatif");
 		PlusCC.BellmanFord(GA, s1);
 		PlusCC.BellmanFord(GRA,s1);
 	}
@@ -89,8 +90,8 @@ public class PlusCCTest
 	@Test
 	public void testFord()
 	{
-		assertEquals("Ford /OrdinalPositif",TableauGOP,PlusCC.Ford(GOP, s1));
-		assertEquals("Ford /OrdinalNegatif",TableauGON,PlusCC.Ford(GON, s1));
+		assertEquals(TableauGOP,PlusCC.Ford(GOP, s1),"Ford /OrdinalPositif");
+		assertEquals(TableauGON,PlusCC.Ford(GON, s1),"Ford /OrdinalNegatif");
 		PlusCC.Ford(GA, s1);
 		PlusCC.Ford(GRA,s1);
 	}

@@ -1,7 +1,7 @@
 package testing;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import algorithme.Parcours;
 import factory.Factory;
@@ -15,7 +15,7 @@ public class ParcoursTest
 	private InterfaceSommet<Integer> s1,s2,s3,s4;
 	private InterfaceArc<Integer> a12,a23,a32,a34,a33;
 
-	@Before
+	@BeforeEach
 	public void setUp()
 	{
 		s1=Factory.sommet(1);

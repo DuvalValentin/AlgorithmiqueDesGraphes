@@ -115,11 +115,16 @@ V 0.11.1
 * Les méthodes statiques (union et intersection) ont été déplacées dans les Interfaces => il y a donc des méthodes implémentées dans les Interfaces mais désormais le code respecte entièrement le principe d'inversion de dépendances
 * La méthode getCout de EnsembleArcValue rend maintenant un objet de type Optional<InterfaceCout>
 
+V 0.11.2
+======
+* Passage de JUnit4 à JUnit5 Jupiter
+* Passage de projet Java "simple" à projet Maven
+
 Encore à faire :
 ----------------
 * Revoir les TODO présents dans le code.
 * Créer une fonction pour savoir si un Ensemble est un sous ensemble d'un autre Ensemble (utiliser Union en statique).
 * Les algorithmes CFC doivent rendre un graphe d'ensemble de graphe.
-* Répondre aux questions du moment et faire leurs implémentations
-* Créer un fichier gitignore correct
+* Répondre aux questions du moment et faire leurs implémentations.
 * Commencer les algorithmes d'ordonnancement.
+* Respecter l'architecture Maven Classique

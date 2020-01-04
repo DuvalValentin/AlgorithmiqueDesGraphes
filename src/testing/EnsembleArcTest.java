@@ -1,11 +1,11 @@
 package testing;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.HashSet;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import factory.Factory;
 import graphElements.Interfaces.InterfaceArc;
@@ -29,7 +29,7 @@ public class EnsembleArcTest
 	private InterfaceArc<Integer> a22;
 	private InterfaceArc<Integer> a23;
 	
-	@Before
+	@BeforeEach
 	public void setup()
 	{
 		ensembleArcTest = Factory.ensembleArcNonValue();
@@ -52,10 +52,10 @@ public class EnsembleArcTest
 	public void testEnsembleArc()
 	{
 		InterfaceEnsembleArcNonValue<Integer> ensembleArcClone=Factory.ensembleArcNonValue(ensembleArcTest);
-		assertEquals("Le constructeur clone",ensembleArcTest,ensembleArcClone);
-		assertNotSame("Le constructeur clone créé un objet identique",ensembleArcTest,ensembleArcClone);
+		assertEquals(ensembleArcTest,ensembleArcClone,"Le constructeur clone");
+		assertNotSame(ensembleArcTest,ensembleArcClone,"Le constructeur clone créé un objet identique");
 		ensembleArcClone.supprElement(a22);
-		assertNotEquals("Modifier le clone modifie l'original",ensembleArcTest,ensembleArcClone);
+		assertNotEquals(ensembleArcTest,ensembleArcClone,"Modifier le clone modifie l'original");
 	}
 	
 	@Test 
@@ -73,29 +73,29 @@ public class EnsembleArcTest
 		succ1.ajouteElement(s2);succ1.ajouteElement(s1);
 		InterfaceEnsembleSommet<Integer> pred3 = Factory.ensembleSommet();
 		pred3.ajouteElement(s2);
-		assertEquals("listSucc",succ1,ensembleArcTest.listSucc(s1));
-		assertEquals("listPred",pred3,ensembleArcTest.listPred(s3));	
+		assertEquals(succ1,ensembleArcTest.listSucc(s1),"listSucc");
+		assertEquals(pred3,ensembleArcTest.listPred(s3),"listPred");	
 	}
 	
 	@Test
 	public void testAjouteSupprExist()
 	{
 		InterfaceEnsembleArcNonValue<Integer> sommetAjout =Factory.ensembleArcNonValue();
-		assertTrue("Les arcs s'ajoutent bien",ensembleArcTest.existeArc(s1,s2));
-		assertTrue("Test de présence de boucle lorsqu'elle existe",ensembleArcTest.existeBoucle());
-		assertTrue("Test de présence de boucle avec un sommet en paramètre lorsqu'elle existe",ensembleArcTest.existeBoucle(s2));
-		assertFalse("Test de présence de boucle avec un sommet en paramètre lorsqu'elle n'existe pas",ensembleArcTest.existeBoucle(s3));
+		assertTrue(ensembleArcTest.existeArc(s1,s2),"Les arcs s'ajoutent bien");
+		assertTrue(ensembleArcTest.existeBoucle(),"Test de présence de boucle lorsqu'elle existe");
+		assertTrue(ensembleArcTest.existeBoucle(s2),"Test de présence de boucle avec un sommet en paramètre lorsqu'elle existe");
+		assertFalse(ensembleArcTest.existeBoucle(s3),"Test de présence de boucle avec un sommet en paramètre lorsqu'elle n'existe pas");
 		sommetAjout.ajouteElement(s1,s1);sommetAjout.ajouteElement(1,2);sommetAjout.ajouteElement(s2,s1);sommetAjout.ajouteElement(2,2);sommetAjout.ajouteElement(s2,s3);
 		sommetAjout.ajouteElement(1,1);//ajouter un arc déja existant ne pose pas de problème
-		assertTrue("Les arcs s'ajoutent bien",sommetAjout.existeArc(a12));
-		assertTrue("Les arcs s'ajoutent bien",sommetAjout.existeArc(a22));
-		assertTrue("Les arcs s'ajoutent bien",sommetAjout.existeArc(a23));
-		assertEquals("Les deux ajouteElement ont un effet différent",sommetAjout,ensembleArcTest);
+		assertTrue(sommetAjout.existeArc(a12),"Les arcs s'ajoutent bien");
+		assertTrue(sommetAjout.existeArc(a22),"Les arcs s'ajoutent bien");
+		assertTrue(sommetAjout.existeArc(a23),"Les arcs s'ajoutent bien");
+		assertEquals(sommetAjout,ensembleArcTest,"Les deux ajouteElement ont un effet différent");
 		ensembleArcTest.supprElement(a11);ensembleArcTest.supprElement(s2, s2);
-		assertFalse("Arc supposé être enlevé",ensembleArcTest.existeArc(a22));
-		assertFalse("Arc supposé être enlevé",ensembleArcTest.existeArc(s1,s1));
+		assertFalse(ensembleArcTest.existeArc(a22),"Arc supposé être enlevé");
+		assertFalse(ensembleArcTest.existeArc(s1,s1),"Arc supposé être enlevé");
 		ensembleArcTest.supprElement(a11);//enlever un arc déjà enlever ne pose pas d'erreur
-		assertFalse("Test de présence de boucle lorsqu'elle n'existe pas",ensembleArcTest.existeBoucle());
+		assertFalse(ensembleArcTest.existeBoucle(),"Test de présence de boucle lorsqu'elle n'existe pas");
 	}
 	
 	@Test
@@ -127,11 +127,10 @@ public class EnsembleArcTest
 	public void testEncapsulation()
 	{
 		s3.setId(9);
-		assertFalse("Modification d'un sommet depuis l'exterieur",ensembleArcTest.existeArc(s2,s3));
-		assertTrue("Modification d'un sommet depuis l'exterieur",ensembleArcTest.existeArc(a23));
+		assertFalse(ensembleArcTest.existeArc(s2,s3),"Modification d'un sommet depuis l'exterieur");
+		assertTrue(ensembleArcTest.existeArc(a23),"Modification d'un sommet depuis l'exterieur");
 		a12.setArrivee(s3);
-		assertFalse("Modification d'un arc depuis l'exterieur",ensembleArcTest.existeArc(a12));
-		
+		assertFalse(ensembleArcTest.existeArc(a12),"Modification d'un arc depuis l'exterieur");
 	}
 	
 	@Test
