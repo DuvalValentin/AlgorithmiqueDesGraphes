@@ -1,13 +1,16 @@
 package exemple;
 
+import java.util.logging.Logger;
+
 import algorithme.*;
 import factory.Factory;
-import graphElements.Interfaces.*;
+import graphelements.interfaces.*;
 
 public class ExempleUtilisation
 {
 	
 	private ExempleUtilisation() {}
+	private static Logger logger = Logger.getAnonymousLogger();
 	public static void main(String[] args)
 	{
 		
@@ -17,31 +20,31 @@ public class ExempleUtilisation
 		InterfaceSommet<Integer> s2=Factory.sommet(2);
 		InterfaceSommet<Integer> s3=Factory.sommet(3);
 		InterfaceSommet<Integer> s4=Factory.sommet(4);
-		System.out.println("Un sommet : "+s3);
+		logger.info("Un sommet : "+s3);
 		
 		InterfaceArc<Integer>a12=Factory.arcNonValue(s1,s2);
 		InterfaceArc<Integer>a23=Factory.arcNonValue(s2,s3);
 		InterfaceArc<Integer>a32=Factory.arcNonValue(s3,s2);
 		InterfaceArc<Integer>a34=Factory.arcNonValue(s3,s4);
 
-		System.out.println("Un arc : "+a34);
+		logger.info("Un arc : "+a34);
 		
-		InterfaceEnsembleSommet<Integer> X;
-		X=Factory.ensembleSommet();
-		X.ajouteElement(s1);X.ajouteElement(s2);X.ajouteElement(s3);X.ajouteElement(s4);
-		System.out.println("Un ensemble de sommets : "+X);
+		InterfaceEnsembleSommet<Integer> x;
+		x=Factory.ensembleSommet();
+		x.ajouteElement(s1);x.ajouteElement(s2);x.ajouteElement(s3);x.ajouteElement(s4);
+		logger.info("Un ensemble de sommets : "+x);
 		
-		InterfaceEnsembleArcNonValue<Integer>Gamma= Factory.ensembleArcNonValue();
-		Gamma.ajouteElement(a12);Gamma.ajouteElement(a23);Gamma.ajouteElement(a32);Gamma.ajouteElement(a34);
-		System.out.println("Un ensemble d'arcs : "+Gamma);
+		InterfaceEnsembleArcNonValue<Integer>gamma= Factory.ensembleArcNonValue();
+		gamma.ajouteElement(a12);gamma.ajouteElement(a23);gamma.ajouteElement(a32);gamma.ajouteElement(a34);
+		logger.info("Un ensemble d'arcs : "+gamma);
 		
-		InterfaceGrapheNonValue<Integer> G = Factory.grapheNonValue(X,Gamma); 
-		System.out.println("Un graphe : "+G.toString());
+		InterfaceGrapheNonValue<Integer> G = Factory.grapheNonValue(x,gamma); 
+		logger.info("Un graphe : "+G.toString());
 		
 		
 		
 		//Opération élémentaires
-		G.getX();//Obtenir l'ensemble de sommet du graphe
+		G.getEnsembleSommet();//Obtenir l'ensemble de sommet du graphe
 		G.getGamma();//Obtenir l'ensemble d'arc du graphe
 		G.existeSommet(s4);//Savoir si le sommet est présent dans le graphe
 		G.existeArc(a32);//Savoir si l'arc est présent dans le graphe
@@ -51,18 +54,17 @@ public class ExempleUtilisation
 		G.existeBoucle(s3);//Savoir si le existe une boucle au niveau d'un sommet (ATTENTION ici on ne tient pas compte de la fermeture transitive)
 		
 		//Appels aux algorithmes
-		Parcours.DFS(G);//Juste un parcours du graphe (ne fait absolument rien)
-		Parcours.WFS(G,s1);//Pareil	
-		System.out.println();
-		//System.out.println("Le graphe composé de G (arcs en deux temps) : "+FermetureTransitive.Composition(G, G));//En commentaire tant que composition est privé
+		Parcours.dfs(G);//Juste un parcours du graphe (ne fait absolument rien)
+		Parcours.wfs(G,s1);//Pareil	
+		//logger.info("Le graphe composé de G (arcs en deux temps) : "+FermetureTransitive.Composition(G, G));//En commentaire tant que composition est privé
 
-		System.out.println("Fermeture transitive par puissance de Graphe : "+FermetureTransitive.PuissanceDeGraphe(G));
+		logger.info("Fermeture transitive par puissance de Graphe : "+FermetureTransitive.puissanceDeGraphe(G));
 
-		System.out.println("Fermeture transitive par Roy-Warshall : "+FermetureTransitive.Roy_Warshall(G));
-		System.out.println("Fermeture anti-transitive par Tau-Minalité (ne marche pas si circuit) : "+AntiTransitif.TauMinalite(G));
-		System.out.println("Existence d'un circuit par Roy-Warshall: "+DetectionCircuit.Roy_Warshall(G));
-		System.out.println("Existence d'un circuit par Marimont par points d'entrée : "+DetectionCircuit.MarimontEntree(G));
-		System.out.println("Existence d'un circuit par Marimont par points de sortie : "+DetectionCircuit.MarimontSortie(G));
-		System.out.println("Calcul des CFC grâce à l'algorithme de Foulkes : "+CalculCFC.Foulkes(FermetureTransitive.Roy_Warshall(G)));
+		logger.info("Fermeture transitive par Roy-Warshall : "+FermetureTransitive.royWarshall(G));
+		logger.info("Fermeture anti-transitive par Tau-Minalité (ne marche pas si circuit) : "+AntiTransitif.tauMinalite(G));
+		logger.info("Existence d'un circuit par Roy-Warshall: "+DetectionCircuit.royWarshall(G));
+		logger.info("Existence d'un circuit par Marimont par points d'entrée : "+DetectionCircuit.marimontEntree(G));
+		logger.info("Existence d'un circuit par Marimont par points de sortie : "+DetectionCircuit.marimontSortie(G));
+		logger.info("Calcul des CFC grâce à l'algorithme de Foulkes : "+CalculCFC.foulkes(FermetureTransitive.royWarshall(G)));
 	}
 }

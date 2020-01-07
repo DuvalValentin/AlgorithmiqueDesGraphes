@@ -4,39 +4,39 @@ package algorithme;
 import java.util.Optional;
 
 import factory.Factory;
-import graphElements.Interfaces.*;
+import graphelements.interfaces.*;
 
 public class FermetureTransitive
 {
 	private FermetureTransitive(){}
 	
 	@SuppressWarnings("unchecked")
-	private static <S,A extends InterfaceArc<S>> InterfaceGraphe<S,A> Composition (InterfaceGraphe<S,A> G1,InterfaceGraphe<S,A> G2) 
+	private static <S,A extends InterfaceArc<S>> InterfaceGraphe<S,A> composition (InterfaceGraphe<S,A> graph1,InterfaceGraphe<S,A> graph2) 
 	{
-		InterfaceEnsembleSommet<S>X=G1.getX();//L'ensemble de sommet
-		InterfaceEnsembleArc<S,A>Gamma1=G1.getGamma();//L'ensemble d'arc du graphe1
-		InterfaceEnsembleArc<S,A>Gamma2=G2.getGamma();//L'ensemble d'arc du graphe2
-		InterfaceGraphe<S,A> G3 =Factory.graphe(X, Factory.ensembleArc(Gamma1.getClass().getSimpleName()));//Le graphe final
-		for(InterfaceSommet<S> x : X.getEnsemble())
+		InterfaceEnsembleSommet<S>ensembleSommet=graph1.getEnsembleSommet();//L'ensemble de sommet
+		InterfaceEnsembleArc<S,A>gamma1=graph1.getGamma();//L'ensemble d'arc du graphe1
+		InterfaceEnsembleArc<S,A>gamma2=graph2.getGamma();//L'ensemble d'arc du graphe2
+		InterfaceGraphe<S,A> g3 =Factory.graphe(ensembleSommet, Factory.ensembleArc(gamma1.getClass().getSimpleName()));//Le graphe final
+		for(InterfaceSommet<S> x : ensembleSommet.getEnsemble())
 		{
-			for(InterfaceSommet<S> y : X.getEnsemble())
+			for(InterfaceSommet<S> y : ensembleSommet.getEnsemble())
 			{
-				for(InterfaceSommet<S> z : X.getEnsemble())
+				for(InterfaceSommet<S> z : ensembleSommet.getEnsemble())
 				{
 					InterfaceArc<S> arc1=Factory.arcNonValue(x,z);
 					InterfaceArc<S> arc2=Factory.arcNonValue(z,y);
-					if(Gamma1.existeArc(arc1)&&Gamma2.existeArc(arc2))
+					if(gamma1.existeArc(arc1)&&gamma2.existeArc(arc2))
 					{
-						if(G3 instanceof InterfaceGrapheNonValue)
+						if(g3 instanceof InterfaceGrapheNonValue)
 						{
-							((InterfaceGrapheNonValue<S>)G3).ajouteArc(x,y);
+							((InterfaceGrapheNonValue<S>)g3).ajouteArc(x,y);
 						}
-						else //if (G3 instanceof InterfaceGrapheValue)
+						else if (g3 instanceof InterfaceGrapheValue)
 						{
-							InterfaceCout cout1=(InterfaceCout)((InterfaceGrapheValue<S,InterfaceArcValue<S>>)G1).getCout(x, z).get();
-							InterfaceCout cout2=(InterfaceCout)((InterfaceGrapheValue<S,InterfaceArcValue<S>>)G2).getCout(z, y).get();
+							InterfaceCout cout1=((InterfaceGrapheValue<S>)graph1).getCout(x, z).get();
+							InterfaceCout cout2=((InterfaceGrapheValue<S>)graph2).getCout(z, y).get();
 							InterfaceCout cout=Factory.cout(cout1.getValeur()+cout2.getValeur());
-							((InterfaceGrapheValue<S,InterfaceArcValue<S>>)G3).ajouteArc(x,y,cout);
+							((InterfaceGrapheValue<S>)g3).ajouteArc(x,y,cout);
 						}
 						
 						break;
@@ -44,55 +44,55 @@ public class FermetureTransitive
 				}
 			}
 		}
-		return G3;
+		return g3;
 	}
 	
-	public static <S,A extends InterfaceArc<S>> InterfaceGraphe<S,A> PuissanceDeGraphe (InterfaceGraphe<S,A> G)
+	public static <S,A extends InterfaceArc<S>> InterfaceGraphe<S,A> puissanceDeGraphe (InterfaceGraphe<S,A> graphe)
 	{
-		InterfaceGraphe<S,A> P;//Le graphe résultat
-		InterfaceGraphe<S,A> R;
-		P=Factory.graphe(G.getClass().getSimpleName());
-		R=Factory.graphe(G);
-		while(!R.equals(P))
+		InterfaceGraphe<S,A> p;//Le graphe résultat
+		InterfaceGraphe<S,A> r;
+		p=Factory.graphe(graphe.getClass().getSimpleName());
+		r=Factory.graphe(graphe);
+		while(!r.equals(p))
 		{
-			P=Factory.graphe(R);
-			R= InterfaceGraphe.union(R, Composition(G,R));
+			p=Factory.graphe(r);
+			r= InterfaceGraphe.union(r, composition(graphe,r));
 		}
-		return(P);
+		return(p);
 	}
 	//Non valué
 	@SuppressWarnings("unchecked")
-	public static <S,A extends InterfaceArc<S>> InterfaceGraphe<S,A> Roy_Warshall(InterfaceGraphe<S,A> G)
+	public static <S,A extends InterfaceArc<S>> InterfaceGraphe<S,A> royWarshall(InterfaceGraphe<S,A> graphe)
 	{
-		InterfaceEnsembleSommet<S>X=G.getX();
-		InterfaceGraphe<S,A> RW=Factory.graphe(G);
-		for(InterfaceSommet<S> z : X.getEnsemble())//sommet pivot
+		InterfaceEnsembleSommet<S>ensembleSommet=graphe.getEnsembleSommet();
+		InterfaceGraphe<S,A> royWarshal=Factory.graphe(graphe);
+		for(InterfaceSommet<S> z : ensembleSommet.getEnsemble())//sommet pivot
 		{
-			for(InterfaceSommet<S> x : X.getEnsemble())//sommet précédant z
+			for(InterfaceSommet<S> x : ensembleSommet.getEnsemble())//sommet précédant z
 			{
-				if(RW.existeArc(x,z))
+				if(royWarshal.existeArc(x,z))
 				{
-					for(InterfaceSommet<S> y : X.getEnsemble())//sommet procédant z
+					for(InterfaceSommet<S> y : ensembleSommet.getEnsemble())//sommet procédant z
 					{
-						if(RW.existeArc(z,y))
+						if(royWarshal.existeArc(z,y))
 						{
-							if(G.getClass().getSimpleName().equals("GrapheNonValue"))
+							if(royWarshal instanceof InterfaceGrapheNonValue)
 							{
-								((InterfaceGrapheNonValue<S>)RW).ajouteArc(x,y);
+								((InterfaceGrapheNonValue<S>)royWarshal).ajouteArc(x,y);
 							}
-							else //if (G.getClass().getSimpleName().equals("GrapheValue"))
+							else if (royWarshal instanceof InterfaceGrapheValue)
 							{
-								Optional<InterfaceCout> oCxz=((InterfaceGrapheValue<S,InterfaceArcValue<S>>)RW).getCout(x, z);
-								Optional<InterfaceCout> oCzy=((InterfaceGrapheValue<S,InterfaceArcValue<S>>)RW).getCout(z, y);
+								Optional<InterfaceCout> oCxz=((InterfaceGrapheValue<S>)royWarshal).getCout(x, z);
+								Optional<InterfaceCout> oCzy=((InterfaceGrapheValue<S>)royWarshal).getCout(z, y);
 								InterfaceCout cout=InterfaceCout.somme(oCxz.get(), oCzy.get());
-								((InterfaceGrapheValue<S,InterfaceArcValue<S>>)RW).ajouteArc(x,y,cout);
+								((InterfaceGrapheValue<S>)royWarshal).ajouteArc(x,y,cout);
 							}
 						}
 					}
 				}
 			}
 		}
-		return RW;
+		return royWarshal;
 	}
 	
 	//Valué

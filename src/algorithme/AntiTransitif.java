@@ -1,35 +1,35 @@
 package algorithme;
 
 import factory.Factory;
-import graphElements.Interfaces.*;
+import graphelements.interfaces.*;
 
 public class AntiTransitif
 {
 	private AntiTransitif(){}
 	
-	public static <S> InterfaceGrapheNonValue<S> TauMinalite(InterfaceGrapheNonValue<S> G)
+	public static <S> InterfaceGrapheNonValue<S> tauMinalite(InterfaceGrapheNonValue<S> graphe)
 	{
-		InterfaceEnsembleSommet<S>X=G.getX();
-		InterfaceGrapheNonValue<S> RW=Factory.grapheNonValue(G);
-		InterfaceGrapheNonValue<S> TauMin=Factory.grapheNonValue(G);//Graphe tauMinimal
+		InterfaceEnsembleSommet<S>ensembleSommet=graphe.getEnsembleSommet();
+		InterfaceGrapheNonValue<S> royWarshall=Factory.grapheNonValue(graphe);
+		InterfaceGrapheNonValue<S> tauMin=Factory.grapheNonValue(graphe);//Graphe tauMinimal
 		
-		for(InterfaceSommet<S> z : X.getEnsemble()) 
+		for(InterfaceSommet<S> z : ensembleSommet.getEnsemble()) 
 		{
-			for(InterfaceSommet<S> x : X.getEnsemble())
+			for(InterfaceSommet<S> x : ensembleSommet.getEnsemble())
 			{
-				if(RW.existeArc(x,z))
+				if(graphe.existeArc(x,z))
 				{
-					for(InterfaceSommet<S> y : X.getEnsemble())
+					for(InterfaceSommet<S> y : ensembleSommet.getEnsemble())
 					{
-						if(RW.existeArc(z,y))
+						if(graphe.existeArc(z,y))
 						{
-							RW.ajouteArc(x, y);
-							TauMin.supprArc(x, y);
+							royWarshall.ajouteArc(x, y);
+							tauMin.supprArc(x, y);
 						}
 					}
 				}
 			}
 		}
-		return TauMin;
+		return tauMin;
 	}
 }

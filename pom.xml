@@ -2,13 +2,13 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>valentin.duval</groupId>
   <artifactId>algorithme</artifactId>
-  <version>0.11.1</version>
+  <version>0.11.2</version>
   <name>AlgorithmiqueDesGraphes</name>
   <build>
     <sourceDirectory>src</sourceDirectory>
-    <testSourceDirectory>src/testing</testSourceDirectory>
+    <testSourceDirectory>test/testing</testSourceDirectory>
     <plugins>
-      <plugin>
+      <plugin><!-- Plugin pour le fonctionnement de Maven -->
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.8.0</version>
         <configuration>
@@ -19,19 +19,45 @@
       	<artifactId>maven-surefire-plugin</artifactId>
       	<version>2.22.2</version>
       </plugin>
+      <plugin>
+      	<groupId>org.jacoco</groupId>
+      	<artifactId>jacoco-maven-plugin</artifactId>
+      	<version>0.8.5</version>
+      	<executions>
+      		<execution>
+      			<goals>
+      				<goal>prepare-agent</goal>
+      			</goals>
+      		</execution>
+      		<execution>
+      			<id>report</id>
+      			<phase>test</phase>
+      			<goals>
+      				<goal>report</goal>
+      			</goals>
+      		</execution>
+      	</executions>
+      </plugin>
     </plugins>
   </build>
   <dependencies>
-  	<dependency>
-  		<groupId>junit</groupId>
-  		<artifactId>junit</artifactId>
-  		<version>4.13</version>
-  	</dependency>
-  	
-  	<dependency>
+  	<dependency><!-- Framework de test jupiter -->
   		<groupId>org.junit.jupiter</groupId>
   		<artifactId>junit-jupiter</artifactId>
   		<version>5.5.2</version>
   	</dependency>
+  	<dependency><!-- AssertJ pour des assertions "plus compréhensibles" -->
+  		<groupId>org.assertj</groupId>
+  		<artifactId>assertj-core</artifactId>
+  		<version>3.14.0</version>
+  	</dependency>
   </dependencies>
+  <properties>
+  	<maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
+  	<sonar.projectKey>DuvalValentin_AlgorithmiqueDesGraphes</sonar.projectKey>
+  	<sonar.organization>duvalvalentin</sonar.organization>
+  	<sonar.host.url>https://sonarcloud.io</sonar.host.url>
+  	<sonar.login>2f5e26247e2959caf2531af45544a9b0708ad3e5</sonar.login>
+  </properties>
 </project>

@@ -4,95 +4,95 @@ import java.util.LinkedList;
 import java.util.Stack;
 
 import factory.Factory;
-import graphElements.Interfaces.*;
+import graphelements.interfaces.*;
 
 public class Parcours
 {
 	private Parcours(){}
 	
 	@SuppressWarnings("unchecked")
-	public static <S,A extends InterfaceArc<S>> void DFS (InterfaceGraphe<S,A> G)
+	public static <S,A extends InterfaceArc<S>> void dfs (InterfaceGraphe<S,A> graphe)
 	{
-		InterfaceEnsembleArc<S,A> V; //Ensemble des arcs visités
-		InterfaceEnsembleSommet<S> D;//Ensemble des sommets non visités
-		InterfaceEnsembleSommet<S> T=Factory.ensembleSommet(); //Ensemble des sommets visités
-		InterfaceEnsembleSommet<S> Y;//Ensemble de successeur de y
-		InterfaceEnsembleSommet<S> Z;//Ensemble de successeur de z
-		Stack<InterfaceSommet<S>> A=new Stack<InterfaceSommet<S>>();//Pile 
+		InterfaceEnsembleArc<S,A> ensembleArcVisites;
+		InterfaceEnsembleSommet<S> ensembleSommetNonVisites;
+		InterfaceEnsembleSommet<S> ensembleSommetVisites=Factory.ensembleSommet();
+		InterfaceEnsembleSommet<S> successeursY;
+		InterfaceEnsembleSommet<S> successeursZ;
+		Stack<InterfaceSommet<S>> pileSommet=new Stack<>();
 		InterfaceSommet<S>y;
 		InterfaceSommet<S>z;
 		//Init
-		D=Factory.ensembleSommet(G.getX());//Ensemble de sommets non visité
-		V=Factory.ensembleArc(G.getGamma().getClass().getSimpleName());
+		ensembleSommetNonVisites=Factory.ensembleSommet(graphe.getEnsembleSommet());//Ensemble de sommets non visité
+		ensembleArcVisites=Factory.ensembleArc(graphe.getGamma().getClass().getSimpleName());
 		
-		InterfaceGraphe<S,A> Gavisiter = Factory.graphe(G);
+		InterfaceGraphe<S,A> graphAVisiter = Factory.graphe(graphe);
 
-		while(!D.isEmpty())
+		while(!ensembleSommetNonVisites.isEmpty())
 		{
-			A.push(Gavisiter.pickSommet());
-			D.supprElement(Gavisiter.pickSommet());
-			while(!A.isEmpty())
+			pileSommet.push(graphAVisiter.pickSommet());
+			ensembleSommetNonVisites.supprElement(graphAVisiter.pickSommet());
+			while(!pileSommet.isEmpty())
 			{
-				y=A.peek();
-				Y=Gavisiter.listSucc(y);
-				if(!Y.isEmpty())
+				y=pileSommet.peek();
+				successeursY=graphAVisiter.listSucc(y);
+				if(!successeursY.isEmpty())
 				{
-					z=Y.pickSommet();
-					A arc = (A) Factory.arc(G.getClass().getSimpleName(), y, z,Factory.cout());
-					Gavisiter.supprArc( arc);
-					V.ajouteElement(arc);
-					if (D.existeSommet(z))
+					z=successeursY.pickSommet();
+					A arc = (A) Factory.arc(graphe.getClass().getSimpleName(), y, z,Factory.cout());
+					graphAVisiter.supprArc( arc);
+					ensembleArcVisites.ajouteElement(arc);
+					if (ensembleSommetNonVisites.existeSommet(z))
 					{
-						D.supprElement(z);
-						Z=Gavisiter.listSucc(z);
-						if (!Z.isEmpty())
+						ensembleSommetNonVisites.supprElement(z);
+						successeursZ=graphAVisiter.listSucc(z);
+						if (!successeursZ.isEmpty())
 						{
-							A.push(z);
+							pileSommet.push(z);
 						}
 						else
 						{
-							T.ajouteElement(z);
+							ensembleSommetVisites.ajouteElement(z);
 						}
 					}
 				}
 				else
 				{
-					Gavisiter.supprSommet(y);
-					T.ajouteElement(y);
-					A.pop();
+					graphAVisiter.supprSommet(y);
+					ensembleSommetVisites.ajouteElement(y);
+					pileSommet.pop();
 				}
 			}
 		}
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static <S,A extends InterfaceArc<S>> void WFS (InterfaceGrapheNonValue<S> G, InterfaceSommet<S> x)
+	public static <S,A extends InterfaceArc<S>> void wfs (InterfaceGrapheNonValue<S> graphe, InterfaceSommet<S> sommet)
 	{
-		InterfaceEnsembleArc<S,A> V;//Ensemble des arcs parcours
-		InterfaceEnsembleSommet<S> D;//Ensemble des sommets non visités
-		InterfaceEnsembleSommet<S> T;//Ensemble des sommets visités
-		InterfaceEnsembleSommet<S> S;//Liste de successeur de y
-		LinkedList<InterfaceSommet<S>> A=new LinkedList<InterfaceSommet<S>>();//File
+		InterfaceEnsembleArc<S,A> ensembleArcVisites;//Ensemble des arcs parcours
+		InterfaceEnsembleSommet<S> ensembleSommetNonVisites;//Ensemble des sommets non visités
+		InterfaceEnsembleSommet<S> ensembleSommetVisites;//Ensemble des sommets visités
+		InterfaceEnsembleSommet<S> successeursY;//Liste de successeur de y
+		LinkedList<InterfaceSommet<S>> fileSommets=new LinkedList<>();//File
 		InterfaceSommet<S>y;
 		//Init
-		D=Factory.ensembleSommet(G.getX());
-		D.supprElement(x);
-		A.add(x);
-		T=Factory.ensembleSommet();
-		V=Factory.ensembleArc(G.getGamma().getClass().getSimpleName());
-		while(!A.isEmpty())
+		ensembleSommetNonVisites=Factory.ensembleSommet(graphe.getEnsembleSommet());
+		ensembleSommetNonVisites.supprElement(sommet);
+		fileSommets.add(sommet);
+		ensembleSommetVisites=Factory.ensembleSommet();
+		ensembleArcVisites=Factory.ensembleArc(graphe.getGamma().getClass().getSimpleName());
+		while(!fileSommets.isEmpty())
 		{
-			y=A.poll();
-			T.ajouteElement(y);
-			S=G.listSucc(y);
-			for (InterfaceSommet<S> z : S.getEnsemble())
+			y=fileSommets.poll();
+			ensembleSommetVisites.ajouteElement(y);
+			successeursY=graphe.listSucc(y);
+			for (InterfaceSommet<S> z : successeursY.getEnsemble())
 			{
-				A arc = (A) Factory.arc(G.getClass().getSimpleName(), y, z, Factory.cout());
-				V.ajouteElement(arc);
-				if (D.existeSommet(z))
+				A arc = (A) Factory.arc(graphe.getClass().getSimpleName(), y, z, Factory.cout());
+				ensembleArcVisites.ajouteElement(arc);
+				if (ensembleSommetNonVisites.existeSommet(z))
 				{
-					D.supprElement(z);
-					A.add(z);
+					ensembleSommetNonVisites.supprElement(z);
+					fileSommets.add(z);
 				}
 			}
 		}

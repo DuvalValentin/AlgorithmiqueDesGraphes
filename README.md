@@ -120,6 +120,12 @@ V 0.11.2
 * Passage de JUnit4 à JUnit5 Jupiter
 * Passage de projet Java "simple" à projet Maven
 
+V 0.12
+======
+* Ajouts de nouveaux outils tels que jacoco et sonar
+* Gros refactoring pour respecter au mieux les bonnes pratiques (rennomages, changement de certains types..)
+* 2 bugs détecté via sonar corrigé
+
 Encore à faire :
 ----------------
 * Revoir les TODO présents dans le code.
@@ -127,4 +133,6 @@ Encore à faire :
 * Les algorithmes CFC doivent rendre un graphe d'ensemble de graphe.
 * Répondre aux questions du moment et faire leurs implémentations.
 * Commencer les algorithmes d'ordonnancement.
-* Respecter l'architecture Maven Classique
+* Respecter l'architecture Maven Classique.
+* Avoir un "Sonar" le plus propre que possible.
+* Atteindre 100% de coverage.

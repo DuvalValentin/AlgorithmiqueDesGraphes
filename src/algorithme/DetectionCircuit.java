@@ -1,16 +1,16 @@
 package algorithme;
 
 import factory.Factory;
-import graphElements.Interfaces.*;
+import graphelements.interfaces.*;
 public class DetectionCircuit
 {
 	private DetectionCircuit(){}
 	
-	public static <S> boolean Roy_Warshall(InterfaceGrapheNonValue<S> G)
+	public static <S> boolean royWarshall(InterfaceGrapheNonValue<S> graph)
 	{
-		InterfaceGrapheNonValue<S> RW=(InterfaceGrapheNonValue<S>) FermetureTransitive.Roy_Warshall(G);
+		InterfaceGrapheNonValue<S> royWarshall=(InterfaceGrapheNonValue<S>) FermetureTransitive.royWarshall(graph);
 		boolean result;
-		if(RW.existeBoucle())
+		if(royWarshall.existeBoucle())
 		{
 			result=true;
 		}
@@ -21,33 +21,33 @@ public class DetectionCircuit
 		return result;
 	}
 	//TODO DFS et WFS
-	public static <S> boolean MarimontEntree(InterfaceGrapheNonValue<S> G)
+	public static <S> boolean marimontEntree(InterfaceGrapheNonValue<S> graph)
 	{
-		InterfaceGrapheNonValue<S>SG=Factory.grapheNonValue(G);//sous graphe
-		InterfaceEnsembleSommet<S> Ent=SG.pointsEntree();
-		while(!Ent.isEmpty())
+		InterfaceGrapheNonValue<S>sousGraphe=Factory.grapheNonValue(graph);
+		InterfaceEnsembleSommet<S> ensembleEntree=sousGraphe.pointsEntree();
+		while(!ensembleEntree.isEmpty())
 		{
-			for(InterfaceSommet<S> S : Ent.getEnsemble())
+			for(InterfaceSommet<S> entree : ensembleEntree.getEnsemble())
 			{
-				SG.supprSommet(S);
+				sousGraphe.supprSommet(entree);
 			}
-			Ent=SG.pointsEntree();
+			ensembleEntree=sousGraphe.pointsEntree();
 		}
-		return !SG.isEmpty();
+		return !sousGraphe.isEmpty();
 	}
 	
-	public static <S> boolean MarimontSortie(InterfaceGrapheNonValue<S> G)
+	public static <S> boolean marimontSortie(InterfaceGrapheNonValue<S> graph)
 	{
-		InterfaceGrapheNonValue<S>SG=Factory.grapheNonValue(G);//sous graphe
-		InterfaceEnsembleSommet<S> Sor=SG.pointsSortie();
-		while(!Sor.isEmpty())
+		InterfaceGrapheNonValue<S>sousGraphe=Factory.grapheNonValue(graph);
+		InterfaceEnsembleSommet<S> ensembleSortie=sousGraphe.pointsSortie();
+		while(!ensembleSortie.isEmpty())
 		{
-			for(InterfaceSommet<S> S : Sor.getEnsemble())
+			for(InterfaceSommet<S> sortie : ensembleSortie.getEnsemble())
 			{
-				SG.supprSommet(S);
+				sousGraphe.supprSommet(sortie);
 			}
-			Sor=SG.pointsSortie();
+			ensembleSortie=sousGraphe.pointsSortie();
 		}
-		return !SG.isEmpty();
+		return !sousGraphe.isEmpty();
 	}
 }

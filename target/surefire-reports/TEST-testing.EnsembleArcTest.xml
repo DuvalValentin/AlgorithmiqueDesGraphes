@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="testing.EnsembleArcTest" time="0.017" tests="12" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="testing.EnsembleArcTest" time="0.02" tests="12" errors="0" skipped="0" failures="0">
   <properties>
     <property name="sun.desktop" value="gnome"/>
     <property name="awt.toolkit" value="sun.awt.X11.XToolkit"/>
     <property name="java.specification.version" value="11"/>
     <property name="sun.cpu.isalist" value=""/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
-    <property name="java.class.path" value="/home/valentin/M1CCN/Travaux/Algorithmique-workspace/AlgorithmiqueDesGraphes/target/test-classes:/home/valentin/M1CCN/Travaux/Algorithmique-workspace/AlgorithmiqueDesGraphes/target/classes:/home/valentin/.m2/repository/junit/junit/4.13/junit-4.13.jar:/home/valentin/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/home/valentin/.m2/repository/org/junit/jupiter/junit-jupiter/5.5.2/junit-jupiter-5.5.2.jar:/home/valentin/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.5.2/junit-jupiter-api-5.5.2.jar:/home/valentin/.m2/repository/org/apiguardian/apiguardian-api/1.1.0/apiguardian-api-1.1.0.jar:/home/valentin/.m2/repository/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar:/home/valentin/.m2/repository/org/junit/platform/junit-platform-commons/1.5.2/junit-platform-commons-1.5.2.jar:/home/valentin/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.5.2/junit-jupiter-params-5.5.2.jar:/home/valentin/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.5.2/junit-jupiter-engine-5.5.2.jar:/home/valentin/.m2/repository/org/junit/platform/junit-platform-engine/1.5.2/junit-platform-engine-1.5.2.jar:"/>
+    <property name="java.class.path" value="/home/valentin/M1CCN/Travaux/Algorithmique-workspace/AlgorithmiqueDesGraphes/target/test-classes:/home/valentin/M1CCN/Travaux/Algorithmique-workspace/AlgorithmiqueDesGraphes/target/classes:/home/valentin/.m2/repository/org/junit/jupiter/junit-jupiter/5.5.2/junit-jupiter-5.5.2.jar:/home/valentin/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.5.2/junit-jupiter-api-5.5.2.jar:/home/valentin/.m2/repository/org/apiguardian/apiguardian-api/1.1.0/apiguardian-api-1.1.0.jar:/home/valentin/.m2/repository/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar:/home/valentin/.m2/repository/org/junit/platform/junit-platform-commons/1.5.2/junit-platform-commons-1.5.2.jar:/home/valentin/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.5.2/junit-jupiter-params-5.5.2.jar:/home/valentin/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.5.2/junit-jupiter-engine-5.5.2.jar:/home/valentin/.m2/repository/org/junit/platform/junit-platform-engine/1.5.2/junit-platform-engine-1.5.2.jar:/home/valentin/.m2/repository/org/assertj/assertj-core/3.14.0/assertj-core-3.14.0.jar:"/>
     <property name="java.vm.vendor" value="Ubuntu"/>
     <property name="sun.arch.data.model" value="64"/>
     <property name="java.vendor.url" value="https://ubuntu.com/"/>
@@ -16,9 +16,9 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="FR"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-11-openjdk-amd64/lib"/>
-    <property name="sun.java.command" value="/home/valentin/M1CCN/Travaux/Algorithmique-workspace/AlgorithmiqueDesGraphes/target/surefire/surefirebooter17354660972192548332.jar /home/valentin/M1CCN/Travaux/Algorithmique-workspace/AlgorithmiqueDesGraphes/target/surefire 2020-01-04T17-21-41_705-jvmRun1 surefire1015463126128734740tmp surefire_02910802124596772919tmp"/>
+    <property name="sun.java.command" value="/home/valentin/M1CCN/Travaux/Algorithmique-workspace/AlgorithmiqueDesGraphes/target/surefire/surefirebooter4579362904236972232.jar /home/valentin/M1CCN/Travaux/Algorithmique-workspace/AlgorithmiqueDesGraphes/target/surefire 2020-01-07T18-49-40_189-jvmRun1 surefire782071812212643584tmp surefire_012040694433415454060tmp"/>
     <property name="jdk.debug" value="release"/>
-    <property name="surefire.test.class.path" value="/home/valentin/M1CCN/Travaux/Algorithmique-workspace/AlgorithmiqueDesGraphes/target/test-classes:/home/valentin/M1CCN/Travaux/Algorithmique-workspace/AlgorithmiqueDesGraphes/target/classes:/home/valentin/.m2/repository/junit/junit/4.13/junit-4.13.jar:/home/valentin/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/home/valentin/.m2/repository/org/junit/jupiter/junit-jupiter/5.5.2/junit-jupiter-5.5.2.jar:/home/valentin/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.5.2/junit-jupiter-api-5.5.2.jar:/home/valentin/.m2/repository/org/apiguardian/apiguardian-api/1.1.0/apiguardian-api-1.1.0.jar:/home/valentin/.m2/repository/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar:/home/valentin/.m2/repository/org/junit/platform/junit-platform-commons/1.5.2/junit-platform-commons-1.5.2.jar:/home/valentin/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.5.2/junit-jupiter-params-5.5.2.jar:/home/valentin/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.5.2/junit-jupiter-engine-5.5.2.jar:/home/valentin/.m2/repository/org/junit/platform/junit-platform-engine/1.5.2/junit-platform-engine-1.5.2.jar:"/>
+    <property name="surefire.test.class.path" value="/home/valentin/M1CCN/Travaux/Algorithmique-workspace/AlgorithmiqueDesGraphes/target/test-classes:/home/valentin/M1CCN/Travaux/Algorithmique-workspace/AlgorithmiqueDesGraphes/target/classes:/home/valentin/.m2/repository/org/junit/jupiter/junit-jupiter/5.5.2/junit-jupiter-5.5.2.jar:/home/valentin/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.5.2/junit-jupiter-api-5.5.2.jar:/home/valentin/.m2/repository/org/apiguardian/apiguardian-api/1.1.0/apiguardian-api-1.1.0.jar:/home/valentin/.m2/repository/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar:/home/valentin/.m2/repository/org/junit/platform/junit-platform-commons/1.5.2/junit-platform-commons-1.5.2.jar:/home/valentin/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.5.2/junit-jupiter-params-5.5.2.jar:/home/valentin/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.5.2/junit-jupiter-engine-5.5.2.jar:/home/valentin/.m2/repository/org/junit/platform/junit-platform-engine/1.5.2/junit-platform-engine-1.5.2.jar:/home/valentin/.m2/repository/org/assertj/assertj-core/3.14.0/assertj-core-3.14.0.jar:"/>
     <property name="sun.cpu.endian" value="little"/>
     <property name="user.home" value="/home/valentin"/>
     <property name="user.language" value="fr"/>
@@ -32,7 +32,7 @@
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.awt.graphicsenv" value="sun.awt.X11GraphicsEnvironment"/>
-    <property name="surefire.real.class.path" value="/home/valentin/M1CCN/Travaux/Algorithmique-workspace/AlgorithmiqueDesGraphes/target/surefire/surefirebooter17354660972192548332.jar"/>
+    <property name="surefire.real.class.path" value="/home/valentin/M1CCN/Travaux/Algorithmique-workspace/AlgorithmiqueDesGraphes/target/surefire/surefirebooter4579362904236972232.jar"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="11.0.4+11-post-Ubuntu-1ubuntu219.04"/>
     <property name="user.name" value="valentin"/>
@@ -58,15 +58,15 @@
     <property name="java.class.version" value="55.0"/>
   </properties>
   <testcase name="testClear" classname="testing.EnsembleArcTest" time="0"/>
-  <testcase name="testUnion" classname="testing.EnsembleArcTest" time="0"/>
+  <testcase name="testUnion" classname="testing.EnsembleArcTest" time="0.001"/>
   <testcase name="testToString" classname="testing.EnsembleArcTest" time="0.012"/>
-  <testcase name="testGetEnsemble" classname="testing.EnsembleArcTest" time="0"/>
+  <testcase name="testGetEnsemble" classname="testing.EnsembleArcTest" time="0.001"/>
   <testcase name="testAjouteSupprExist" classname="testing.EnsembleArcTest" time="0"/>
   <testcase name="testListSuccPred" classname="testing.EnsembleArcTest" time="0"/>
-  <testcase name="testHashCode" classname="testing.EnsembleArcTest" time="0"/>
+  <testcase name="testHashCode" classname="testing.EnsembleArcTest" time="0.001"/>
   <testcase name="testIntersection" classname="testing.EnsembleArcTest" time="0.001"/>
   <testcase name="testEquals" classname="testing.EnsembleArcTest" time="0"/>
   <testcase name="testEnsembleArc" classname="testing.EnsembleArcTest" time="0"/>
-  <testcase name="testIsEmpty" classname="testing.EnsembleArcTest" time="0"/>
-  <testcase name="testEncapsulation" classname="testing.EnsembleArcTest" time="0"/>
+  <testcase name="testIsEmpty" classname="testing.EnsembleArcTest" time="0.001"/>
+  <testcase name="testEncapsulation" classname="testing.EnsembleArcTest" time="0.001"/>
 </testsuite>
