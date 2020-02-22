@@ -1,39 +1,39 @@
 package graphelements.elements;
 
-import graphelements.interfaces.InterfaceCout;
+import graphelements.interfaces.Cout;
 
 //TODO Cout sera inutile dès que la méthode getCout de EnsembleArcValue sera améliorée
-
-public class Cout implements InterfaceCout
+public class CoutImpl implements Cout
 {
-	//Valeur
+	// Valeur
 	private float valeur;
-	//Constructeur
-	public Cout()
+
+	// Constructeur
+	public CoutImpl()
 	{
 		valeur=0;
 	}
-	public Cout(float valeur)
+	public CoutImpl(float valeur)
 	{
 		setValeur(valeur);
 	}
-	public Cout(InterfaceCout cout)
+	public CoutImpl(Cout cout)
 	{
 		setValeur(cout.getValeur());
 	}
-	//Getter
+	// Getter
 	@Override
 	public float getValeur()
 	{
 		return valeur;
 	}
-	//Setter
+	// Setter
 	@Override
 	public void setValeur(float valeur)
 	{
-		this.valeur = valeur;
+		this.valeur=valeur;
 	}
-	//toString/equals/hashCode
+	// toString/equals/hashCode
 	@Override
 	public String toString()
 	{
@@ -43,11 +43,10 @@ public class Cout implements InterfaceCout
 	public boolean equals(Object obj)
 	{
 		boolean result=false;
-		if(obj!=null&&obj.getClass()==getClass()&&((Cout)obj).getValeur()==(getValeur()))
+		if(obj!=null&&obj.getClass()==getClass()&&((CoutImpl)obj).getValeur()==(getValeur()))
 		{
 			result=true;
 		}
-		
 		return result;
 	}
 	@Override

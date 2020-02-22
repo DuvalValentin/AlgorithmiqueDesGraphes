@@ -1,33 +1,34 @@
 package graphelements.elements;
 
-import graphelements.interfaces.InterfaceSommet;
+import graphelements.interfaces.Sommet;
 
-public class Sommet<S> implements InterfaceSommet<S>
+public class SommetImpl<S> implements Sommet<S>
 {
-	//Id
+	// Id
 	private S id;
-	//Constructeur
-	public Sommet(S s)
+
+	// Constructeur
+	public SommetImpl(S s)
 	{
 		setId(s);
 	}
-	public Sommet(InterfaceSommet<S> sommet)
+	public SommetImpl(Sommet<S> sommet)
 	{
 		setId(sommet.getId());
 	}
-	//Getter
+	// Getter
 	@Override
-	public S getId() 
+	public S getId()
 	{
 		return id;
 	}
-	//Setter
+	// Setter
 	@Override
-	public void setId(S s) 
+	public void setId(S s)
 	{
-		id = s;
+		id=s;
 	}
-	//toString/equals/hashCode
+	// toString/equals/hashCode
 	@Override
 	public String toString()
 	{
@@ -38,7 +39,7 @@ public class Sommet<S> implements InterfaceSommet<S>
 	public boolean equals(Object obj)
 	{
 		boolean result=false;
-		if(obj!=null&&obj.getClass()==getClass()&&((Sommet<S>)obj).getId().equals(getId()))
+		if(obj!=null&&obj.getClass()==getClass()&&((SommetImpl<S>)obj).getId().equals(getId()))
 		{
 			result=true;
 		}
@@ -50,4 +51,3 @@ public class Sommet<S> implements InterfaceSommet<S>
 		return getId().hashCode();
 	}
 }
-

@@ -126,6 +126,12 @@ V 0.12
 * Gros refactoring pour respecter au mieux les bonnes pratiques (rennomages, changement de certains types..)
 * 2 bugs détecté via sonar corrigé
 
+V 0.13
+======
+* Changement des conventions de nommage (plus de Interface mais il y a des Impl)
+* Coverage du code 100% pour les instructions (mais pas toutes les branches)
+* Mise en place d'un formateur et application de ce formateur sur tout le code
+
 Encore à faire :
 ----------------
 * Revoir les TODO présents dans le code.

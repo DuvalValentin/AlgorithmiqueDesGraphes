@@ -1,26 +1,26 @@
 package graphelements.abstracts;
 
 import factory.Factory;
-import graphelements.interfaces.InterfaceArc;
-import graphelements.interfaces.InterfaceEnsembleArc;
-import graphelements.interfaces.InterfaceEnsembleSommet;
-import graphelements.interfaces.InterfaceSommet;
+import graphelements.interfaces.Arc;
+import graphelements.interfaces.EnsembleArc;
+import graphelements.interfaces.EnsembleSommet;
+import graphelements.interfaces.Sommet;
 
-public abstract class AbstractEnsembleArc<S,A extends InterfaceArc<S>> extends AbstractEnsemble<A> implements InterfaceEnsembleArc<S,A>
+public abstract class AbstractEnsembleArc<S,A extends Arc<S>>extends AbstractEnsemble<A> implements EnsembleArc<S,A>
 {
-	//Constructeurs
+	// Constructeurs
 	public AbstractEnsembleArc()
 	{
 		super();
 	}
-	//Test d'existence d'éléments
+	// Test d'existence d'éléments
 	@Override
-	public boolean existeArc(InterfaceArc<S> arc)
+	public boolean existeArc(Arc<S> arc)
 	{
 		return existeArc(arc.getDepart(),arc.getArrivee());
 	}
 	@Override
-	public boolean existeArc(InterfaceSommet<S> depart, InterfaceSommet<S> arrivee)
+	public boolean existeArc(Sommet<S> depart, Sommet<S> arrivee)
 	{
 		boolean result=false;
 		for(A arc : ensemble)
@@ -37,7 +37,7 @@ public abstract class AbstractEnsembleArc<S,A extends InterfaceArc<S>> extends A
 	public boolean existeBoucle()
 	{
 		boolean resultat=false;
-		for(InterfaceArc<S> Arc : ensemble)
+		for(Arc<S> Arc : ensemble)
 		{
 			if(Arc.getDepart().equals(Arc.getArrivee()))
 			{
@@ -48,18 +48,18 @@ public abstract class AbstractEnsembleArc<S,A extends InterfaceArc<S>> extends A
 		return resultat;
 	}
 	@Override
-	public boolean existeBoucle(InterfaceSommet<S> sommet)
+	public boolean existeBoucle(Sommet<S> sommet)
 	{
 		return existeArc(sommet,sommet);
 	}
-	//Séléction d'éléments
+	// Séléction d'éléments
 	@Override
-	public InterfaceEnsembleSommet<S> listSucc(InterfaceSommet<S> sommet)
+	public EnsembleSommet<S> listSucc(Sommet<S> sommet)
 	{
-		InterfaceEnsembleSommet<S> xSucc=Factory.ensembleSommet();
-		for (A arc : ensemble)
+		EnsembleSommet<S> xSucc=Factory.ensembleSommet();
+		for(A arc : ensemble)
 		{
-			if (arc.getDepart().equals(sommet))
+			if(arc.getDepart().equals(sommet))
 			{
 				xSucc.ajouteElement(arc.getArrivee());
 			}
@@ -67,19 +67,19 @@ public abstract class AbstractEnsembleArc<S,A extends InterfaceArc<S>> extends A
 		return xSucc;
 	}
 	@Override
-	public InterfaceEnsembleSommet<S> listPred(InterfaceSommet<S> sommet)
+	public EnsembleSommet<S> listPred(Sommet<S> sommet)
 	{
-		InterfaceEnsembleSommet<S> xPred=Factory.ensembleSommet();
-		for (A arc : ensemble)
+		EnsembleSommet<S> xPred=Factory.ensembleSommet();
+		for(A arc : ensemble)
 		{
-			if (arc.getArrivee().equals(sommet))
+			if(arc.getArrivee().equals(sommet))
 			{
 				xPred.ajouteElement(arc.getDepart());
 			}
 		}
 		return xPred;
 	}
-	//Ajouts et suppressions d'éléments ----------------------------------------
+	// Ajouts et suppressions d'éléments ----------------------------------------
 	@Override
 	public void supprElement(A arc)
 	{

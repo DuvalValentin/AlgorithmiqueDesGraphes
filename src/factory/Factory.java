@@ -2,262 +2,232 @@ package factory;
 
 import graphelements.elements.*;
 import graphelements.interfaces.*;
+
 @SuppressWarnings("unchecked")
 public class Factory
 {
-	private Factory() {}
-	//Sommets
-	public static <S> InterfaceSommet<S> sommet(InterfaceSommet<S> sommet)
+	private Factory()
+	{}
+	// Sommets
+	public static <S> Sommet<S> sommet(Sommet<S> sommet)
 	{
-		return new Sommet<>(sommet);
+		return new SommetImpl<>(sommet);
 	}
-	
-	public static <S> InterfaceSommet<S> sommet(S value)
+	public static <S> Sommet<S> sommet(S value)
 	{
-		return new Sommet<>(value);
+		return new SommetImpl<>(value);
 	}
-	
-	//Arc
-	//TODO améliorer méthodes de créations dynamiques de factory
-	public static <S> InterfaceArc<S> arc(String className,InterfaceSommet<S> depart, InterfaceSommet<S> arrivee, InterfaceCout cout)
+	// Arc
+	// TODO améliorer méthodes de créations dynamiques de factory
+	public static <S> Arc<S> arc(String className, Sommet<S> depart, Sommet<S> arrivee)
 	{
-		InterfaceArc<S> arc;
+		Arc<S> arc;
 		if(className.equals("Arc")||className.equals("GrapheNonValue"))
 		{
-			arc = Factory.arcNonValue(depart,arrivee);
+			arc=Factory.arcNonValue(depart,arrivee);
 		}
-		else //if (className.equals("ArcValue")||className.equals("GrapheValue"))
+		else // if (className.equals("ArcValue")||className.equals("GrapheValue"))
 		{
-			arc =  Factory.arcValue(depart,arrivee,cout);
+			arc=Factory.arcValue(depart,arrivee,cout());
 		}/*
-		else
-		{
-			throw  new Exception("pas marché");
-		}*/
+			 * else { throw new Exception("pas marché"); }
+			 */
 		return arc;
 	}
-	
-	public static <S> InterfaceArc<S> arcNonValue(InterfaceSommet<S> depart, InterfaceSommet<S> arrivee)
+	public static <S> Arc<S> arcNonValue(Sommet<S> depart, Sommet<S> arrivee)
 	{
-		return new Arc<>(depart,arrivee);
+		return new ArcImpl<>(depart,arrivee);
 	}
-	
-	public static <S> InterfaceArc<S> arcNonValue(InterfaceArc<S> arc)
+	public static <S> Arc<S> arcNonValue(Arc<S> arc)
 	{
-		return new Arc<>(arc);
+		return new ArcImpl<>(arc);
 	}
-	public static <S> InterfaceArc<S> arcNonValue(S idDepart, S idArrivee)
+	public static <S> Arc<S> arcNonValue(S idDepart, S idArrivee)
 	{
-		return new Arc<>(idDepart,idArrivee);
+		return new ArcImpl<>(idDepart,idArrivee);
 	}
-	
-	public static <S> InterfaceArcValue<S> arcValue(InterfaceSommet<S> depart, InterfaceSommet<S> arrivee,InterfaceCout cout)
+	public static <S> ArcValue<S> arcValue(Sommet<S> depart, Sommet<S> arrivee, Cout cout)
 	{
-		return new ArcValue<>(depart,arrivee,cout);
+		return new ArcValueImpl<>(depart,arrivee,cout);
 	}
-
-	public static <S> InterfaceArcValue<S> arcValue(InterfaceArcValue<S> arc)
+	public static <S> ArcValue<S> arcValue(ArcValue<S> arc)
 	{
-		return new ArcValue<>(arc);
+		return new ArcValueImpl<>(arc);
 	}
-	
-	//EnsembleSommet
-	public static <S> InterfaceEnsembleSommet<S> ensembleSommet()
+	// EnsembleSommet
+	public static <S> EnsembleSommet<S> ensembleSommet()
 	{
-		return new EnsembleSommet<>();
+		return new EnsembleSommetImpl<>();
 	}
-	
-	public static <S> InterfaceEnsembleSommet<S> ensembleSommet(InterfaceEnsembleSommet<S> ensembleSommet)
+	public static <S> EnsembleSommet<S> ensembleSommet(EnsembleSommet<S> ensembleSommet)
 	{
-		return new EnsembleSommet<>(ensembleSommet);
+		return new EnsembleSommetImpl<>(ensembleSommet);
 	}
-	
-	//EnsembleArc
-	public static <S,A extends InterfaceArc<S>> InterfaceEnsembleArc<S, A> ensembleArc (String className)
+	// EnsembleArc
+	public static <S,A extends Arc<S>> EnsembleArc<S,A> ensembleArc(String className)
 	{
-		InterfaceEnsembleArc<S,A> ensembleArc;
+		EnsembleArc<S,A> ensembleArc;
 		if(className.equals("EnsembleArcNonValue"))
 		{
-			ensembleArc = (InterfaceEnsembleArc<S,A>) Factory.ensembleArcNonValue();
+			ensembleArc=(EnsembleArc<S,A>)Factory.ensembleArcNonValue();
 		}
-		else //if(className.equals("EnsembleArcValue"))
+		else // if(className.equals("EnsembleArcValue"))
 		{
-			ensembleArc = (InterfaceEnsembleArc<S,A>) Factory.ensembleArcValue();
+			ensembleArc=(EnsembleArc<S,A>)Factory.ensembleArcValue();
 		}
-		/*else
-		{
-			throw new Exception("pas marché");
-		}*/
+		/*
+		 * else { throw new Exception("pas marché"); }
+		 */
 		return ensembleArc;
 	}
-	
-	public static <S> InterfaceEnsembleArcNonValue<S> ensembleArcNonValue()
+	public static <S> EnsembleArcNonValue<S> ensembleArcNonValue()
 	{
-		return new EnsembleArcNonValue<>();
+		return new EnsembleArcNonValueImpl<>();
 	}
-	
-	public static <S> InterfaceEnsembleArcNonValue<S> ensembleArcNonValue(InterfaceEnsembleArcNonValue<S> ensembleArcNonValue)
+	public static <S> EnsembleArcNonValue<S> ensembleArcNonValue(EnsembleArcNonValue<S> ensembleArcNonValue)
 	{
-		return new EnsembleArcNonValue<>(ensembleArcNonValue);
+		return new EnsembleArcNonValueImpl<>(ensembleArcNonValue);
 	}
-	
-	public static <S,A extends InterfaceArc<S>> InterfaceEnsembleArc<S,A> ensembleArc(InterfaceEnsembleArc<S,A> gamma) //throws Exception
+	public static <S,A extends Arc<S>> EnsembleArc<S,A> ensembleArc(EnsembleArc<S,A> gamma) // throws
+																																													// Exception
 	{
-		InterfaceEnsembleArc<S,A> ensembleArc;
-		String className = gamma.getClass().getSimpleName();
+		EnsembleArc<S,A> ensembleArc;
+		String className=gamma.getClass().getSimpleName();
 		if(className.equals("EnsembleArcNonValue"))
 		{
-			ensembleArc = (InterfaceEnsembleArc<S,A>) Factory.ensembleArcNonValue((InterfaceEnsembleArcNonValue<S>) gamma);
+			ensembleArc=(EnsembleArc<S,A>)Factory.ensembleArcNonValue((EnsembleArcNonValue<S>)gamma);
 		}
-		else //if (className.equals("EnsembleArcValue"))
+		else // if (className.equals("EnsembleArcValue"))
 		{
-			ensembleArc = (InterfaceEnsembleArc<S,A>) Factory.ensembleArcValue((InterfaceEnsembleArcValue<S>) gamma);
+			ensembleArc=(EnsembleArc<S,A>)Factory.ensembleArcValue((EnsembleArcValue<S>)gamma);
 		}
-		/*else
-		{
-			throw  new Exception("pas marché");
-		}*/
+		/*
+		 * else { throw new Exception("pas marché"); }
+		 */
 		return ensembleArc;
 	}
-	
-	public static <S> InterfaceEnsembleArcValue<S> ensembleArcValue(InterfaceEnsembleArcValue<S> ensembleArcValue)
+	public static <S> EnsembleArcValue<S> ensembleArcValue(EnsembleArcValue<S> ensembleArcValue)
 	{
-		return new EnsembleArcValue<>(ensembleArcValue);
+		return new EnsembleArcValueImpl<>(ensembleArcValue);
 	}
-	
-	public static <S> InterfaceEnsembleArcValue<S> ensembleArcValue()
+	public static <S> EnsembleArcValue<S> ensembleArcValue()
 	{
-		return new EnsembleArcValue<>();
+		return new EnsembleArcValueImpl<>();
 	}
-	
-	//Graphe
-	public static <S,A extends InterfaceArc<S>>  InterfaceGraphe<S,A> graphe(String classGraph) //throws Exception
+	// Graphe
+	public static <S,A extends Arc<S>> Graphe<S,A> graphe(String classGraph) // throws
+																																						// Exception
 	{
-		InterfaceGraphe<S,A> retour;
-		if (classGraph.equals( "GrapheNonValue"))
+		Graphe<S,A> retour;
+		if(classGraph.equals("GrapheNonValue"))
 		{
-			retour = (InterfaceGraphe<S,A>) Factory.grapheNonValue();
+			retour=(Graphe<S,A>)Factory.grapheNonValue();
 		}
-		else //if(classGraph.equals("GrapheValue"))
+		else // if(classGraph.equals("GrapheValue"))
 		{
-			retour = (InterfaceGraphe<S,A>) Factory.grapheValue();
+			retour=(Graphe<S,A>)Factory.grapheValue();
 		}
-		/*else
-		{
-			throw new Exception("pas maché");
-		}*/
+		/*
+		 * else { throw new Exception("pas maché"); }
+		 */
 		return retour;
 	}
-	
-	public static <S,A extends InterfaceArc<S>>  InterfaceGraphe<S,A> graphe(InterfaceGraphe<S,A> graphe)
+	public static <S,A extends Arc<S>> Graphe<S,A> graphe(Graphe<S,A> graphe)
 	{
-		InterfaceGraphe<S,A> retour;
-		String classGraph = graphe.getClass().getSimpleName();
-		if (classGraph.equals("GrapheNonValue"))
+		Graphe<S,A> retour;
+		String classGraph=graphe.getClass().getSimpleName();
+		if(classGraph.equals("GrapheNonValue"))
 		{
-			retour =(InterfaceGraphe<S,A>) Factory.grapheNonValue((GrapheNonValue<S>)graphe);
+			retour=(Graphe<S,A>)Factory.grapheNonValue((GrapheNonValueImpl<S>)graphe);
 		}
-		else //if (classGraph.equals("GrapheValue"))
+		else // if (classGraph.equals("GrapheValue"))
 		{
-			retour =(InterfaceGraphe<S,A>) Factory.grapheValue((GrapheValue<S>)graphe);
+			retour=(Graphe<S,A>)Factory.grapheValue((GrapheValueImpl<S>)graphe);
 		}
-		/*else
-		{
-			throw new Exception("pas maché");
-		}*/
+		/*
+		 * else { throw new Exception("pas maché"); }
+		 */
 		return retour;
 	}
-	
-	public static <S,A extends InterfaceArc<S>> InterfaceGraphe<S,A> graphe(InterfaceEnsembleSommet<S>X,InterfaceEnsembleArc<S,A> Gamma)
+	public static <S,A extends Arc<S>> Graphe<S,A> graphe(EnsembleSommet<S> X, EnsembleArc<S,A> Gamma)
 	{
-		InterfaceGraphe<S,A> retour;
-		String classGamma = Gamma.getClass().getSimpleName();
+		Graphe<S,A> retour;
+		String classGamma=Gamma.getClass().getSimpleName();
 		if(classGamma.equals("EnsembleArcNonValue"))
 		{
-			retour=(InterfaceGraphe<S,A>) Factory.grapheNonValue(X, (InterfaceEnsembleArcNonValue<S>)Gamma);
+			retour=(Graphe<S,A>)Factory.grapheNonValue(X,(EnsembleArcNonValue<S>)Gamma);
 		}
 		else
 		{
-			retour=(InterfaceGraphe<S,A>) Factory.grapheValue(X, (InterfaceEnsembleArcValue<S>)Gamma);
+			retour=(Graphe<S,A>)Factory.grapheValue(X,(EnsembleArcValue<S>)Gamma);
 		}
 		return retour;
 	}
-	
-	public static <S> InterfaceGrapheNonValue<S> grapheNonValue(InterfaceEnsembleSommet<S> X, InterfaceEnsembleArcNonValue<S> Gamma)
+	public static <S> GrapheNonValue<S> grapheNonValue(EnsembleSommet<S> X, EnsembleArcNonValue<S> Gamma)
 	{
-		return new GrapheNonValue<>(X,Gamma);
+		return new GrapheNonValueImpl<>(X,Gamma);
 	}
-	
-	public static <S> InterfaceGrapheNonValue<S> grapheNonValue(InterfaceGrapheNonValue<S> g)
+	public static <S> GrapheNonValue<S> grapheNonValue(GrapheNonValue<S> g)
 	{
-		return new GrapheNonValue<>(g);
+		return new GrapheNonValueImpl<>(g);
 	}
-	
-	public static <S> InterfaceGrapheNonValue<S> grapheNonValue()
+	public static <S> GrapheNonValue<S> grapheNonValue()
 	{
-		return new GrapheNonValue<>();
+		return new GrapheNonValueImpl<>();
 	}
-	
-	public static <S> InterfaceGrapheValue<S> grapheValue(InterfaceGrapheValue<S> g)
+	public static <S> GrapheValue<S> grapheValue(GrapheValue<S> g)
 	{
-		return new GrapheValue<>(g);
+		return new GrapheValueImpl<>(g);
 	}
-	
-	public static <S> InterfaceGrapheValue<S> grapheValue()
+	public static <S> GrapheValue<S> grapheValue()
 	{
-		return new GrapheValue<>();
+		return new GrapheValueImpl<>();
 	}
-	public static <S> InterfaceGrapheValue<S> grapheValue(InterfaceEnsembleSommet<S> X, InterfaceEnsembleArcValue<S> Gamma)
+	public static <S> GrapheValue<S> grapheValue(EnsembleSommet<S> X, EnsembleArcValue<S> Gamma)
 	{
-		return new GrapheValue<>(X,Gamma);
+		return new GrapheValueImpl<>(X,Gamma);
 	}
-	//Cout
-	
-	public static InterfaceCout cout(InterfaceCout cout)
+	// Cout
+	public static Cout cout(Cout cout)
 	{
-		return new Cout(cout);
+		return new CoutImpl(cout);
 	}
-	
-	public static InterfaceCout cout(float valeur)
+	public static Cout cout(float valeur)
 	{
-		return new Cout(valeur);
+		return new CoutImpl(valeur);
 	}
-	
-	public static InterfaceCout cout()
+	public static Cout cout()
 	{
-		return new Cout();
+		return new CoutImpl();
 	}
-	//Autres
-	public static <S> InterfaceTableauPlusCC<S> tableauPlusCC(InterfaceSommet<S>principal,InterfaceGrapheValue<S>G)
+	// Autres
+	public static <S> TableauPlusCC<S> tableauPlusCC(Sommet<S> principal, GrapheValue<S> G)
 	{
-		return new TableauPlusCC<>(principal,G);
+		return new TableauPlusCCImpl<>(principal,G);
 	}
-	
-	public static <S> InterfaceTableauPlusCC<S> tableauPlusCC(InterfaceSommet<S>principal)
+	public static <S> TableauPlusCC<S> tableauPlusCC(Sommet<S> principal)
 	{
-		return new TableauPlusCC<>(principal);
+		return new TableauPlusCCImpl<>(principal);
 	}
-	
-	public static <S> InterfaceCFC<S> CFC (InterfaceEnsembleSommet<S> X)
+	public static <S> CFC<S> CFC(EnsembleSommet<S> X)
 	{
-		return new CFC<>(X);
+		return new CFCImpl<>(X);
 	}
-	
-	public static <E,S> InterfaceEnsemble<E> ensemble(InterfaceEnsemble<E> ensemble)
+	public static <E,S> Ensemble<E> ensemble(Ensemble<E> ensemble)
 	{
-		InterfaceEnsemble<E> ensembleRetour;
-		String className = ensemble.getClass().getSimpleName();
+		Ensemble<E> ensembleRetour;
+		String className=ensemble.getClass().getSimpleName();
 		if(className.equals("EnsembleArcNonValue"))
 		{
-			ensembleRetour = (InterfaceEnsemble<E>) Factory.ensembleArcNonValue((InterfaceEnsembleArcNonValue<S>) ensemble);
+			ensembleRetour=(Ensemble<E>)Factory.ensembleArcNonValue((EnsembleArcNonValue<S>)ensemble);
 		}
-		else if (className.equals("EnsembleArcValue"))
+		else if(className.equals("EnsembleArcValue"))
 		{
-			ensembleRetour = (InterfaceEnsemble<E>) Factory.ensembleArcValue((InterfaceEnsembleArcValue<S>) ensemble);
+			ensembleRetour=(Ensemble<E>)Factory.ensembleArcValue((EnsembleArcValue<S>)ensemble);
 		}
-		else //if(className.equals("EnsembleSommet"))
+		else // if(className.equals("EnsembleSommet"))
 		{
-			ensembleRetour = (InterfaceEnsemble<E>) Factory.ensembleSommet((InterfaceEnsembleSommet<S>) ensemble);
+			ensembleRetour=(Ensemble<E>)Factory.ensembleSommet((EnsembleSommet<S>)ensemble);
 		}
 		return ensembleRetour;
 	}

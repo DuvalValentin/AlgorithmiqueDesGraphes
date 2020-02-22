@@ -1,26 +1,27 @@
 package graphelements.elements;
 
 import factory.Factory;
-import graphelements.interfaces.InterfaceArc;
-import graphelements.interfaces.InterfaceSommet;
+import graphelements.interfaces.Arc;
+import graphelements.interfaces.Sommet;
 
-public class Arc<S> implements InterfaceArc<S>
+public class ArcImpl<S> implements Arc<S>
 {
-	//Sommets
-	private InterfaceSommet<S> depart;
-	private InterfaceSommet<S> arrivee;
-	//Constructeurs
-	public Arc(InterfaceSommet<S> dep, InterfaceSommet<S> arr)
+	// Sommets
+	private Sommet<S> depart;
+	private Sommet<S> arrivee;
+
+	// Constructeurs
+	public ArcImpl(Sommet<S> dep, Sommet<S> arr)
 	{
 		setDepart(Factory.sommet(dep));
 		setArrivee(Factory.sommet(arr));
 	}
-	public Arc(S idDep, S idArr)
+	public ArcImpl(S idDep, S idArr)
 	{
 		setDepart(Factory.sommet(idDep));
 		setArrivee(Factory.sommet(idArr));
 	}
-	public Arc(InterfaceArc<S> arc)
+	public ArcImpl(Arc<S> arc)
 	{
 		setDepart(arc.getDepart());
 		setArrivee(arc.getArrivee());
@@ -29,38 +30,37 @@ public class Arc<S> implements InterfaceArc<S>
 	public String toString()
 	{
 		return "("+getDepart().getId()+","+getArrivee().getId()+")";
-		
 	}
-	//Getters
+	// Getters
 	@Override
-	public InterfaceSommet<S> getDepart() 
+	public Sommet<S> getDepart()
 	{
 		return Factory.sommet(depart);
 	}
 	@Override
-	public InterfaceSommet<S> getArrivee() 
+	public Sommet<S> getArrivee()
 	{
 		return Factory.sommet(arrivee);
 	}
-	//Setters
+	// Setters
 	@Override
-	public void setDepart(InterfaceSommet<S> depart) 
+	public void setDepart(Sommet<S> depart)
 	{
-		this.depart = Factory.sommet(depart);
+		this.depart=Factory.sommet(depart);
 	}
 	@Override
-	public void setArrivee(InterfaceSommet<S> arrivee) 
+	public void setArrivee(Sommet<S> arrivee)
 	{
-		this.arrivee = Factory.sommet(arrivee);
+		this.arrivee=Factory.sommet(arrivee);
 	}
-	//test pour savoir si deux arc sont équivalents
+	// test pour savoir si deux arc sont équivalents
 	@Override
-	public boolean memeArc(InterfaceSommet<S> depart, InterfaceSommet<S> arrivee)
+	public boolean memeArc(Sommet<S> depart, Sommet<S> arrivee)
 	{
 		return(getDepart().equals(depart)&&getArrivee().equals(arrivee));
 	}
 	@Override
-	public boolean memeArc(InterfaceArc<S> arc)
+	public boolean memeArc(Arc<S> arc)
 	{
 		return memeArc(arc.getDepart(),arc.getArrivee());
 	}
@@ -69,7 +69,7 @@ public class Arc<S> implements InterfaceArc<S>
 	public boolean equals(Object obj)
 	{
 		boolean result=false;
-		if(obj!=null&&obj.getClass()==getClass()&&memeArc(((Arc<S>)obj)))
+		if(obj!=null&&obj.getClass()==getClass()&&memeArc(((ArcImpl<S>)obj)))
 		{
 			result=true;
 		}

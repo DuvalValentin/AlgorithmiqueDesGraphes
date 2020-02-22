@@ -1,9 +1,27 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
+  <!-- Informations Maven -->
   <groupId>valentin.duval</groupId>
   <artifactId>algorithme</artifactId>
-  <version>0.11.2</version>
+  <version>0.11.2-SNAPSHOT</version>
+  <packaging>jar</packaging>
+  <!-- Informations générales-->
   <name>AlgorithmiqueDesGraphes</name>
+  <description>Un package pour manipuler les graphes</description>
+  <url>https://github.com/DuvalValentin/AlgorithmiqueDesGraphes</url>
+  <organization>
+  	<name>Valentin Duval</name>
+  	<url>https://www.linkedin.com/in/valentin-duval-531ab513a/</url>
+  </organization>
+  
+  <properties>
+  	<maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
+  	<sonar.projectKey>DuvalValentin_AlgorithmiqueDesGraphes</sonar.projectKey>
+  	<sonar.organization>duvalvalentin</sonar.organization>
+  	<sonar.host.url>https://sonarcloud.io</sonar.host.url>
+  	<sonar.login>2f5e26247e2959caf2531af45544a9b0708ad3e5</sonar.login>
+  </properties>
   <build>
     <sourceDirectory>src</sourceDirectory>
     <testSourceDirectory>test/testing</testSourceDirectory>
@@ -19,7 +37,7 @@
       	<artifactId>maven-surefire-plugin</artifactId>
       	<version>2.22.2</version>
       </plugin>
-      <plugin>
+      <plugin><!-- plugin jacoco pour le coverage -->
       	<groupId>org.jacoco</groupId>
       	<artifactId>jacoco-maven-plugin</artifactId>
       	<version>0.8.5</version>
@@ -52,12 +70,4 @@
   		<version>3.14.0</version>
   	</dependency>
   </dependencies>
-  <properties>
-  	<maven.compiler.source>11</maven.compiler.source>
-    <maven.compiler.target>11</maven.compiler.target>
-  	<sonar.projectKey>DuvalValentin_AlgorithmiqueDesGraphes</sonar.projectKey>
-  	<sonar.organization>duvalvalentin</sonar.organization>
-  	<sonar.host.url>https://sonarcloud.io</sonar.host.url>
-  	<sonar.login>2f5e26247e2959caf2531af45544a9b0708ad3e5</sonar.login>
-  </properties>
 </project>

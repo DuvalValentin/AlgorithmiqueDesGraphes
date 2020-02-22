@@ -1,14 +1,15 @@
 package graphelements.abstracts;
 
 import java.util.HashSet;
+import graphelements.interfaces.Ensemble;
 
-import graphelements.interfaces.InterfaceEnsemble;
-public abstract class AbstractEnsemble<E> implements InterfaceEnsemble<E>
+public abstract class AbstractEnsemble<E> implements Ensemble<E>
 {
-	//L'ensemble encapsulé
+	// L'ensemble encapsulé
 	protected HashSet<E> ensemble;
-	//Constructeur
-	public AbstractEnsemble ()
+
+	// Constructeur
+	public AbstractEnsemble()
 	{
 		ensemble=new HashSet<>();
 	}
@@ -22,30 +23,27 @@ public abstract class AbstractEnsemble<E> implements InterfaceEnsemble<E>
 	{
 		ensemble.clear();
 	}
-	
 	@Override
-	public boolean contient(InterfaceEnsemble<E> ensemble)
+	public boolean contient(Ensemble<E> ensemble)
 	{
-		return this.equals(InterfaceEnsemble.union(this, ensemble));
+		return this.equals(Ensemble.union(this,ensemble));
 	}
-	
 	@Override
 	public String toString()
 	{
 		StringBuilder str=new StringBuilder("{");
 		if(!ensemble.isEmpty())
 		{
-			for(E e: ensemble)
+			for(E e : ensemble)
 			{
 				str=str.append(e.toString()+",");
 			}
-			str.setCharAt(str.length()-1, '}');
+			str.setCharAt(str.length()-1,'}');
 		}
 		else
 		{
 			str.append("}");
 		}
-		
 		return str.toString();
 	}
 	@SuppressWarnings("unchecked")
@@ -55,11 +53,10 @@ public abstract class AbstractEnsemble<E> implements InterfaceEnsemble<E>
 		boolean result=false;
 		if(obj!=null&&obj.getClass()==getClass()&&((AbstractEnsemble<E>)obj).ensemble.equals(ensemble))
 		{
-					result=true;
+			result=true;
 		}
 		return result;
 	}
-	
 	@Override
 	public int hashCode()
 	{
