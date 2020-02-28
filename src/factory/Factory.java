@@ -22,7 +22,7 @@ public class Factory
 	public static <S> Arc<S> arc(String className, Sommet<S> depart, Sommet<S> arrivee)
 	{
 		Arc<S> arc;
-		if(className.equals("Arc")||className.equals("GrapheNonValue"))
+		if(className.equals("ArcImpl")||className.equals("GrapheNonValueImpl"))
 		{
 			arc=Factory.arcNonValue(depart,arrivee);
 		}
@@ -67,11 +67,11 @@ public class Factory
 	public static <S,A extends Arc<S>> EnsembleArc<S,A> ensembleArc(String className)
 	{
 		EnsembleArc<S,A> ensembleArc;
-		if(className.equals("EnsembleArcNonValue"))
+		if(className.equals("EnsembleArcNonValueImpl"))
 		{
 			ensembleArc=(EnsembleArc<S,A>)Factory.ensembleArcNonValue();
 		}
-		else // if(className.equals("EnsembleArcValue"))
+		else // if(className.equals("EnsembleArcValueImpl"))
 		{
 			ensembleArc=(EnsembleArc<S,A>)Factory.ensembleArcValue();
 		}
@@ -93,11 +93,11 @@ public class Factory
 	{
 		EnsembleArc<S,A> ensembleArc;
 		String className=gamma.getClass().getSimpleName();
-		if(className.equals("EnsembleArcNonValue"))
+		if(className.equals("EnsembleArcNonValueImpl"))
 		{
 			ensembleArc=(EnsembleArc<S,A>)Factory.ensembleArcNonValue((EnsembleArcNonValue<S>)gamma);
 		}
-		else // if (className.equals("EnsembleArcValue"))
+		else // if (className.equals("EnsembleArcValueImpl"))
 		{
 			ensembleArc=(EnsembleArc<S,A>)Factory.ensembleArcValue((EnsembleArcValue<S>)gamma);
 		}
@@ -119,7 +119,7 @@ public class Factory
 																																						// Exception
 	{
 		Graphe<S,A> retour;
-		if(classGraph.equals("GrapheNonValue"))
+		if(classGraph.equals("GrapheNonValueImpl"))
 		{
 			retour=(Graphe<S,A>)Factory.grapheNonValue();
 		}
@@ -136,7 +136,7 @@ public class Factory
 	{
 		Graphe<S,A> retour;
 		String classGraph=graphe.getClass().getSimpleName();
-		if(classGraph.equals("GrapheNonValue"))
+		if(classGraph.equals("GrapheNonValueImpl"))
 		{
 			retour=(Graphe<S,A>)Factory.grapheNonValue((GrapheNonValueImpl<S>)graphe);
 		}
@@ -153,7 +153,7 @@ public class Factory
 	{
 		Graphe<S,A> retour;
 		String classGamma=Gamma.getClass().getSimpleName();
-		if(classGamma.equals("EnsembleArcNonValue"))
+		if(classGamma.equals("EnsembleArcNonValueImpl"))
 		{
 			retour=(Graphe<S,A>)Factory.grapheNonValue(X,(EnsembleArcNonValue<S>)Gamma);
 		}
@@ -217,11 +217,11 @@ public class Factory
 	{
 		Ensemble<E> ensembleRetour;
 		String className=ensemble.getClass().getSimpleName();
-		if(className.equals("EnsembleArcNonValue"))
+		if(className.equals("EnsembleArcNonValueImpl"))
 		{
 			ensembleRetour=(Ensemble<E>)Factory.ensembleArcNonValue((EnsembleArcNonValue<S>)ensemble);
 		}
-		else if(className.equals("EnsembleArcValue"))
+		else if(className.equals("EnsembleArcValueImpl"))
 		{
 			ensembleRetour=(Ensemble<E>)Factory.ensembleArcValue((EnsembleArcValue<S>)ensemble);
 		}

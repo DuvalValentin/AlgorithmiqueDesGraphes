@@ -22,10 +22,13 @@ public class EnsembleSommetImpl<S>extends AbstractEnsemble<Sommet<S>> implements
 	@Override
 	public Sommet<S> pickSommet()
 	{
-		// FIXME améliorer la méthode pickSommet() de Sommet
-		@SuppressWarnings("unchecked")
-		Sommet<S>[] tab=new SommetImpl[ensemble.size()];
-		return ensemble.toArray(tab)[0];
+		Sommet<S> pickedSommet = null;
+		for(Sommet<S> sommet : ensemble)
+		{
+			pickedSommet=sommet;
+			break;
+		}
+		return pickedSommet;
 	}
 	@Override
 	public boolean existeSommet(Sommet<S> sommet)

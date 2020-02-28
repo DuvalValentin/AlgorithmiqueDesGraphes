@@ -132,6 +132,12 @@ V 0.13
 * Coverage du code 100% pour les instructions (mais pas toutes les branches)
 * Mise en place d'un formateur et application de ce formateur sur tout le code
 
+V 0.13.1
+======
+* Modification de la factory dû au changement des conventions de nommage
+* Modification de la méthode pickSommet (exception à ajouter)
+* Mise en place d'une automatisation des tests avant un commit pour éviter d'avoir des problèmes de régression
+
 Encore à faire :
 ----------------
 * Revoir les TODO présents dans le code.
@@ -141,4 +147,5 @@ Encore à faire :
 * Commencer les algorithmes d'ordonnancement.
 * Respecter l'architecture Maven Classique.
 * Avoir un "Sonar" le plus propre que possible.
-* Atteindre 100% de coverage.
+* Atteindre 100% de coverage (avec toutes les branches).
+* Créer des exceptions personnalisée.

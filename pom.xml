@@ -3,7 +3,7 @@
   <!-- Informations Maven -->
   <groupId>valentin.duval</groupId>
   <artifactId>algorithme</artifactId>
-  <version>0.11.2-SNAPSHOT</version>
+  <version>0.13.1-SNAPSHOT</version>
   <packaging>jar</packaging>
   <!-- Informations générales-->
   <name>AlgorithmiqueDesGraphes</name>
@@ -21,23 +21,28 @@
   	<sonar.organization>duvalvalentin</sonar.organization>
   	<sonar.host.url>https://sonarcloud.io</sonar.host.url>
   	<sonar.login>2f5e26247e2959caf2531af45544a9b0708ad3e5</sonar.login>
+  	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
   <build>
     <sourceDirectory>src</sourceDirectory>
     <testSourceDirectory>test/testing</testSourceDirectory>
     <plugins>
-      <plugin><!-- Plugin pour le fonctionnement de Maven -->
+      <!-- Plugin pour le fonctionnement de Maven -->
+      <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.8.0</version>
         <configuration>
           <release>11</release>
         </configuration>
       </plugin>
-      <plugin><!-- Sans ce plugin Junit5 ne marchera pas -->
+      <!-- Sans ce plugin Junit5 ne marchera pas -->
+      <plugin>
       	<artifactId>maven-surefire-plugin</artifactId>
       	<version>2.22.2</version>
       </plugin>
-      <plugin><!-- plugin jacoco pour le coverage -->
+      <!-- plugin jacoco pour le coverage -->
+       
+      <plugin>
       	<groupId>org.jacoco</groupId>
       	<artifactId>jacoco-maven-plugin</artifactId>
       	<version>0.8.5</version>
@@ -59,12 +64,14 @@
     </plugins>
   </build>
   <dependencies>
-  	<dependency><!-- Framework de test jupiter -->
+    <!-- Framework de test jupiter -->
+  	<dependency>
   		<groupId>org.junit.jupiter</groupId>
   		<artifactId>junit-jupiter</artifactId>
   		<version>5.5.2</version>
   	</dependency>
-  	<dependency><!-- AssertJ pour des assertions "plus compréhensibles" -->
+  	<!-- AssertJ pour des assertions "plus compréhensibles" -->
+  	<dependency>
   		<groupId>org.assertj</groupId>
   		<artifactId>assertj-core</artifactId>
   		<version>3.14.0</version>
