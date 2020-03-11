@@ -21,11 +21,7 @@ public class Parcours
 		Sommet<S> y;
 		Sommet<S> z;
 		// Init
-		ensembleSommetNonVisites=Factory.ensembleSommet(graphe.getEnsembleSommet());// Ensemble
-																																								// de
-																																								// sommets
-																																								// non
-																																								// visité
+		ensembleSommetNonVisites=Factory.ensembleSommet(graphe.getEnsembleSommet());// Ensemble de sommets non visité
 		ensembleArcVisites=Factory.ensembleArc(graphe.getGamma().getClass().getSimpleName());
 		Graphe<S,A> graphAVisiter=Factory.graphe(graphe);
 		while(!ensembleSommetNonVisites.isEmpty())
@@ -69,8 +65,7 @@ public class Parcours
 	public static <S,A extends Arc<S>> void wfs(Graphe<S,A> graphe, Sommet<S> sommet)
 	{
 		EnsembleArc<S,A> ensembleArcVisites;// Ensemble des arcs parcours
-		EnsembleSommet<S> ensembleSommetNonVisites;// Ensemble des sommets non
-																								// visités
+		EnsembleSommet<S> ensembleSommetNonVisites;// Ensemble des sommets non visités
 		EnsembleSommet<S> ensembleSommetVisites;// Ensemble des sommets visités
 		EnsembleSommet<S> successeursY;// Liste de successeur de y
 		LinkedList<Sommet<S>> fileSommets=new LinkedList<>();// File

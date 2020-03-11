@@ -57,7 +57,7 @@ public class ArcTest
 	}
 	@SuppressWarnings("unlikely-arg-type")
 	@Test
-	public void testEqualsMemeArc()
+	public void testEquals()
 	{
 		Arc<Integer> arcEq=Factory.arcNonValue(depart,arrivee);
 		Arc<Integer> arcNDepEq=Factory.arcNonValue(Factory.sommet(6),arrivee);
@@ -67,10 +67,6 @@ public class ArcTest
 		assertNotEquals(arcTest,arcNDepEq,"Le equals de Arc rends vrai pour deux arcs avec un depart différent");
 		assertNotEquals(arcTest,arcNArrEq,"Le equals de Arc rends vrai pour deux arcs avec une arrivee différente");
 		assertNotEquals(arcTest,arcNEq,"Le equals de Arc rends vrai pour deux arcs avec un depart et une arrivee différents");
-		assertTrue(arcTest.memeArc(arcEq),"Le memeArc de Arc rends faux pour deux arcs sensé être les même");
-		assertFalse(arcTest.memeArc(arcNDepEq),"Le memeArc de Arc rends vrai pour deux arcs avec un depart différent");
-		assertFalse(arcTest.memeArc(arcNArrEq),"Le memeArc de Arc rends vrai pour deux arcs avec une arrivee différente");
-		assertFalse(arcTest.memeArc(arcNEq),"Le memeArc de Arc rends vrai pour deux arcs avec un depart et une arrivee différents");
 		assertFalse(arcTest.equals("cnjfbb"));
 		assertFalse(arcTest.equals(null));
 	}

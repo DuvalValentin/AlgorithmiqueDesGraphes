@@ -8,5 +8,5 @@ public interface GrapheValue<S>extends Graphe<S,ArcValue<S>>, OperationsElementa
 	{
 		return (GrapheValue<S>)Graphe.union(graphe1,graphe2);
 	}
-	void ajouteArc(Sommet<S> depart, Sommet<S> arrivee, Cout cout);
+	void ajouteArc(Sommet<S> depart, Sommet<S> arrivee, Float cout);
 }

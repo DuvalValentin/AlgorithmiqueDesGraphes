@@ -13,7 +13,7 @@ public class ParcoursTest
 	private EnsembleSommet<Integer> X;
 	private Sommet<Integer> s1, s2, s3, s4;
 	private Arc<Integer> a12, a23, a32, a34, a33;
-	private Cout c1;
+	private Float c1;
 	private GrapheValue<Integer> grapheValue;
 	private EnsembleArcValue<Integer> gammaValue;
 	private ArcValue<Integer> a121, a231, a321, a341, a331;
@@ -42,7 +42,7 @@ public class ParcoursTest
 		Gamma.ajouteElement(a34);
 		Gamma.ajouteElement(a33);
 		G=Factory.grapheNonValue(X,Gamma);
-		c1=Factory.cout(1);
+		c1=1f;
 		a121=Factory.arcValue(s1,s2,c1);
 		a231=Factory.arcValue(s2,s3,c1);
 		a321=Factory.arcValue(s3,s2,c1);

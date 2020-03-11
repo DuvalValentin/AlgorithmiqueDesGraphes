@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import factory.Factory;
-import graphelements.interfaces.Cout;
 import graphelements.interfaces.Sommet;
 import graphelements.interfaces.TableauPlusCC;
 
@@ -13,8 +12,7 @@ public class TableauPlusCCTest
 {
 	private TableauPlusCC<Integer> tableau;
 	private Sommet<Integer> s1, s2;
-	private Cout c1;
-	private HashMap<Sommet<Integer>,Cout> d;
+	private HashMap<Sommet<Integer>,Float> d;
 	private HashMap<Sommet<Integer>,Sommet<Integer>> pred;
 
 	@BeforeEach
@@ -22,13 +20,12 @@ public class TableauPlusCCTest
 	{
 		s1=Factory.sommet(1);
 		s2=Factory.sommet(2);
-		c1=Factory.cout(1);
 		tableau=Factory.tableauPlusCC(s1);
 		tableau.initSommet(s2);
-		tableau.modifDistance(s2,c1);
-		d=new HashMap<Sommet<Integer>,Cout>();
-		d.put(s1,Factory.cout());
-		d.put(s2,c1);
+		tableau.modifDistance(s2,1f);
+		d=new HashMap<Sommet<Integer>,Float>();
+		d.put(s1,0f);
+		d.put(s2,1f);
 		pred=new HashMap<Sommet<Integer>,Sommet<Integer>>();
 		pred.put(s1,s1);
 		pred.put(s2,s1);
@@ -59,7 +56,7 @@ public class TableauPlusCCTest
 	@Test
 	public void testModifDistance()
 	{
-		Cout c5=Factory.cout(5);
+		Float c5=5f;
 		tableau.modifDistance(s1,c5);
 		assertEquals(c5,tableau.getDistance(s1),"modifCout");
 	}
@@ -72,7 +69,7 @@ public class TableauPlusCCTest
 	@Test
 	public void testGetDistance()
 	{
-		assertEquals(c1,tableau.getDistance(s2),"getDistance");
+		assertEquals(1f,tableau.getDistance(s2),"getDistance");
 	}
 	@Test
 	public void testGetPredecesseur()
@@ -96,9 +93,9 @@ public class TableauPlusCCTest
 		assertNotEquals(otherTableau,tableau);
 		otherTableau=Factory.tableauPlusCC(s1);
 		otherTableau.initSommet(s2);
-		otherTableau.modifDistance(s2,Factory.cout(9));
+		otherTableau.modifDistance(s2,9f);
 		assertNotEquals(otherTableau,tableau);
-		otherTableau.modifDistance(s2,c1);
+		otherTableau.modifDistance(s2,1f);
 		assertEquals(otherTableau,tableau);
 	}
 	@Test

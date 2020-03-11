@@ -28,7 +28,7 @@ public class Factory
 		}
 		else // if (className.equals("ArcValue")||className.equals("GrapheValue"))
 		{
-			arc=Factory.arcValue(depart,arrivee,cout());
+			arc=Factory.arcValue(depart,arrivee,0f);
 		}/*
 			 * else { throw new Exception("pas marché"); }
 			 */
@@ -46,7 +46,7 @@ public class Factory
 	{
 		return new ArcImpl<>(idDepart,idArrivee);
 	}
-	public static <S> ArcValue<S> arcValue(Sommet<S> depart, Sommet<S> arrivee, Cout cout)
+	public static <S> ArcValue<S> arcValue(Sommet<S> depart, Sommet<S> arrivee, Float cout)
 	{
 		return new ArcValueImpl<>(depart,arrivee,cout);
 	}
@@ -88,8 +88,7 @@ public class Factory
 	{
 		return new EnsembleArcNonValueImpl<>(ensembleArcNonValue);
 	}
-	public static <S,A extends Arc<S>> EnsembleArc<S,A> ensembleArc(EnsembleArc<S,A> gamma) // throws
-																																													// Exception
+	public static <S,A extends Arc<S>> EnsembleArc<S,A> ensembleArc(EnsembleArc<S,A> gamma) // throws Exception
 	{
 		EnsembleArc<S,A> ensembleArc;
 		String className=gamma.getClass().getSimpleName();
@@ -115,8 +114,7 @@ public class Factory
 		return new EnsembleArcValueImpl<>();
 	}
 	// Graphe
-	public static <S,A extends Arc<S>> Graphe<S,A> graphe(String classGraph) // throws
-																																						// Exception
+	public static <S,A extends Arc<S>> Graphe<S,A> graphe(String classGraph) // throws Exception
 	{
 		Graphe<S,A> retour;
 		if(classGraph.equals("GrapheNonValueImpl"))
@@ -186,19 +184,6 @@ public class Factory
 	public static <S> GrapheValue<S> grapheValue(EnsembleSommet<S> X, EnsembleArcValue<S> Gamma)
 	{
 		return new GrapheValueImpl<>(X,Gamma);
-	}
-	// Cout
-	public static Cout cout(Cout cout)
-	{
-		return new CoutImpl(cout);
-	}
-	public static Cout cout(float valeur)
-	{
-		return new CoutImpl(valeur);
-	}
-	public static Cout cout()
-	{
-		return new CoutImpl();
 	}
 	// Autres
 	public static <S> TableauPlusCC<S> tableauPlusCC(Sommet<S> principal, GrapheValue<S> G)

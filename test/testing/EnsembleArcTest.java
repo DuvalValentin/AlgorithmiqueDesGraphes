@@ -97,8 +97,7 @@ public class EnsembleArcTest
 		ensembleArcTest.supprElement(s2,s2);
 		assertFalse(ensembleArcTest.existeArc(a22),"Arc supposé être enlevé");
 		assertFalse(ensembleArcTest.existeArc(s1,s1),"Arc supposé être enlevé");
-		ensembleArcTest.supprElement(a11);// enlever un arc déjà enlever ne pose pas
-																			// d'erreur
+		ensembleArcTest.supprElement(a11);// enlever un arc déjà enlever ne pose pas d'erreur
 		assertFalse(ensembleArcTest.existeBoucle(),"Test de présence de boucle lorsqu'elle n'existe pas");
 	}
 	@Test

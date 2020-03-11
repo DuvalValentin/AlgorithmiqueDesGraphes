@@ -10,5 +10,5 @@ public interface EnsembleArcValue<S>extends EnsembleArc<S,ArcValue<S>>, Operatio
 	{
 		return (EnsembleArcValue<S>)EnsembleArc.intersection(ensemble1,ensemble2);
 	}
-	void ajouteElement(Sommet<S> depart, Sommet<S> arrivee, Cout cout);
+	void ajouteElement(Sommet<S> depart, Sommet<S> arrivee, Float cout);
 }

@@ -3,7 +3,6 @@ package graphelements.elements;
 import java.util.HashMap;
 import java.util.Optional;
 import factory.Factory;
-import graphelements.interfaces.Cout;
 import graphelements.interfaces.GrapheValue;
 import graphelements.interfaces.Sommet;
 import graphelements.interfaces.TableauPlusCC;
@@ -12,7 +11,7 @@ public class TableauPlusCCImpl<S> implements TableauPlusCC<S>
 {
 	// Eléments
 	private Sommet<S> principal;
-	private HashMap<Sommet<S>,Cout> d;
+	private HashMap<Sommet<S>,Float> d;
 	private HashMap<Sommet<S>,Sommet<S>> pred;
 
 	// Constructeur
@@ -22,7 +21,7 @@ public class TableauPlusCCImpl<S> implements TableauPlusCC<S>
 		pred=new HashMap<>();
 		principal=prin;
 		initSommet(principal);
-		modifDistance(principal,Factory.cout());
+		modifDistance(principal,0f);
 	}
 	public TableauPlusCCImpl(Sommet<S> prin, GrapheValue<S> graphe)
 	{
@@ -32,16 +31,16 @@ public class TableauPlusCCImpl<S> implements TableauPlusCC<S>
 		for(Sommet<S> sommet : graphe.getEnsembleSommet().getEnsemble())
 		{
 			initSommet(sommet);
-			Optional<Cout> oCout=graphe.getCout(principal,sommet);
+			Optional<Float> oCout=graphe.getCout(principal,sommet);
 			if(oCout.isPresent())
 			{
 				modifDistance(sommet,oCout.get());
 			}
 		}
-		modifDistance(principal,Factory.cout());
+		modifDistance(principal,0f);
 	}
 	// Getters
-	public HashMap<Sommet<S>,Cout> getD()
+	public HashMap<Sommet<S>,Float> getD()
 	{
 		return new HashMap<>(d);
 	}
@@ -53,7 +52,7 @@ public class TableauPlusCCImpl<S> implements TableauPlusCC<S>
 	{
 		return Factory.sommet(principal);
 	}
-	public Cout getDistance(Sommet<S> sommet)
+	public Float getDistance(Sommet<S> sommet)
 	{
 		return d.get(sommet);
 	}
@@ -67,7 +66,7 @@ public class TableauPlusCCImpl<S> implements TableauPlusCC<S>
 		d.put(sommet,null);
 		pred.put(sommet,principal);
 	}
-	public void modifDistance(Sommet<S> sommet, Cout cout)
+	public void modifDistance(Sommet<S> sommet, Float cout)
 	{
 		d.replace(sommet,cout);
 	}

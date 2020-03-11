@@ -1,10 +1,18 @@
 package graphelements.interfaces;
 
-public interface ArcValue<S>extends Arc<S>, Cout
+/**
+ * Vertex with an assossiated cost
+ * 
+ * @author valentin
+ *
+ * @param <S>
+ *          the type of objects wrapped in the edges
+ */
+public interface ArcValue<S>extends Arc<S>
 {
-	// Un arc avec un attribut cout
+	// Un Cout a un attribut valeur qui est un flottant
 	// Getter
-	Cout getCout();// Renvoi une copie de cout
-	// Pas de setCout => on se contente de modifier la valeur du coup avec
-	// setValeur() (InterfaceCout)
+	float getCout();// Renvoie la valeur
+	// Setter
+	void setCout(Float cout);// Modifie la valeur
 }

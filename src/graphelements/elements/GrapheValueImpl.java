@@ -28,19 +28,19 @@ public class GrapheValueImpl<S>extends AbstractGraphe<S,ArcValue<S>> implements 
 		return Factory.ensembleArcValue((EnsembleArcValue<S>)super.getGamma());
 	}
 	@Override
-	public Optional<Cout> getCout(Sommet<S> depart, Sommet<S> arrivee)
+	public Optional<Float> getCout(Sommet<S> depart, Sommet<S> arrivee)
 	{
 		return ((EnsembleArcValue<S>)gamma).getCout(depart,arrivee);
 	}
 	// Setter
 	@Override
-	public boolean setValeur(Sommet<S> depart, Sommet<S> arrivee, Cout cout)
+	public boolean setValeur(Sommet<S> depart, Sommet<S> arrivee, Float cout)
 	{
 		return ((EnsembleArcValue<S>)gamma).setValeur(depart,arrivee,cout);
 	}
 	// Ajout d'éléments
 	@Override
-	public void ajouteArc(Sommet<S> depart, Sommet<S> arrivee, Cout cout)
+	public void ajouteArc(Sommet<S> depart, Sommet<S> arrivee, Float cout)
 	{
 		ajouteArc(Factory.arcValue(depart,arrivee,cout));
 	}

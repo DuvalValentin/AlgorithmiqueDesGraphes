@@ -5,7 +5,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import factory.Factory;
 import graphelements.interfaces.ArcValue;
-import graphelements.interfaces.Cout;
 import graphelements.interfaces.EnsembleArcValue;
 import graphelements.interfaces.EnsembleSommet;
 import graphelements.interfaces.GrapheValue;
@@ -17,7 +16,7 @@ public class GrapheValueTest
 	private EnsembleSommet<Integer> X;
 	private ArcValue<Integer> a121, a135, a149, a232, a246, a343;
 	private EnsembleArcValue<Integer> Gamma;
-	private Cout c1, c2, c3, c5, c6, c9;
+	private Float c1, c2, c3, c5, c6, c9;
 	private GrapheValue<Integer> GV, GV1, GV2;
 
 	@BeforeEach
@@ -32,12 +31,12 @@ public class GrapheValueTest
 		X.ajouteElement(s2);
 		X.ajouteElement(s3);
 		X.ajouteElement(s4);
-		c1=Factory.cout(1);
-		c2=Factory.cout(2);
-		c3=Factory.cout(3);
-		c5=Factory.cout(5);
-		c6=Factory.cout(6);
-		c9=Factory.cout(9);
+		c1=1f;
+		c2=2f;
+		c3=3f;
+		c5=5f;
+		c6=6f;
+		c9=9f;
 		a121=Factory.arcValue(s1,s2,c1);
 		a135=Factory.arcValue(s1,s3,c5);
 		a149=Factory.arcValue(s1,s4,c9);
@@ -71,7 +70,7 @@ public class GrapheValueTest
 		assertEquals(GV,GV1,"Test des constructeurs avec et sans paramètres");
 		assertEquals(GV,GV2,"Test du constructeur avec un graphe en paramètre");
 		assertNotSame(GV,GV2,"On vérifie que les deux objets sont différents");
-		GV2.setValeur(s1,s2,c5);
+		GV2.setValeur(s1,s2,5f);
 		assertNotEquals(GV,GV2,"Modifier le clone modifie l'original");
 	}
 	@Test
@@ -83,9 +82,9 @@ public class GrapheValueTest
 	@Test
 	public void testGetCout()
 	{
-		Cout cout=GV.getCout(s3,s4).get();
-		assertEquals(c3,cout,"GetCout");
-		assertNotSame(c3,cout,"GetCout renvoie bien un cout différent");
+		Float cout=GV.getCout(s3,s4).get();
+		assertEquals(3f,cout,"GetCout");
+		assertNotSame(3f,cout,"GetCout renvoie bien un cout différent");
 	}
 	@Test
 	public void testAjouteSupprArc()
@@ -94,15 +93,15 @@ public class GrapheValueTest
 		ArcValue<Integer> av=Factory.arcValue(s2,s1,c5);
 		assertFalse(GV.ajoutableArc(av),"L'ajout ne s'est pas fait");
 		assertNotEquals(GV,GV2,"L'ajout a aussi été fait dans un autre graphe");
-		assertEquals(c5,GV.getCout(s2,s1).get(),"L'arc ajouté n'a pas la bonne valeur");
+		assertEquals(5f,GV.getCout(s2,s1).get(),"L'arc ajouté n'a pas la bonne valeur");
 		GV.supprArc(s2,s1);
 		assertTrue(GV.ajoutableArc(av),"La suppression c'est effectuée");
 	}
 	@Test
 	public void testSetValeur()
 	{
-		GV.setValeur(s1,s2,c9);
-		assertEquals(c9,GV.getCout(s1,s2).get(),"Le cout n'a pas été modifié");
+		GV.setValeur(s1,s2,9f);
+		assertEquals(9f,GV.getCout(s1,s2).get(),"Le cout n'a pas été modifié");
 	}
 	@Test
 	public void testUnion()

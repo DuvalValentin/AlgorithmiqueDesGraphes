@@ -85,19 +85,11 @@ public class CalculCFC
 					else
 					{
 						// Pour le moment la répétition permet au tout de marcher
-						for(int i=pospile.get(z); i<pile.size(); i++)// pospile.get(z)
-																													// correspond à la
-																													// position du sommet
-																													// au dessus de z sur
-																													// la pile
+						for(int i=pospile.get(z); i<pile.size(); i++)// pospile.get(z) correspond à la position du sommet au dessus de z sur la pile
 						{
 							cfc.get(z).ajouteElement(pile.get(i));
 						}
-						for(int i=pospile.get(z); i<pile.size(); i++)// pospile.get(z)
-																													// correspond à la
-																													// position du sommet
-																													// au dessus de z sur
-																													// la pile
+						for(int i=pospile.get(z); i<pile.size(); i++)// pospile.get(z) correspond à la position du sommet au dessus de z sur la pile
 						{
 							cfc.memeCFC(z,pile.get(i));
 						}

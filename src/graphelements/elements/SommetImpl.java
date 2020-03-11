@@ -2,6 +2,13 @@ package graphelements.elements;
 
 import graphelements.interfaces.Sommet;
 
+/**
+ * The implementation of the Sommet interface
+ * 
+ * @author valentin
+ *
+ * @param <S>
+ */
 public class SommetImpl<S> implements Sommet<S>
 {
 	// Id
@@ -32,14 +39,14 @@ public class SommetImpl<S> implements Sommet<S>
 	@Override
 	public String toString()
 	{
-		return getId().toString();
+		return id.toString();
 	}
 	@SuppressWarnings("unchecked")
 	@Override
 	public boolean equals(Object obj)
 	{
 		boolean result=false;
-		if(obj!=null&&obj.getClass()==getClass()&&((SommetImpl<S>)obj).getId().equals(getId()))
+		if(obj!=null&&obj.getClass()==getClass()&&((SommetImpl<S>)obj).getId().equals(id))
 		{
 			result=true;
 		}
@@ -48,6 +55,6 @@ public class SommetImpl<S> implements Sommet<S>
 	@Override
 	public int hashCode()
 	{
-		return getId().hashCode();
+		return id.hashCode();
 	}
 }

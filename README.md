@@ -138,14 +138,23 @@ V 0.13.1
 * Modification de la méthode pickSommet (exception à ajouter)
 * Mise en place d'une automatisation des tests avant un commit pour éviter d'avoir des problèmes de régression
 
+V 0.14
+======
+* Suppression des coûts
+* Début d'une javadoc
+
+V 0.15
+======
+* Mise en place d'exceptions personnalisées
+* Amélioration du formatteur pour ne pas poser de problèmes avec les commentaires
+
 Encore à faire :
 ----------------
 * Revoir les TODO présents dans le code.
-* Créer une fonction pour savoir si un Ensemble est un sous ensemble d'un autre Ensemble (utiliser Union en statique).
 * Les algorithmes CFC doivent rendre un graphe d'ensemble de graphe.
 * Répondre aux questions du moment et faire leurs implémentations.
 * Commencer les algorithmes d'ordonnancement.
 * Respecter l'architecture Maven Classique.
 * Avoir un "Sonar" le plus propre que possible.
 * Atteindre 100% de coverage (avec toutes les branches).
-* Créer des exceptions personnalisée.
+* Ecrire une javadoc

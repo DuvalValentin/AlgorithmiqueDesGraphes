@@ -1,6 +1,9 @@
 package algorithme;
 
 import java.util.Stack;
+import exception.AbsorbingException;
+import exception.CircuitException;
+import exception.NotRootException;
 import factory.Factory;
 import graphelements.interfaces.*;
 
@@ -11,29 +14,16 @@ public class PlusCC
 	{}
 	public static <S> TableauPlusCC<S> dijkstra(GrapheValue<S> graph, Sommet<S> sommet0)
 	{
-		EnsembleSommet<S> ensembleNonTraite=Factory.ensembleSommet(graph.getEnsembleSommet());// Liste
-																																													// des
-																																													// sommets
-																																													// non
-																																													// traités
-		EnsembleSommet<S> successeurs=Factory.ensembleSommet(graph.listSucc(sommet0));// Liste
-																																									// de
-																																									// Successeur
-																																									// du
-																																									// sommet
-																																									// en
-																																									// cours
-		TableauPlusCC<S> dijkstra=Factory.tableauPlusCC(sommet0,graph);// Tableau
-																																		// résultat
+		EnsembleSommet<S> ensembleNonTraite=Factory.ensembleSommet(graph.getEnsembleSommet());// Liste des sommets non traités
+		EnsembleSommet<S> successeurs=Factory.ensembleSommet(graph.listSucc(sommet0));// Liste de Successeur du sommet en cours
+		TableauPlusCC<S> dijkstra=Factory.tableauPlusCC(sommet0,graph);// Tableau résultat
 		float distance;// valeur de la distance par un sommet intermédiaire
 		ensembleNonTraite.supprElement(sommet0);
-		successeurs.supprElement(sommet0);// Supprime x si x se succède à lui
-																			// même//FIXME si le graphe est absorbant
-																			// car x0->x0 est négatif, on ne le
-																			// reperera jamais.
+		successeurs.supprElement(sommet0);// Supprime x si x se succède à lui même
+		// FIXME si le graphe est absorbant car x0->x0 est négatif, on ne le reperera jamais.
 		while(!ensembleNonTraite.isEmpty())
 		{
-			Cout coutm=null;
+			Float coutm=null;
 			Sommet<S> m=null;
 			for(Sommet<S> sommet : ensembleNonTraite.getEnsemble())
 			{
@@ -44,49 +34,43 @@ public class PlusCC
 				}
 				else
 				{
-					if(dijkstra.getDistance(sommet)!=null&&dijkstra.getDistance(sommet).getValeur()<coutm.getValeur())
+					if(dijkstra.getDistance(sommet)!=null&&dijkstra.getDistance(sommet)<coutm)
 					{
 						m=sommet;
 						coutm=dijkstra.getDistance(sommet);
 					}
 				}
-				// if(coutm!=null)
-				// {
 				successeurs=graph.listSucc(m);
 				for(Sommet<S> y : successeurs.getEnsemble())
 				{
 					if(ensembleNonTraite.existeSommet(y))
 					{
-						Cout cout=graph.getCout(m,y).get();
-						distance=dijkstra.getDistance(m).getValeur()+cout.getValeur();
-						if(distance<dijkstra.getDistance(y).getValeur())
+						Float cout=graph.getCout(m,y).orElseThrow();
+						distance=dijkstra.getDistance(m)+cout;
+						if(distance<dijkstra.getDistance(y))
 						{
-							dijkstra.getDistance(y).setValeur(distance);
+							dijkstra.modifDistance(y,distance);
 							dijkstra.modifPredecesseur(y,m);
 						}
 					}
 				}
-				// }
 			}
 			ensembleNonTraite.supprElement(m);
 		}
 		return dijkstra;
 		// FIXME revoir tout le dijkstra => complexité trop élévée
 	}
-	public static <S> TableauPlusCC<S> ordinalRacine(GrapheValue<S> graph, Sommet<S> sommet0)
+	public static <S> TableauPlusCC<S> ordinalRacine(GrapheValue<S> graph, Sommet<S> sommet0) throws NotRootException, CircuitException
 	{
-		GrapheValue<S> remainingGraph=Factory.grapheValue(graph);// Le reste du
-																															// graphe qu'il
-																															// reste à
-																															// parcourir
+		GrapheValue<S> remainingGraph=Factory.grapheValue(graph);// Le reste du graphe qu'il reste à parcourir
 		EnsembleSommet<S> entrees;// Liste des points d'entrée
 		EnsembleSommet<S> predecesseurs;// Liste de prédecesseurs
-		Sommet<S> y, m;// y : le sommet que l'on traite m prédécesseur de y au coup
-										// le plus faible pour atteindre y,
+		Sommet<S> y;// le sommet que l'on traite
+		Sommet<S> m;// prédécesseur de y au coup le plus faible pour atteindre y
 		TableauPlusCC<S> ordinalRacine=Factory.tableauPlusCC(sommet0,graph);
 		if(!graph.listPred(sommet0).equals(Factory.ensembleSommet()))
 		{
-			System.err.println(sommet0+" n'est pas la racine de "+graph);
+			throw new NotRootException(sommet0+" n'est pas la racine de "+graph);
 		}
 		remainingGraph.supprSommet(sommet0);
 		entrees=remainingGraph.pointsEntree();
@@ -94,12 +78,12 @@ public class PlusCC
 		{
 			y=entrees.pickSommet();
 			predecesseurs=graph.listPred(y);
-			Cout coutm=null;
+			Float coutm=null;
 			m=null;
-			Cout coutp;
+			Float coutp;
 			for(Sommet<S> sommet : predecesseurs.getEnsemble())
 			{
-				coutp=Cout.somme(ordinalRacine.getDistance(sommet),graph.getCout(sommet,y).get());
+				coutp=ordinalRacine.getDistance(sommet)+graph.getCout(sommet,y).orElseThrow();
 				if(coutm==null)
 				{
 					m=sommet;
@@ -107,39 +91,37 @@ public class PlusCC
 				}
 				else
 				{
-					if(coutm.getValeur()>coutp.getValeur())
+					if(coutm>coutp)
 					{
 						m=sommet;
 						coutm=coutp;
 					}
 				}
 			}
-			ordinalRacine.modifDistance(y,Cout.somme(ordinalRacine.getDistance(m),graph.getCout(m,y).get()));
+			ordinalRacine.modifDistance(y,ordinalRacine.getDistance(m)+graph.getCout(m,y).orElseThrow());
 			ordinalRacine.modifPredecesseur(y,m);
 			remainingGraph.supprSommet(y);
 			entrees=remainingGraph.pointsEntree();
 		}
 		if(!remainingGraph.isEmpty())
 		{
-			System.err.println("Le graphe avait un circuit, le tableau obtenu n'est donc pas complet");
+			throw new CircuitException("Ordinal racine n'est pas applicable si le graph contient un circuit");
 		}
 		return ordinalRacine;
 	}
-	public static <S> TableauPlusCC<S> bellmanFord(GrapheValue<S> graph, Sommet<S> sommet0)
+	public static <S> TableauPlusCC<S> bellmanFord(GrapheValue<S> graph, Sommet<S> sommet0) throws AbsorbingException
 	{
-		TableauPlusCC<S> bellmanFord=Factory.tableauPlusCC(sommet0,graph);// Tableau
-																																			// final
+		TableauPlusCC<S> bellmanFord=Factory.tableauPlusCC(sommet0,graph);// Tableau final
 		GrapheValue<S> graphM=Factory.grapheValue(graph);// G moins x0
-		Cout cout;// cout entre les sommet actuel et son successeur
-		graphM.supprSommet(sommet0);// FIXME Gm n'est pas utilisé par la suite =>
-																// pas normal
+		Float cout;// cout entre les sommet actuel et son successeur
+		graphM.supprSommet(sommet0);// FIXME Gm n'est pas utilisé par la suite => pas normal
 		for(Sommet<S> x : graph.getEnsembleSommet().getEnsemble())
 		{
 			for(Sommet<S> y : graph.listSucc(x).getEnsemble())
 			{
 				if(bellmanFord.getDistance(x)!=null)
 				{
-					cout=Cout.somme(bellmanFord.getDistance(x),graph.getCout(x,y).get());
+					cout=bellmanFord.getDistance(x)+graph.getCout(x,y).orElseThrow();
 					if(bellmanFord.getDistance(y)==null)
 					{
 						bellmanFord.modifPredecesseur(y,x);
@@ -147,7 +129,7 @@ public class PlusCC
 					}
 					else
 					{
-						if(bellmanFord.getDistance(y).getValeur()>cout.getValeur())
+						if(bellmanFord.getDistance(y)>cout)
 						{
 							bellmanFord.modifPredecesseur(y,x);
 							bellmanFord.modifDistance(y,cout);
@@ -160,16 +142,15 @@ public class PlusCC
 		{
 			for(Sommet<S> y : graph.listSucc(x).getEnsemble())
 			{
-				if(bellmanFord.getDistance(y).getValeur()>Cout.somme(bellmanFord.getDistance(x),graph.getCout(x,y).get()).getValeur())
+				if(bellmanFord.getDistance(y)>bellmanFord.getDistance(x)+graph.getCout(x,y).orElseThrow())
 				{
-					System.err.println("Il y a un circuit absorbant dans le graphe, la table obtenue par BellmanFord n'est pas exploitable");
-					break;
+					throw new AbsorbingException("BellmanFord doesn't work with absorbing graph");
 				}
 			}
 		}
 		return bellmanFord;
 	}
-	public static <S> TableauPlusCC<S> ford(GrapheValue<S> graph, Sommet<S> sommet0)
+	public static <S> TableauPlusCC<S> ford(GrapheValue<S> graph, Sommet<S> sommet0) throws AbsorbingException
 	{
 		TableauPlusCC<S> ford=Factory.tableauPlusCC(sommet0,graph);
 		Sommet<S> y, z;
@@ -188,12 +169,11 @@ public class PlusCC
 			if(!successeursY.isEmpty())
 			{
 				z=successeursY.pickSommet();
-				graphToVisit.supprArc(y,z);// Supprimer l'arc ici empêche l'arc de
-																		// pouvoir être revisité
+				graphToVisit.supprArc(y,z);// Supprimer l'arc ici empêche l'arc de pouvoir être revisité
 				if(d.existeSommet(z))
 				{
 					d.supprElement(z);
-					ford.modifDistance(z,Cout.somme(ford.getDistance(y),graph.getCout(y,z).get()));
+					ford.modifDistance(z,ford.getDistance(y)+graph.getCout(y,z).orElseThrow());
 					ford.modifPredecesseur(z,y);
 					pile.push(z);
 				}
@@ -201,21 +181,21 @@ public class PlusCC
 				{
 					if(t.existeSommet(z))
 					{
-						if(ford.getDistance(z).getValeur()>Cout.somme(ford.getDistance(y),graph.getCout(y,z).get()).getValeur())
+						if(ford.getDistance(z)>ford.getDistance(y)+graph.getCout(y,z).orElseThrow())
 						{
 							t.supprElement(z);
 							for(Sommet<S> sommet : graph.listSucc(z).getEnsemble())
 							{
-								graphToVisit.ajouteArc(z,sommet,graph.getCout(z,sommet).get());
+								graphToVisit.ajouteArc(z,sommet,graph.getCout(z,sommet).orElseThrow());
 							}
-							ford.modifDistance(z,Cout.somme(ford.getDistance(y),graph.getCout(y,z).get()));
+							ford.modifDistance(z,ford.getDistance(y)+graph.getCout(y,z).orElseThrow());
 							ford.modifPredecesseur(z,y);
 							pile.push(z);
 						}
 					}
 					else
 					{
-						if(ford.getDistance(z).getValeur()>Cout.somme(ford.getDistance(y),graph.getCout(y,z).get()).getValeur())
+						if(ford.getDistance(z)>ford.getDistance(y)+graph.getCout(y,z).orElseThrow())
 						{
 							absorbant=true;
 						}
@@ -230,7 +210,7 @@ public class PlusCC
 		}
 		if(absorbant)
 		{
-			System.err.println("Circuit absorbant détécté, on ne peut pas calculer le plusCC");
+			throw new AbsorbingException("Ford doesn't work with absorbing graph");
 		}
 		return ford;
 	}

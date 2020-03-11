@@ -17,7 +17,7 @@ public class FermetureTransitiveTest
 	private Sommet<Integer> s1, s2, s3, s4;
 	private Arc<Integer> a12, a23, a32, a34, a44;
 	private Arc<Integer> a13, a14, a22, a24, a33;
-	private Cout c1, c2, c3, c5, c6;
+	private Float c1, c2, c3, c5, c6;
 	private ArcValue<Integer> a121, a232, a343;
 	private ArcValue<Integer> a133, a146, a245;
 
@@ -57,11 +57,11 @@ public class FermetureTransitiveTest
 		GammaT.ajouteElement(a24);
 		GammaT.ajouteElement(a33);
 		GT=Factory.grapheNonValue(X,GammaT);
-		c1=Factory.cout(1);
-		c2=Factory.cout(2);
-		c3=Factory.cout(3);
-		c5=Factory.cout(5);
-		c6=Factory.cout(6);
+		c1=1f;
+		c2=2f;
+		c3=3f;
+		c5=5f;
+		c6=6f;
 		a121=Factory.arcValue(s1,s2,c1);
 		a232=Factory.arcValue(s2,s3,c2);
 		a343=Factory.arcValue(s3,s4,c3);

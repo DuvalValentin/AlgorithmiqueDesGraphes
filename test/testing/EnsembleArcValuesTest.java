@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import java.util.HashSet;
 import factory.Factory;
 import graphelements.interfaces.ArcValue;
-import graphelements.interfaces.Cout;
 import graphelements.interfaces.EnsembleArcValue;
 import graphelements.interfaces.Sommet;
 
@@ -15,7 +14,7 @@ public class EnsembleArcValuesTest
 	private EnsembleArcValue<Integer> ensembleArcValueTest, ensembleEmpty;
 	private Sommet<Integer> s1, s2;
 	private ArcValue<Integer> av115, av113, av121, av217;
-	private Cout c1, c3, c5, c7;
+	private Float c1, c3, c5, c7;
 
 	@BeforeEach
 	public void setUp()
@@ -23,10 +22,10 @@ public class EnsembleArcValuesTest
 		ensembleArcValueTest=Factory.ensembleArcValue();
 		s1=Factory.sommet(1);
 		s2=Factory.sommet(2);
-		c1=Factory.cout(1);
-		c3=Factory.cout(3);
-		c5=Factory.cout(5);
-		c7=Factory.cout(7);
+		c1=1f;
+		c3=3f;
+		c5=5f;
+		c7=7f;
 		av115=Factory.arcValue(s1,s1,c5);
 		av113=Factory.arcValue(s1,s1,c3);
 		av121=Factory.arcValue(s1,s2,c1);
@@ -42,7 +41,7 @@ public class EnsembleArcValuesTest
 		EnsembleArcValue<Integer> ensembleArcValueClone=Factory.ensembleArcValue(ensembleArcValueTest);
 		assertEquals(ensembleArcValueTest,ensembleArcValueClone,"Le constructeur clone");
 		assertNotSame(ensembleArcValueTest,ensembleArcValueClone,"Le constructeur clone créé un objet identique");
-		ensembleArcValueClone.setValeur(s1,s1,c3);
+		ensembleArcValueClone.setValeur(s1,s1,3f);
 		assertNotEquals(ensembleArcValueTest,ensembleArcValueClone,"Modifier le clone modifie l'original");
 	}
 	@Test
@@ -59,8 +58,8 @@ public class EnsembleArcValuesTest
 	{
 		ensembleArcValueTest.ajouteElement(av113);
 		assertEquals(av113.getCout(),ensembleArcValueTest.getCout(s1,s1).get(),"Coût de l'arc plus faible mais n'a pas remplacé le précédent");
-		ensembleArcValueTest.ajouteElement(s1,s1,c5);
-		assertEquals(c3,ensembleArcValueTest.getCout(s1,s1).get(),"Cout de l'arc plus fort mais a quand même remplacé le précedent");
+		ensembleArcValueTest.ajouteElement(s1,s1,5f);
+		assertEquals(3f,ensembleArcValueTest.getCout(s1,s1).get(),"Cout de l'arc plus fort mais a quand même remplacé le précedent");
 	}
 	@Test
 	public void testsupprElement()
@@ -79,19 +78,19 @@ public class EnsembleArcValuesTest
 	@Test
 	public void testSetValeur()
 	{
-		ensembleArcValueTest.setValeur(s1,s2,c7);
-		assertEquals(c7,ensembleArcValueTest.getCout(s1,s2).get(),"setValeur ne marche pas");
-		ensembleEmpty.setValeur(s1,s2,c7);// on vérifie que ça ne plante pas
+		ensembleArcValueTest.setValeur(s1,s2,7f);
+		assertEquals(7f,ensembleArcValueTest.getCout(s1,s2).get(),"setValeur ne marche pas");
+		ensembleEmpty.setValeur(s1,s2,7f);// on vérifie que ça ne plante pas
 	}
 	@Test
 	public void testUnion()
 	{
 		EnsembleArcValue<Integer> ajout=Factory.ensembleArcValue(ensembleArcValueTest);
-		ajout.ajouteElement(s2,s2,c5);
+		ajout.ajouteElement(s2,s2,5f);
 		EnsembleArcValue<Integer> copie=Factory.ensembleArcValue(ensembleArcValueTest);
 		EnsembleArcValue<Integer> unionVide=EnsembleArcValue.union(ensembleArcValueTest,ensembleEmpty);
 		assertEquals(copie,unionVide);
-		copie.ajouteElement(s2,s2,c5);
+		copie.ajouteElement(s2,s2,5f);
 		EnsembleArcValue<Integer> union=EnsembleArcValue.union(ensembleArcValueTest,ajout);
 		assertEquals(copie,union);
 	}
@@ -101,7 +100,7 @@ public class EnsembleArcValuesTest
 		EnsembleArcValue<Integer> copie=Factory.ensembleArcValue(ensembleArcValueTest);
 		copie.supprElement(av115);
 		copie.supprElement(av121);
-		copie.ajouteElement(s2,s2,c5);
+		copie.ajouteElement(s2,s2,5f);
 		EnsembleArcValue<Integer> intersection=EnsembleArcValue.intersection(ensembleArcValueTest,copie);
 		copie.supprElement(s2,s2);
 		assertEquals(copie,intersection);
@@ -111,7 +110,7 @@ public class EnsembleArcValuesTest
 	@Test
 	public void encapsulation()
 	{
-		c1.setValeur(5);
+		c1=5f;
 		assertTrue(ensembleArcValueTest.existeArc(av121),"Modification d'un cout exterieur");
 		s2.setId(9);
 		assertTrue(ensembleArcValueTest.existeArc(av217),"Modification d'un sommet exterieur");

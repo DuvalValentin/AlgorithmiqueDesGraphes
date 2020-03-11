@@ -59,7 +59,6 @@ public class ArcImpl<S> implements Arc<S>
 	{
 		return(getDepart().equals(depart)&&getArrivee().equals(arrivee));
 	}
-	@Override
 	public boolean memeArc(Arc<S> arc)
 	{
 		return memeArc(arc.getDepart(),arc.getArrivee());

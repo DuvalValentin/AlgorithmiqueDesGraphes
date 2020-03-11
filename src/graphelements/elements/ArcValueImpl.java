@@ -1,17 +1,15 @@
 package graphelements.elements;
 
-import factory.Factory;
 import graphelements.interfaces.ArcValue;
-import graphelements.interfaces.Cout;
 import graphelements.interfaces.Sommet;
 
 public class ArcValueImpl<S>extends ArcImpl<S> implements ArcValue<S>
 {
 	// Le Cout
-	private Cout cout;
+	private Float cout;
 
 	// Constructeurs
-	public ArcValueImpl(Sommet<S> depart, Sommet<S> arrivee, Cout cout)
+	public ArcValueImpl(Sommet<S> depart, Sommet<S> arrivee, Float cout)
 	{
 		super(depart,arrivee);
 		this.cout=cout;
@@ -19,24 +17,19 @@ public class ArcValueImpl<S>extends ArcImpl<S> implements ArcValue<S>
 	public ArcValueImpl(ArcValue<S> arcValue)
 	{
 		super(arcValue.getDepart(),arcValue.getArrivee());
-		cout=Factory.cout(arcValue.getValeur());
+		cout=arcValue.getCout();
 	}
 	// Getters
 	@Override
-	public Cout getCout()
+	public float getCout()
 	{
-		return Factory.cout(cout);
-	}
-	@Override
-	public float getValeur()
-	{
-		return cout.getValeur();
+		return cout;
 	}
 	// Setters
 	@Override
-	public void setValeur(float valeur)
+	public void setCout(Float cout)
 	{
-		cout.setValeur(valeur);
+		this.cout=cout;
 	}
 	// toString/equals/hashCode
 	@Override
@@ -49,7 +42,7 @@ public class ArcValueImpl<S>extends ArcImpl<S> implements ArcValue<S>
 	public boolean equals(Object obj)
 	{
 		boolean result=false;
-		if(super.equals(obj)&&((ArcValueImpl<S>)obj).getCout().equals(getCout()))
+		if(super.equals(obj)&&((ArcValueImpl<S>)obj).getCout()==getCout())
 		{
 			result=true;
 		}
@@ -58,6 +51,6 @@ public class ArcValueImpl<S>extends ArcImpl<S> implements ArcValue<S>
 	@Override
 	public int hashCode()
 	{
-		return super.hashCode()+(int)getValeur();
+		return super.hashCode()+cout.hashCode();
 	}
 }

@@ -5,8 +5,7 @@ import factory.Factory;
 
 public interface Ensemble<E>
 {
-	// Cette Interface est pour des objets encapsulant un HashSet appellé
-	// ensemble.
+	// Cette Interface est pour des objets encapsulant un HashSet appellé ensemble.
 	// Getter
 	HashSet<E> getEnsemble();// Donne une copie de l'ensemble
 	// Autres

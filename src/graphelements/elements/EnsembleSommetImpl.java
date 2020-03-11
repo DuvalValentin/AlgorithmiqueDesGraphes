@@ -22,13 +22,7 @@ public class EnsembleSommetImpl<S>extends AbstractEnsemble<Sommet<S>> implements
 	@Override
 	public Sommet<S> pickSommet()
 	{
-		Sommet<S> pickedSommet = null;
-		for(Sommet<S> sommet : ensemble)
-		{
-			pickedSommet=sommet;
-			break;
-		}
-		return pickedSommet;
+		return ensemble.iterator().next();
 	}
 	@Override
 	public boolean existeSommet(Sommet<S> sommet)

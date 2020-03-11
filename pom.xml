@@ -3,7 +3,7 @@
   <!-- Informations Maven -->
   <groupId>valentin.duval</groupId>
   <artifactId>algorithme</artifactId>
-  <version>0.13.1-SNAPSHOT</version>
+  <version>0.15-SNAPSHOT</version>
   <packaging>jar</packaging>
   <!-- Informations générales-->
   <name>AlgorithmiqueDesGraphes</name>
@@ -76,5 +76,6 @@
   		<artifactId>assertj-core</artifactId>
   		<version>3.14.0</version>
   	</dependency>
+  	
   </dependencies>
 </project>

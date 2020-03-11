@@ -5,7 +5,6 @@ import java.util.Optional;
 import factory.Factory;
 import graphelements.abstracts.AbstractEnsembleArc;
 import graphelements.interfaces.ArcValue;
-import graphelements.interfaces.Cout;
 import graphelements.interfaces.EnsembleArcValue;
 import graphelements.interfaces.Sommet;
 
@@ -25,9 +24,9 @@ public class EnsembleArcValueImpl<S>extends AbstractEnsembleArc<S,ArcValue<S>> i
 	}
 	// getter
 	@Override
-	public Optional<Cout> getCout(Sommet<S> depart, Sommet<S> arrivee)
+	public Optional<Float> getCout(Sommet<S> depart, Sommet<S> arrivee)
 	{
-		Cout cout=null;
+		Float cout=null;
 		for(ArcValue<S> arcV : ensemble)
 		{
 			if(arcV.getDepart().equals(depart)&&arcV.getArrivee().equals(arrivee))
@@ -36,7 +35,7 @@ public class EnsembleArcValueImpl<S>extends AbstractEnsembleArc<S,ArcValue<S>> i
 				break;
 			}
 		}
-		Optional<Cout> oCout;
+		Optional<Float> oCout;
 		if(cout!=null)
 		{
 			oCout=Optional.of(cout);
@@ -49,7 +48,7 @@ public class EnsembleArcValueImpl<S>extends AbstractEnsembleArc<S,ArcValue<S>> i
 	}
 	// setter
 	@Override
-	public boolean setValeur(Sommet<S> depart, Sommet<S> arrivee, Cout cout)
+	public boolean setValeur(Sommet<S> depart, Sommet<S> arrivee, Float cout)
 	{
 		boolean succes=false;
 		ArcValue<S> arcS=Factory.arcValue(depart,arrivee,cout);
@@ -57,7 +56,7 @@ public class EnsembleArcValueImpl<S>extends AbstractEnsembleArc<S,ArcValue<S>> i
 		{
 			if(arcV.memeArc(arcS))
 			{
-				((ArcValueImpl<S>)arcV).setValeur(cout.getValeur());
+				((ArcValueImpl<S>)arcV).setCout(cout);
 				succes=true;
 				break;
 			}
@@ -66,14 +65,13 @@ public class EnsembleArcValueImpl<S>extends AbstractEnsembleArc<S,ArcValue<S>> i
 	}
 	// ajout et suppression d'élément
 	@Override
-	public void ajouteElement(ArcValue<S> arc)// Si le coût est inferieur l'arc
-																						// est remplacé
+	public void ajouteElement(ArcValue<S> arc)// Si le coût est inferieur l'arc est remplacé
 	{
 		if(existeArc(arc))
 		{
 			for(ArcValue<S> a : ensemble)
 			{
-				if(arc.getDepart().equals(a.getDepart())&&arc.getArrivee().equals(a.getArrivee())&&arc.getValeur()<a.getValeur())
+				if(arc.getDepart().equals(a.getDepart())&&arc.getArrivee().equals(a.getArrivee())&&arc.getCout()<a.getCout())
 				{
 					ensemble.remove(a);
 					ensemble.add(Factory.arcValue(arc));
@@ -87,14 +85,14 @@ public class EnsembleArcValueImpl<S>extends AbstractEnsembleArc<S,ArcValue<S>> i
 		}
 	}
 	@Override
-	public void ajouteElement(Sommet<S> depart, Sommet<S> arrivee, Cout cout)
+	public void ajouteElement(Sommet<S> depart, Sommet<S> arrivee, Float cout)
 	{
 		ajouteElement(Factory.arcValue(depart,arrivee,cout));
 	}
 	@Override
 	public void supprElement(Sommet<S> depart, Sommet<S> arrivee)
 	{
-		Optional<Cout> oCout=getCout(depart,arrivee);
+		Optional<Float> oCout=getCout(depart,arrivee);
 		if(oCout.isPresent())
 		{
 			supprElement(Factory.arcValue(depart,arrivee,oCout.get()));

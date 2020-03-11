@@ -4,6 +4,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import algorithme.PlusCC;
+import exception.AbsorbingException;
+import exception.CircuitException;
+import exception.NotRootException;
 import factory.Factory;
 import graphelements.interfaces.*;
 
@@ -12,8 +15,8 @@ public class PlusCCTest
 	// G pour Graphe, O pour OrdinalRacine, P pour Positif, N pour Négatif, A pour
 	// Absorbant, R pour Racine seul
 	private Sommet<Integer> s1, s2, s3, s4;
-	private Cout c1, c2, c3, c5, c6, c9;
-	private Cout c1N, c2N, c3N, c5N, /* c6N*, */c9N;
+	private Float c1, c2, c3, c5, c6, c9;
+	private Float c1N, c2N, c3N, c5N, /* c6N*, */c9N;
 	private ArcValue<Integer> a121, a135, a149, a232, a246, a343;
 	private ArcValue<Integer> a121N, a135N, a149N, a232N, /* a246N, */a322N, a343N, a215N;
 	private GrapheValue<Integer> GOP, GON, /* GN, */GA, GRA;
@@ -26,17 +29,18 @@ public class PlusCCTest
 		s2=Factory.sommet(2);
 		s3=Factory.sommet(3);
 		s4=Factory.sommet(4);
-		c1=Factory.cout(1);
-		c2=Factory.cout(2);
-		c3=Factory.cout(3);
-		c5=Factory.cout(5);
-		c6=Factory.cout(6);
-		c9=Factory.cout(9);
-		c1N=Factory.cout(-1);
-		c2N=Factory.cout(-2);
-		c3N=Factory.cout(-3);
-		c5N=Factory.cout(-5);
-		/* c6N=Factory.cout(-6); */c9N=Factory.cout(-9);
+		c1=1f;
+		c2=2f;
+		c3=3f;
+		c5=5f;
+		c6=6f;
+		c9=9f;
+		c1N=-1f;
+		c2N=-2f;
+		c3N=-3f;
+		c5N=-5f;
+		/* c6N=-6f; */
+		c9N=-9f;
 		a121=Factory.arcValue(s1,s2,c1);
 		a135=Factory.arcValue(s1,s3,c5);
 		a149=Factory.arcValue(s1,s4,c9);
@@ -62,8 +66,8 @@ public class PlusCCTest
 		GOP.ajouteArc(a246);
 		GOP.ajouteArc(a343);
 		TableauGOP=Factory.tableauPlusCC(s1,GOP);
-		TableauGOP.modifDistance(s3,c3);
-		TableauGOP.modifDistance(s4,c6);
+		TableauGOP.modifDistance(s3,3f);
+		TableauGOP.modifDistance(s4,6f);
 		TableauGOP.modifPredecesseur(s3,s2);
 		TableauGOP.modifPredecesseur(s4,s3);
 		GON=Factory.grapheValue();
@@ -78,7 +82,7 @@ public class PlusCCTest
 		GON.ajouteArc(a246);
 		GON.ajouteArc(a343N);
 		TableauGON=Factory.tableauPlusCC(s1,GON);
-		TableauGON.modifDistance(s4,Factory.cout(-8));
+		TableauGON.modifDistance(s4,-8f);
 		TableauGON.modifPredecesseur(s4,s3);
 		GA=Factory.grapheValue();
 		GA.ajouteSommet(s1);
@@ -106,25 +110,51 @@ public class PlusCCTest
 	@Test
 	public void testOrdinalRacine()
 	{
-		assertEquals(TableauGOP,PlusCC.ordinalRacine(GOP,s1),"OrdinalRacine /Positif");
-		assertEquals(TableauGON,PlusCC.ordinalRacine(GON,s1),"OrdinalRacine /Negatif");
-		PlusCC.ordinalRacine(GA,s1);
-		PlusCC.ordinalRacine(GRA,s1);
+		try
+		{
+			assertEquals(TableauGOP,PlusCC.ordinalRacine(GOP,s1),"OrdinalRacine /Positif");
+			assertEquals(TableauGON,PlusCC.ordinalRacine(GON,s1),"OrdinalRacine /Negatif");
+		}
+		catch(NotRootException e)
+		{
+			e.printStackTrace();
+		}
+		catch(CircuitException e)
+		{
+			e.printStackTrace();
+		}
+		assertThrows(NotRootException.class,()->{ PlusCC.ordinalRacine(GA,s1); });
+		assertThrows(CircuitException.class,()->{ PlusCC.ordinalRacine(GRA,s1); });
 	}
 	@Test
 	public void testBellmanFord()
 	{
-		assertEquals(TableauGOP,PlusCC.bellmanFord(GOP,s1),"BellmanFord /OrdinalPositif");
-		assertEquals(TableauGON,PlusCC.bellmanFord(GON,s1),"BellmanFod /OrdinalNegatif");
-		PlusCC.bellmanFord(GA,s1);
-		PlusCC.bellmanFord(GRA,s1);
+		try
+		{
+			assertEquals(TableauGOP,PlusCC.bellmanFord(GOP,s1),"BellmanFord /OrdinalPositif");
+			assertEquals(TableauGON,PlusCC.bellmanFord(GON,s1),"BellmanFod /OrdinalNegatif");
+		}
+		catch(AbsorbingException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		assertThrows(AbsorbingException.class,()->{ PlusCC.bellmanFord(GA,s1); });
+		assertThrows(AbsorbingException.class,()->{ PlusCC.bellmanFord(GRA,s1); });
 	}
 	@Test
 	public void testFord()
 	{
-		assertEquals(TableauGOP,PlusCC.ford(GOP,s1),"Ford /OrdinalPositif");
-		assertEquals(TableauGON,PlusCC.ford(GON,s1),"Ford /OrdinalNegatif");
-		PlusCC.ford(GA,s1);
-		PlusCC.ford(GRA,s1);
+		try
+		{
+			assertEquals(TableauGOP,PlusCC.ford(GOP,s1),"Ford /OrdinalPositif");
+			assertEquals(TableauGON,PlusCC.ford(GON,s1),"Ford /OrdinalNegatif");
+		}
+		catch(AbsorbingException e)
+		{
+			e.printStackTrace();
+		}
+		assertThrows(AbsorbingException.class,()->{ PlusCC.ford(GA,s1); });
+		assertThrows(AbsorbingException.class,()->{ PlusCC.ford(GRA,s1); });
 	}
 }
